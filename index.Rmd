@@ -12,9 +12,7 @@ github-repo: MrQ02/dl
 description: ""
 ---
 
-# Deep Learning {#dl}
-
-References:
+# References {-}
 
 - Andrew Ng. <a href="https://www.coursera.org/specializations/deep-learning" target="__blank">Deep Learning Specialization</a>. Coursera Inc.  
 - Goodfellow, I. Bengio, Y. Courville, A. <a href="http://www.deeplearningbook.org/" target="__blank">Deep Learning</a>. MIT Press.

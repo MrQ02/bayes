@@ -1,4 +1,3 @@
-dl
 basics
 neural-network-representation
 activation-functions
