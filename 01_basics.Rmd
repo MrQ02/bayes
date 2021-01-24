@@ -1,6 +1,5 @@
 # Basics of Neural Networks {#basics}
 
-
 ## Neural Network Representation
 
 <center><img src="../../images/DL/NN.png" width="400"/></center>

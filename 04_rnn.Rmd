@@ -1,15 +1,5 @@
 # Recurrent Neural Networks {#rnn}
 
----
-layout: post
-title: "Recurrent Neural Networks"
-date: 2019-12-01 22:29:53 +0900
-permalink: /DL/RNN/
-header-includes:
-- \usepackage{amsmath}
-- \usepackage{mathtools}
----
-
 ## Basics of RNN
 
 ### <strong>Intuition of Sequence Models</strong>  
