@@ -4,7 +4,9 @@ language:
     chapter_name: "Chapter "
 rmd_files: [
   "index.Rmd",
-  "setup.Rmd",
-  "write.Rmd"]
+  "01_basics.Rmd",
+  "02_improvements.Rmd",
+  "03_cnn.Rmd",
+  "04_rnn.Rmd"]
 delete_merged_file: true 
 output_dir: "docs"
