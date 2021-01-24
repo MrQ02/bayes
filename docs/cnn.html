@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Convolutional Neural Networks | Recurrent Neural Networks</title>
+  <meta name="description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Convolutional Neural Networks | Recurrent Neural Networks" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  <meta name="github-repo" content="openscapes/series" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Convolutional Neural Networks | Recurrent Neural Networks" />
+  
+  <meta name="twitter:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  
+
+<meta name="author" content="Julie Lowndes" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="imp.html"/>
+<link rel="next" href="rnn.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Mini Bookdown Tutorial</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Deep Learning</a></li>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics of Neural Networks</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#neural-network-representation"><i class="fa fa-check"></i><b>2.1</b> Neural Network Representation</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#activation-functions"><i class="fa fa-check"></i><b>2.2</b> Activation Functions</a></li>
+<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#training"><i class="fa fa-check"></i><b>2.3</b> Training</a></li>
+<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#gradient-descent"><i class="fa fa-check"></i><b>2.4</b> Gradient Descent</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="imp.html"><a href="imp.html"><i class="fa fa-check"></i><b>3</b> Improvements on Neural Networks</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="imp.html"><a href="imp.html#traintest-split"><i class="fa fa-check"></i><b>3.1</b> Train/Test Split</a></li>
+<li class="chapter" data-level="3.2" data-path="imp.html"><a href="imp.html#initialization"><i class="fa fa-check"></i><b>3.2</b> Initialization</a></li>
+<li class="chapter" data-level="3.3" data-path="imp.html"><a href="imp.html#data-fitting"><i class="fa fa-check"></i><b>3.3</b> Data Fitting</a></li>
+<li class="chapter" data-level="3.4" data-path="imp.html"><a href="imp.html#regularization"><i class="fa fa-check"></i><b>3.4</b> Regularization</a></li>
+<li class="chapter" data-level="3.5" data-path="imp.html"><a href="imp.html#optimization"><i class="fa fa-check"></i><b>3.5</b> Optimization</a></li>
+<li class="chapter" data-level="3.6" data-path="imp.html"><a href="imp.html#hyperparameter-tuning"><i class="fa fa-check"></i><b>3.6</b> Hyperparameter Tuning</a></li>
+<li class="chapter" data-level="3.7" data-path="imp.html"><a href="imp.html#batch-normalization"><i class="fa fa-check"></i><b>3.7</b> Batch Normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cnn.html"><a href="cnn.html"><i class="fa fa-check"></i><b>4</b> Convolutional Neural Networks</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cnn.html"><a href="cnn.html#basics-of-cnn"><i class="fa fa-check"></i><b>4.1</b> Basics of CNN</a></li>
+<li class="chapter" data-level="4.2" data-path="cnn.html"><a href="cnn.html#cnn-examples"><i class="fa fa-check"></i><b>4.2</b> CNN Examples</a></li>
+<li class="chapter" data-level="4.3" data-path="cnn.html"><a href="cnn.html#object-detection"><i class="fa fa-check"></i><b>4.3</b> Object Detection</a></li>
+<li class="chapter" data-level="4.4" data-path="cnn.html"><a href="cnn.html#face-recognition"><i class="fa fa-check"></i><b>4.4</b> Face Recognition</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rnn.html"><a href="rnn.html"><i class="fa fa-check"></i><b>5</b> Recurrent Neural Networks</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rnn.html"><a href="rnn.html#basics-of-rnn"><i class="fa fa-check"></i><b>5.1</b> Basics of RNN</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="rnn.html"><a href="rnn.html#intuition-of-sequence-models"><i class="fa fa-check"></i><b>5.1.1</b> <strong>Intuition of Sequence Models</strong></a></li>
+<li class="chapter" data-level="5.1.2" data-path="rnn.html"><a href="rnn.html#intuition-of-rnn"><i class="fa fa-check"></i><b>5.1.2</b> <strong>Intuition of RNN</strong></a></li>
+<li class="chapter" data-level="5.1.3" data-path="rnn.html"><a href="rnn.html#rnn-types"><i class="fa fa-check"></i><b>5.1.3</b> <strong>RNN Types</strong></a></li>
+<li class="chapter" data-level="5.1.4" data-path="rnn.html"><a href="rnn.html#language-model"><i class="fa fa-check"></i><b>5.1.4</b> <strong>Language Model</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="rnn.html"><a href="rnn.html#rnn-variations"><i class="fa fa-check"></i><b>5.2</b> RNN Variations</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="rnn.html"><a href="rnn.html#gru-gated-recurrent-unit"><i class="fa fa-check"></i><b>5.2.1</b> <strong>GRU</strong> (Gated Recurrent Unit)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="rnn.html"><a href="rnn.html#lstm-long-short-term-memory"><i class="fa fa-check"></i><b>5.2.2</b> <strong>LSTM</strong> (Long Short-Term Memory)</a></li>
+<li class="chapter" data-level="5.2.3" data-path="rnn.html"><a href="rnn.html#bidirectional-rnn"><i class="fa fa-check"></i><b>5.2.3</b> <strong>Bidirectional RNN</strong></a></li>
+<li class="chapter" data-level="5.2.4" data-path="rnn.html"><a href="rnn.html#deep-rnn"><i class="fa fa-check"></i><b>5.2.4</b> <strong>Deep RNN</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="rnn.html"><a href="rnn.html#word-embeddings"><i class="fa fa-check"></i><b>5.3</b> Word Embeddings</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="rnn.html"><a href="rnn.html#featurized-representation"><i class="fa fa-check"></i><b>5.3.1</b> <strong>Featurized Representation</strong></a></li>
+<li class="chapter" data-level="5.3.2" data-path="rnn.html"><a href="rnn.html#learning-1-word2vec"><i class="fa fa-check"></i><b>5.3.2</b> Learning 1: <strong>Word2Vec</strong></a></li>
+<li class="chapter" data-level="5.3.3" data-path="rnn.html"><a href="rnn.html#learning-2-negative-sampling"><i class="fa fa-check"></i><b>5.3.3</b> Learning 2: <strong>Negative Sampling</strong></a></li>
+<li class="chapter" data-level="5.3.4" data-path="rnn.html"><a href="rnn.html#learning-3-glove-global-vectors"><i class="fa fa-check"></i><b>5.3.4</b> Learning 3: <strong>GloVe</strong> (Global Vectors)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="rnn.html"><a href="rnn.html#sequence-modeling"><i class="fa fa-check"></i><b>5.4</b> Sequence Modeling</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="rnn.html"><a href="rnn.html#sentiment-classification"><i class="fa fa-check"></i><b>5.4.1</b> <strong>Sentiment Classification</strong></a></li>
+<li class="chapter" data-level="5.4.2" data-path="rnn.html"><a href="rnn.html#seq2seq"><i class="fa fa-check"></i><b>5.4.2</b> <strong>Seq2Seq</strong></a></li>
+<li class="chapter" data-level="5.4.3" data-path="rnn.html"><a href="rnn.html#beam-search"><i class="fa fa-check"></i><b>5.4.3</b> <strong>Beam Search</strong></a></li>
+<li class="chapter" data-level="5.4.4" data-path="rnn.html"><a href="rnn.html#bleu-score"><i class="fa fa-check"></i><b>5.4.4</b> <strong>Bleu Score</strong></a></li>
+<li class="chapter" data-level="5.4.5" data-path="rnn.html"><a href="rnn.html#attention-model"><i class="fa fa-check"></i><b>5.4.5</b> <strong>Attention Model</strong></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Recurrent Neural Networks</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cnn" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Convolutional Neural Networks</h1>
+<div id="basics-of-cnn" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Basics of CNN</h2>
+<ul>
+<li><p><a name="cnn"></a><strong>Intuition of CNN</strong></p>
+<center>
+<p><img src="../../images/DL/cnn.gif" width="500"/></p>
+</center>
+<p><br/></p>
+<ul>
+<li><p>CNN is mostly used in Computer Vision (image classification, object detection, neural style transfer, etc.)</p></li>
+<li><p><strong>Input</strong>: images <span class="math inline">\(\rightarrow\)</span> volume of numerical values in the shape of <strong>width <span class="math inline">\(\times\)</span> height <span class="math inline">\(\times\)</span> color-scale</strong> (color-scale=3 <span class="math inline">\(\rightarrow\)</span> RGB; color-scale=1 <span class="math inline">\(\rightarrow\)</span> BW)</p>
+<p>In the gif above, the input shape is <span class="math inline">\(5\times5\times3\)</span>, meaning that the image is colored and the image size <span class="math inline">\(5\times5\)</span>. The “<span class="math inline">\(7\times7\times3\)</span>” results from <strong>padding</strong>, which will be discussed below.</p></li>
+<li><p><strong>Convolution</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>For each color layer of the input image, we apply a 2d <strong>filter</strong> that <strong>scans</strong> through the layer in order.</li>
+<li>For each block that the filter scans, we <strong>multiply</strong> the corresponding filter value and the cell value, and we <strong>sum</strong> them up.</li>
+<li>We <strong>sum</strong> up the output values from all layers of the filter (and add a bias value to it) and <strong>output</strong> this value to the corresponding output cell.</li>
+<li>(If there are multiple filters, ) After the first filter finishes scanning, the next filter starts scanning and outputs into a new layer.<br />
+<br/></li>
+</ol></li>
+<li><p>In the gif above,</p>
+<ol style="list-style-type: decimal">
+<li><p>Apply 2 filters of the shape <span class="math inline">\(3\times3\times3\)</span>.</p></li>
+<li><p>1st filter - 1st layer - 1st block:</p>
+<p><span class="math display">\[\begin{equation}
+ 0+0+0+0+0+0+0+(1\times-1)+0=-1
+ \end{equation}\]</span></p>
+<p>1st filter - 2nd layer - 1st block:</p>
+<p><span class="math display">\[\begin{equation}
+ 0+0+0+0+(2\times-1)+(1\times1)+0+(2\times1)+0=1
+ \end{equation}\]</span></p>
+<p>1st filter - 3rd layer - 1st block:</p>
+<p><span class="math display">\[\begin{equation}
+ 0+0+0+0+(2\times1)+0+0+(1\times-1)+0=1
+ \end{equation}\]</span></p></li>
+<li><p>Sum up + bias <span class="math inline">\(\rightarrow\)</span> 1st cell of 1st output layer</p>
+<p><span class="math display">\[\begin{equation}
+ -1+1+1+1=2
+ \end{equation}\]</span></p></li>
+<li><p>Repeat till we finish scanning<br />
+<br/></p></li>
+</ol></li>
+</ul></li>
+<li><p><strong>Edge Detection &amp; Filter</strong></p>
+<ul>
+<li><p>Sample filters</p>
+<center>
+<p><img src="../../images/DL/edgedetect.png" width="500"/></p>
+</center>
+<ul>
+<li>Gray Scale: 1 = lighter, 0 = gray, -1 = darker<br />
+<br/></li>
+</ul></li>
+<li><p>Notice that we don’t really need to define any filter values. Instead, we are supposed to train the filter values.<br />
+All the convolution operations above are just the same as the operations in ANN. Filters here correspond to <span class="math inline">\(W\)</span> in ANN.</p></li>
+</ul></li>
+<li><p><strong>Padding</strong></p>
+<ul>
+<li><p>Problem: corner cells &amp; edge cells are detected much fewer times than the middle cells <span class="math inline">\(\rightarrow\)</span> info loss of corner &amp; edge</p></li>
+<li><p>Solution: pad the edges of the image with “0” cells (as shown in the gif above)</p></li>
+</ul></li>
+<li><p><strong>Stride</strong>: the step size the filter takes (<span class="math inline">\(s=2\)</span> in the gif above)</p></li>
+<li><p><a name="formula"></a><strong>General Formula of Convolution</strong>:</p>
+<p><span class="math display">\[\begin{equation}
+  \text{Output Size}=\left\lfloor\frac{n+2p-f}{s}+1\right\rfloor\times\left\lfloor\frac{n+2p-f}{s}+1\right\rfloor
+  \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(n\times n\)</span>: image size</li>
+<li><span class="math inline">\(f\times f\)</span>: filter size</li>
+<li><span class="math inline">\(p\)</span>: padding</li>
+<li><span class="math inline">\(s\)</span>: stride</li>
+<li>Floor: ignore the computation when the filter sweeps the region outside the image matrix<br />
+<br/></li>
+</ul></li>
+<li><p><a name="layers"></a><strong>CNN Layers</strong>:</p>
+<ul>
+<li><p><strong>Convolution</strong> (CONV): as described above</p></li>
+<li><p><a name="pool"></a><strong>Pooling</strong> (POOL): to reduce #params &amp; computations (most common pooling size = <span class="math inline">\(2\times2\)</span>)</p>
+<ul>
+<li><p>Max Pooling</p>
+<center>
+<p><img src="../../images/DL/maxpool.png" height="200"/></p>
+</center>
+<ol style="list-style-type: decimal">
+<li>Divide the matrix evenly into regions</li>
+<li>Take the max value in that region as output value<br />
+<br/></li>
+</ol></li>
+<li><p>Average Pooling</p>
+<center>
+<p><img src="../../images/DL/avgpool.png" height="190"/></p>
+</center>
+<ol style="list-style-type: decimal">
+<li>Divide the matrix evenly into regions</li>
+<li>Take the average value of the cells in that region as output value<br />
+<br/></li>
+</ol></li>
+<li><p>Stochastic Pooling</p>
+<center>
+<p><img src="../../images/DL/stochasticpool.png" height="200"/></p>
+</center>
+<ol style="list-style-type: decimal">
+<li><p>Divide the matrix evenly into regions</p></li>
+<li><p>Normalize each cell based on the regional sum:</p>
+<p><span class="math display">\[\begin{equation}
+ p_i=\frac{a_i}{\sum_{k\in R_j}{a_k}}
+ \end{equation}\]</span></p></li>
+<li><p>Take a random cell based on multinomial distribution as output value<br />
+<br/></p></li>
+</ol></li>
+</ul></li>
+<li><p><a name="fc"></a><strong>Fully Connected</strong> (FC): to flatten the 2D/3D matrices into a single vector (each neuron is connected with all input values)</p>
+<center>
+<p><img src="../../images/DL/fullyconnected.png" width="300"/></p>
+</center></li>
+</ul></li>
+</ul>
+</div>
+<div id="cnn-examples" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> CNN Examples</h2>
+<p><a name="lenet"></a><strong>LeNet-5</strong>: LeNet-5 Digit Recognizer</p>
+<center>
+<img src="../../images/DL/cnneg.png"/>
+</center>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Layer</th>
+<th align="center">Shape</th>
+<th align="center">Total Size</th>
+<th align="center">#params</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">INPUT</td>
+<td align="center">32 x 32 x 3</td>
+<td align="center">3072</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">CONV1 (Layer 1)</td>
+<td align="center">28 x 28 x 6</td>
+<td align="center">4704</td>
+<td align="center">156</td>
+</tr>
+<tr class="odd">
+<td align="center">POOL1 (Layer 1)</td>
+<td align="center">14 x 14 x 6</td>
+<td align="center">1176</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">CONV2 (Layer 2)</td>
+<td align="center">10 x 10 x 16</td>
+<td align="center">1600</td>
+<td align="center">416</td>
+</tr>
+<tr class="odd">
+<td align="center">POOL2 (Layer 2)</td>
+<td align="center">5 x 5 x 16</td>
+<td align="center">400</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">FC3 (Layer 3)</td>
+<td align="center">120 x 1</td>
+<td align="center">120</td>
+<td align="center">48001</td>
+</tr>
+<tr class="odd">
+<td align="center">FC4 (Layer 4)</td>
+<td align="center">84 x 1</td>
+<td align="center">84</td>
+<td align="center">10081</td>
+</tr>
+<tr class="even">
+<td align="center">Softmax</td>
+<td align="center">10 x 1</td>
+<td align="center">10</td>
+<td align="center">841</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Calculation of #params for CONV: <span class="math inline">\((f\times f+1)\times n_f\)</span>
+<ul>
+<li><span class="math inline">\(f\)</span>: filter size</li>
+<li><span class="math inline">\(+1\)</span>: bias</li>
+<li><span class="math inline">\(n_f\)</span>: #filter</li>
+</ul></li>
+</ul>
+<p><br/>
+<a name="alexnet"></a><strong>AlexNet</strong>: winner of 2012 ImageNet Large Scale Visual Recognition Challenge</p>
+<center>
+<img src="../../images/DL/alexnet.png"/>
+</center>
+<p><br/></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Layer</th>
+<th align="center">Shape</th>
+<th align="center">Total Size</th>
+<th align="center">#params</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">INPUT</td>
+<td align="center">227 x 227 x 3</td>
+<td align="center">154587</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">CONV1 (Layer 1)</td>
+<td align="center">55 x 55 x 96</td>
+<td align="center">290400</td>
+<td align="center">11712</td>
+</tr>
+<tr class="odd">
+<td align="center">POOL1 (Layer 1)</td>
+<td align="center">27 x 27 x 96</td>
+<td align="center">69984</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">CONV2 (Layer 2)</td>
+<td align="center">27 x 27 x 256</td>
+<td align="center">186624</td>
+<td align="center">6656</td>
+</tr>
+<tr class="odd">
+<td align="center">POOL2 (Layer 2)</td>
+<td align="center">13 x 13 x 256</td>
+<td align="center">43264</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">CONV3 (Layer 3)</td>
+<td align="center">13 x 13 x 384</td>
+<td align="center">64896</td>
+<td align="center">3840</td>
+</tr>
+<tr class="odd">
+<td align="center">CONV4 (Layer 3)</td>
+<td align="center">13 x 13 x 384</td>
+<td align="center">64896</td>
+<td align="center">3840</td>
+</tr>
+<tr class="even">
+<td align="center">CONV5 (Layer 3)</td>
+<td align="center">13 x 13 x 256</td>
+<td align="center">43264</td>
+<td align="center">2560</td>
+</tr>
+<tr class="odd">
+<td align="center">POOL5 (Layer 3)</td>
+<td align="center">6 x 6 x 256</td>
+<td align="center">9216</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">FC5 (Flatten)</td>
+<td align="center">9216 x 1</td>
+<td align="center">9216</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">FC6 (Layer 4)</td>
+<td align="center">4096 x 1</td>
+<td align="center">4096</td>
+<td align="center">37748737</td>
+</tr>
+<tr class="even">
+<td align="center">FC7 (Layer 5)</td>
+<td align="center">4096 x 1</td>
+<td align="center">4096</td>
+<td align="center">16777217</td>
+</tr>
+<tr class="odd">
+<td align="center">Softmax</td>
+<td align="center">1000 x 1</td>
+<td align="center">1000</td>
+<td align="center">4096000</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Significantly bigger than LeNet-5 (60M params to be trained)</li>
+<li>Require multiple GPUs to speed the training up<br/><br/></li>
+</ul>
+<p><a name="vgg"></a><strong>VGG</strong>: made by Visual Geometry Group from Oxford</p>
+<center>
+<img src="../../images/DL/vgg.png"/>
+</center>
+<ul>
+<li>Too large: 138M params<br/><br/></li>
+</ul>
+<p><strong>Inception</strong></p>
+<ul>
+<li><p><a name="res"></a><strong>ResNets</strong></p>
+<ul>
+<li><p>Residual Block</p>
+<center>
+<p><img src="../../images/DL/resnet.png" width="500"/></p>
+</center>
+<p><span class="math display">\[\begin{equation}
+  a^{[l+2]}=g(z^{[l+2]}+a^{[l]})
+  \end{equation}\]</span></p>
+<p>Intuition: we add activation values from layer <span class="math inline">\(l\)</span> to the activation in layer <span class="math inline">\(l+2\)</span></p></li>
+<li><p>Why ResNets?</p>
+<ul>
+<li><p>ResNets allow parametrization for the identity function <span class="math inline">\(f(x)=x\)</span></p></li>
+<li><p>ResNets are proven to be more effective than plain networks:</p>
+<center>
+<p><img src="../../images/DL/resnetperf.png" width="500"/></p>
+</center></li>
+<li><p>ResNets add more complexity to the NN in a very simple way</p></li>
+<li><p>The idea of ResNets further inspired the development of RNN<br />
+<br/></p></li>
+</ul></li>
+</ul></li>
+<li><p><a name="nin"></a><strong>1x1 Conv</strong> (i.e. Network in Network [NiN])</p>
+<ul>
+<li><p>WHY??? This sounds like the stupidest idea ever!!</p></li>
+<li><p>Watch this.</p>
+<center>
+<p><img src="../../images/DL/1x1pt1.png" height="300"/></p>
+</center>
+<p><br/></p>
+<center>
+<p>In a normal CNN layer like this, we need to do in total 210M calculations.</p>
+</center>
+<p><br/></p>
+<center>
+<p><img src="../../images/DL/1x1pt2.png" height="300"/></p>
+</center>
+<p><br/></p>
+<center>
+<p>However, if we add a 1x1 Conv layer in between, we only need to do in total 17M calculations.</p>
+</center>
+<p><br/></p></li>
+<li><p>Therefore, 1x1 Conv is significantly more useful than what newbies expect. When we would like to keep the matrix size but reduce #layers, using 1x1 Conv can significantly reduce #computations needed, thus requiring less computing power.<br />
+<br/></p></li>
+</ul></li>
+<li><p><a name="inception"></a><strong>The Inception</strong>: We need to go deeper!</p>
+<ul>
+<li><p>Inception Module</p>
+<center>
+<p><img src="../../images/DL/incepm.png" width="400"/></p>
+</center>
+<p><br/></p></li>
+<li><p>Inception Network</p>
+<center>
+<p><img src="../../images/DL/incep.png" width="500"/></p>
+</center></li>
+</ul></li>
+</ul>
+<p><a name="conv1d"></a><strong>Conv1D &amp; Conv3D</strong>:</p>
+<p>Although CNN (Conv2D) is undoubtedly most useful in Computer Vision, there are also some other forms of CNN used in other fields:</p>
+<ul>
+<li><p><strong>Conv1D</strong>: e.g. text classification, heartbeat detection, …</p>
+<center>
+<p><img src="../../images/DL/conv1d.png" width="400"/></p>
+</center>
+<ul>
+<li>use a 1D filter to convolve a 1D input vector</li>
+<li>e.g. <span class="math inline">\(14\times1\xrightarrow{5\times1,16}10\times16\xrightarrow{5\times16,32}6\times32\)</span></li>
+<li>However, this is almost never used since we have <strong>RNN</strong><br />
+<br/></li>
+</ul></li>
+<li><p><strong>Conv3D</strong>: e.g. CT scan, …</p>
+<center>
+<p><img src="../../images/DL/conv3d.png" width="400"/></p>
+</center>
+<ul>
+<li>use a 3D filter to convolve a 3D input cube</li>
+<li>e.g. <span class="math inline">\(14\times14\times14\times1\xrightarrow{5\times5\times5\times1,16}10\times10\times10\times16\xrightarrow{5\times5\times5\times16,32}6\times6\times6\times32\)</span></li>
+</ul></li>
+</ul>
+</div>
+<div id="object-detection" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Object Detection</h2>
+<ul>
+<li><p>Object Localization <span class="math inline">\(\rightarrow\)</span> 1 obj; Detection <span class="math inline">\(\rightarrow\)</span> multiple objs.</p></li>
+<li><p><strong>Bounding Box</strong>: to capture the obj in the img with a box</p>
+<ul>
+<li><p>Params:</p>
+<ul>
+<li><span class="math inline">\(b_x, b_y\)</span> = central point</li>
+<li><span class="math inline">\(b_h, b_w\)</span> = full height/width</li>
+</ul></li>
+<li><p>New target label (in place of image classification output):</p>
+<p><span class="math display">\[\begin{equation}
+  y=\begin{bmatrix}
+  p_c \\ b_x \\ b_y \\ b_h \\ b_w \\ c_1 \\ \vdots \\ c_n
+  \end{bmatrix}
+  \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(p_c\)</span>: “is there any object in this box?”
+<ul>
+<li>if <span class="math inline">\(p_c=0\)</span>, we ignore the remaining params</li>
+</ul></li>
+<li><span class="math inline">\(c_i\)</span>: class label <span class="math inline">\(i\)</span> (e.g. <span class="math inline">\(c_1\)</span>: cat, <span class="math inline">\(c_2\)</span>: dog, <span class="math inline">\(c_3\)</span>: bird, …)<br />
+<br/><br />
+</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Landmark Detection</strong>: to capture the obj in the img with points</p>
+<ul>
+<li><p>Params: <span class="math inline">\((l_{ix},l_{iy})\)</span> = each landmark point</p></li>
+<li><p>New target label:</p>
+<p><span class="math display">\[\begin{equation}
+  y=\begin{bmatrix}
+  p_c \\ l_{1x} \\ l_{1y} \\ \vdots \\ l_{nx} \\ l_{ny} \\ c_1 \\ \vdots \\ c_n
+  \end{bmatrix}
+  \end{equation}\]</span></p></li>
+<li><p>THE LABELS MUST BE CONSISTENT!</p>
+<ul>
+<li>Always start from the exact same location of the object! (e.g. if you start with the left corner of the left eye for one image, you should always start with the left corner of the left eye for all images.)</li>
+<li>#landmarks should be the same!</li>
+</ul></li>
+</ul>
+<p><br/>
+I personally have a very awful experience with Landmark Detection. When the algorithms of object detection were not yet well-known in the IT industry, I worked on a project of digital screen defects detection in a Finnish company. Since digital screen defects are 1) black &amp; white 2) in very simple geometric shapes, the usage of bounding boxes could have significantly reduced the complexity of both data collection and NN model building.<br/><br />
+However, the team insisted to use landmark detection. Due to 1) that screen defects are unstructured 2) that the number of landmark points for two different screen defects can hardly be the same, the dataset was basically unusable, and none of the models we built could learn accurate patterns from it, leading to an unfortunate failure.<br/><br />
+I personally would argue that bounding box is much better than landmark detection in most practical cases.</p></li>
+<li><p><strong>Sliding Window</strong></p>
+<center>
+<p><img src="../../images/DL/sliding.gif" width="500"/></p>
+</center>
+<p><br/></p>
+<ul>
+<li><p>Apply a sliding window with a fixed size to scan every part of the img left-right and top-bottom (just like CONV), and feed each part to CNN</p></li>
+<li><p>In order to capture the same type of objects in different sizes and positions in the img, shrink the img (i.e. enlarge the sliding window) and scan again, and repeat.<br/></p></li>
+<li><p>Problem: HUGE computational cost!</p></li>
+<li><p>Solution: (contemporary)</p>
+<ol style="list-style-type: decimal">
+<li><p>Convert FC layer into CONV layer</p>
+<center>
+<p><img src="../../images/DL/slidingfc.jpg" width="700"/></p>
+</center>
+<p><br/></p></li>
+<li><p>Share the former FC info with latter convolutions</p>
+<center>
+<p><img src="../../images/DL/sliding.png" width="700"/></p>
+</center>
+<p><br/></p>
+<ol style="list-style-type: decimal">
+<li>First run of the CNN.</li>
+<li>Second run of the same CNN with a bigger size of the same img (due to sliding window). Notice that the FC info from the first run is shared in the second run.</li>
+<li>Latter runs of the same CNN with bigger sizes of the same img (due to sliding window). Notice that the FC info from all previous runs is shared in this run, thus saving computation power and memories.<br />
+<br/><br />
+</li>
+</ol></li>
+</ol></li>
+</ul></li>
+<li><p><strong>Intersection over Union</strong></p>
+<center>
+<p><img src="../../images/DL/iou.png" width="200"/></p>
+</center>
+<center>
+<p>Is the purple box a good prediction of the car location?</p>
+</center>
+<p>Intersection over Union is defined as:</p>
+<p><span class="math display">\[\begin{equation}
+  \text{IoU}=\frac{\text{area of intersection}}{\text{area of union}}
+  \end{equation}\]</span></p>
+<p>In this case, area of intersection is the intersection between the red and purple box, and area of union is the total area covered by the red and purple box.<br />
+If <span class="math inline">\(\text{IoU}\leq 0.5\)</span>, then the prediction box is correct. (Other threshold values are also okay but 0.5 is conventional.)</p></li>
+<li><p><a name="yolo"></a><strong>YOLO (You Only Look Once)</strong></p>
+<center>
+<p><img src="../../images/DL/yolo.jpg" width="300"/></p>
+</center>
+<ul>
+<li><p><strong>Grids</strong>: divide the image into grids &amp; use each grid as a bounding box</p>
+<ul>
+<li>when <span class="math inline">\(p_c=0\)</span>, we ignore the entire grid</li>
+<li><span class="math inline">\(p_c=1\)</span> only when the central point of the object <span class="math inline">\(\in\)</span> the grid</li>
+<li>target output: <span class="math inline">\(Y.\text{shape}=n_{\text{grid}}\times n_{\text{grid}}\times y.\text{length}\)</span><br />
+<br/></li>
+</ul></li>
+<li><p><strong>Non-Max Suppression</strong>: what happens when the grid is too small to capture the entire object?</p>
+<center>
+<p><img src="../../images/DL/nms.jpg" width="500"/></p>
+</center>
+<ol style="list-style-type: decimal">
+<li>Discard all boxes with <span class="math inline">\(p_c\leq 0.6\)</span></li>
+<li>Pick the box with the largest <span class="math inline">\(p_c\)</span> as the prediction</li>
+<li>Discard any remaining box with <span class="math inline">\(\text{IoU}\geq 0.5\)</span> with the prediction</li>
+<li>Repeat till there is only one box left.<br />
+<br/></li>
+</ol></li>
+<li><p><strong>Anchor Boxes</strong>: what happens when two objects overlap? (e.g. a hot girl standing in front of a car)</p>
+<center>
+<p><img src="../../images/DL/anchor.jpg" width="300"/></p>
+</center>
+<ol style="list-style-type: decimal">
+<li><p>Predefine Anchor boxes for different objects</p></li>
+<li><p>Redefine the target value as a combination of Anchor 1 + Anchor 2</p>
+<p><span class="math display">\[\begin{equation}
+ y=\begin{bmatrix}
+ p_{c1} \\
+ \vdots \\ 
+ p_{c2} \\
+ \vdots 
+ \end{bmatrix}
+ \end{equation}\]</span></p></li>
+<li><p>Each object in the image is assigned to grid cell that contains object’s central point &amp; anchor box for the grid cell with the highest <span class="math inline">\(\text{IoU}\)</span><br />
+<br/><br />
+</p></li>
+</ol></li>
+<li><p><strong>General Procedure</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>Divide the images into grids and label the objects</li>
+<li>Train the CNN</li>
+<li>Get the prediction for each anchor box in each grid cell</li>
+<li>Get rid of low probability predictions</li>
+<li>Get final predictions through non-max suppression for each class<br />
+<br/></li>
+</ol></li>
+</ul></li>
+<li><p><a name="rcnn"></a><strong>R-CNN</strong></p>
+<p>TO BE CONTINUED</p></li>
+</ul>
+</div>
+<div id="face-recognition" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Face Recognition</h2>
+<ul>
+<li><p>Face Verification vs Face Recognition</p>
+<ul>
+<li>Verification
+<ul>
+<li>Input image, name/ID</li>
+<li>Output whether the input image is that of the claimed person (1:1)</li>
+</ul></li>
+<li>Recognition
+<ul>
+<li>Input image</li>
+<li>Output name/ID if the image is any of the <span class="math inline">\(K\)</span> ppl in the database (1:K)<br />
+<br/></li>
+</ul></li>
+</ul></li>
+<li><p><a name="sn"></a><strong>Siamese Network</strong></p>
+<ul>
+<li><p><strong>One Shot Learning</strong>: learn a similarity function</p>
+<p>The major difference between normal image classification and face recognition is that we don’t have enough training examples. Therefore, rather than learning image classification, we</p>
+<ol style="list-style-type: decimal">
+<li>Calculate the degree of diff between the imgs as <span class="math inline">\(d\)</span></li>
+<li>If <span class="math inline">\(d\leq\tau\)</span>: same person; If <span class="math inline">\(d&gt;\tau\)</span>: diff person<br />
+<br/></li>
+</ol></li>
+<li><p>Preparation &amp; Objective:</p>
+<ul>
+<li>Encode <span class="math inline">\(x^{(i)}\)</span> as <span class="math inline">\(f(x^{(i)})\)</span> (defined by the params of the NN)</li>
+<li>Compute <span class="math inline">\(d(x^{(i)},x^{(j)})=\left\lVert{f(x^{(i)})-f(x^{(j)})}\right\lVert_ 2^2\)</span>
+<ul>
+<li>i.e. distance between the two encoding vectors</li>
+<li>if <span class="math inline">\(x^{(i)},x^{(j)}\)</span> are the same person, <span class="math inline">\(\left\lVert{f(x^{(i)})-f(x^{(j)})}\right\lVert_ 2^2\)</span> is small</li>
+<li>if <span class="math inline">\(x^{(i)},x^{(j)}\)</span> are different people,  <span class="math inline">\(\left\lVert{f(x^{(i)})-f(x^{(j)})}\right\lVert_ 2^2\)</span> is large<br />
+<br/></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Method 1: <a name="tl"></a>Triplet Loss</strong></p>
+<ul>
+<li><p><u>Learning Objective</u>: distinguish between Anchor image &amp; Positive/Negative images (i.e. <strong>A vs P / A vs N</strong>)</p>
+<ol style="list-style-type: decimal">
+<li><p><u>Initial Objective</u>: <span class="math inline">\(\left\lVert{f(A)-f(P)}\right\lVert_ 2^2 \leq \left\lVert{f(A)-f(N)}\right\lVert_ 2^2\)</span></p>
+<p><u>Intuition</u>: We want to make sure the difference of A vs P is smaller than the difference of A vs N, so that this Anchor image is classified as positive (i.e. recognized)</p></li>
+<li><p><u>Problem</u>: <span class="math inline">\(\exists\ &quot;0-0\leq0&quot;\)</span>, in which case we can’t tell any difference</p></li>
+<li><p><u>Final Objective</u>: <span class="math inline">\(\left\lVert{f(A)-f(P)}\right\lVert_ 2^2-\left\lVert{f(A)-f(N)}\right\lVert_ 2^2+\alpha\leq0\)</span></p>
+<p><u>Intuition</u>: We apply a margin <span class="math inline">\(\alpha\)</span> to solve the problem and meanwhile make sure “A vs N” is significantly larger than “A vs P”</p></li>
+</ol></li>
+<li><p><u>Loss Function</u>:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{L}(A,P,N)=\max{(\left\lVert{f(A)-f(P)}\right\lVert_ 2^2-\left\lVert{f(A)-f(N)}\right\lVert_ 2^2+\alpha, 0)}
+  \end{equation}\]</span></p>
+<ul>
+<li><u>Intuition</u>: As long as this thing is less than 0, the loss is 0 and that’s a successful recognition!<br />
+<br/></li>
+</ul></li>
+<li><p><u>Training Process</u>:</p>
+<ul>
+<li>Given 10k imgs of 1k ppl: use the 10k images to generate triplets <span class="math inline">\(A^{(i)}, P^{(i)}, N^{(i)}\)</span></li>
+<li>Make sure to have multiple imgs of the same person in the training set</li>
+<li><strike>random choosing</strike></li>
+<li>Choose triplets that are quite “hard” to train on</li>
+</ul>
+<center>
+<p><img src="../../images/DL/andrew.png" width="300"/></p>
+</center></li>
+</ul></li>
+<li><p><strong>Method 2: <a name="bc"></a>Binary Classification</strong></p>
+<ul>
+<li><p><u>Learning Objective</u>: Check if two imgs represent the same person or diff ppl</p>
+<ul>
+<li><span class="math inline">\(y=1\)</span>: same person</li>
+<li><span class="math inline">\(y=0\)</span>: diff ppl</li>
+</ul></li>
+<li><p><u>Training output</u>:</p>
+<p><span class="math display">\[\begin{equation}
+  \hat{y}=\sigma\Bigg(\sum_{k=1}^{128}{w_i \Big|f(x^{(i)})_ k-f(x^{(j)})_ k\Big|+b}\Bigg)
+  \end{equation}\]</span></p>
+<center>
+<p><img src="../../images/DL/binary.png" width="500"/></p>
+</center>
+<ul>
+<li>Precompute the output vectors <span class="math inline">\(f(x^{(i)})\ \&amp;\ f(x^{(j)})\)</span> so that you don’t have to compute them again during each training process<br />
+<br/></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p><a name="nst"></a><strong>Neural Style Transfer</strong></p>
+<ul>
+<li><p><u>Intuition</u>: <strong>Content(C) + Style(S) = Generated Image(G)</strong></p>
+<center>
+<p><img src="../../images/DL/csg.png" width="500"/></p>
+</center>
+<center>
+<p>Combine Content image with Style image to Generate a brand new image</p>
+</center>
+<p><br/></p></li>
+<li><p><u>Cost Function</u>:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{J}(G)=\alpha\mathcal{J}_ \text{content}(C,G)+\beta\mathcal{J}_ \text{style}(S,G)
+  \end{equation}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\mathcal{J}\)</span>: the diff between C/S and G</p></li>
+<li><p><span class="math inline">\(\alpha,\beta\)</span>: weight params</p></li>
+<li><p>Style: correlation between activations across channels</p>
+<center>
+<p><img src="../../images/DL/corr.png" width="500"/></p>
+</center>
+<p>When there is some pattern in one patch, and there is another pattern that changes similarly in the other patch, they are <strong>correlated</strong>.</p>
+<p>e.g. vertical texture in one patch <span class="math inline">\(\leftrightarrow\)</span> orange color in another patch</p>
+<p>The more often they occur together, the more correlated they are.</p></li>
+<li><p>Content Cost Function:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{J}_ \text{content}(C,G)=\frac{1}{2}\left\lVert{a^{[l](C)}-a^{[1](G)}}\right\lVert^2
+  \end{equation}\]</span></p>
+<ul>
+<li>Use hidden layer <span class="math inline">\(l\)</span> to compute content cost</li>
+<li>Use pre-trained CNN (e.g. VGG)</li>
+<li>If <span class="math inline">\(a^{\[l\](C)}\ \&amp;\ a^{\[l\](G)}\)</span> are similar, then both imgs have similar content<br />
+<br/></li>
+</ul></li>
+<li><p>Style Cost Function:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{J}_ \text{style}(S,G)=\sum_l{\lambda^{[l]}\mathcal{J}_ \text{style}^{[l]}(S,G)}
+  \end{equation}\]</span></p>
+<ul>
+<li><p>Style Cost per layer:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{J}^{[l]}_ \text{style}(S,G)=\frac{1}{(2n_h^{[l]}n_w^{[l]}n_c^{[l]})^2}\left\lVert{G^{[l](S)}-G^{[1](G)}}\right\lVert^2_F
+  \end{equation}\]</span></p>
+<ul>
+<li>the first term is simply a normalization param</li>
+</ul></li>
+<li><p>Style Matrix:</p>
+<p><span class="math display">\[\begin{equation}
+  G_{kk&#39;}^{[l]}=\sum_{i=1}^{n_H^{[l]}}{\sum_{j=1}^{n_W^{[l]}}{a_{i,j,k}^{[l]}\cdot a_{i,j,k&#39;}^{[l]}}}
+  \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(a_{i,j,k}^{\[l]}\)</span>: activation at height <span class="math inline">\(i\)</span>, width <span class="math inline">\(j\)</span>, channel <span class="math inline">\(k\)</span></li>
+<li><span class="math inline">\(G^{\[l]}.\text{shape}=n_c^{\[l]}\times n_c^{\[l]}\)</span></li>
+<li><u>Intuition</u>: sum up the multiplication of the two activations on the same cell in two different channels</li>
+</ul></li>
+</ul></li>
+<li><p>Training Process:</p>
+<ul>
+<li>Intialize <span class="math inline">\(G\)</span> randomly (e.g. 100 x 100 x 3)</li>
+<li>Use GD to minimize <span class="math inline">\(\mathcal{J}(G)\)</span>: <span class="math inline">\(G := G-\frac{\partial{\mathcal{J}(G)}}{\partial{G}}\)</span></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="imp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rnn.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/03_cnn.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

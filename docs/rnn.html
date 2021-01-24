@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Recurrent Neural Networks | Recurrent Neural Networks</title>
+  <meta name="description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Recurrent Neural Networks | Recurrent Neural Networks" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  <meta name="github-repo" content="openscapes/series" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Recurrent Neural Networks | Recurrent Neural Networks" />
+  
+  <meta name="twitter:description" content="A mini bookdown tutorial book on how to make bookdown books." />
+  
+
+<meta name="author" content="Julie Lowndes" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cnn.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Mini Bookdown Tutorial</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Deep Learning</a></li>
+<li class="chapter" data-level="2" data-path="basics.html"><a href="basics.html"><i class="fa fa-check"></i><b>2</b> Basics of Neural Networks</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="basics.html"><a href="basics.html#neural-network-representation"><i class="fa fa-check"></i><b>2.1</b> Neural Network Representation</a></li>
+<li class="chapter" data-level="2.2" data-path="basics.html"><a href="basics.html#activation-functions"><i class="fa fa-check"></i><b>2.2</b> Activation Functions</a></li>
+<li class="chapter" data-level="2.3" data-path="basics.html"><a href="basics.html#training"><i class="fa fa-check"></i><b>2.3</b> Training</a></li>
+<li class="chapter" data-level="2.4" data-path="basics.html"><a href="basics.html#gradient-descent"><i class="fa fa-check"></i><b>2.4</b> Gradient Descent</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="imp.html"><a href="imp.html"><i class="fa fa-check"></i><b>3</b> Improvements on Neural Networks</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="imp.html"><a href="imp.html#traintest-split"><i class="fa fa-check"></i><b>3.1</b> Train/Test Split</a></li>
+<li class="chapter" data-level="3.2" data-path="imp.html"><a href="imp.html#initialization"><i class="fa fa-check"></i><b>3.2</b> Initialization</a></li>
+<li class="chapter" data-level="3.3" data-path="imp.html"><a href="imp.html#data-fitting"><i class="fa fa-check"></i><b>3.3</b> Data Fitting</a></li>
+<li class="chapter" data-level="3.4" data-path="imp.html"><a href="imp.html#regularization"><i class="fa fa-check"></i><b>3.4</b> Regularization</a></li>
+<li class="chapter" data-level="3.5" data-path="imp.html"><a href="imp.html#optimization"><i class="fa fa-check"></i><b>3.5</b> Optimization</a></li>
+<li class="chapter" data-level="3.6" data-path="imp.html"><a href="imp.html#hyperparameter-tuning"><i class="fa fa-check"></i><b>3.6</b> Hyperparameter Tuning</a></li>
+<li class="chapter" data-level="3.7" data-path="imp.html"><a href="imp.html#batch-normalization"><i class="fa fa-check"></i><b>3.7</b> Batch Normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cnn.html"><a href="cnn.html"><i class="fa fa-check"></i><b>4</b> Convolutional Neural Networks</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cnn.html"><a href="cnn.html#basics-of-cnn"><i class="fa fa-check"></i><b>4.1</b> Basics of CNN</a></li>
+<li class="chapter" data-level="4.2" data-path="cnn.html"><a href="cnn.html#cnn-examples"><i class="fa fa-check"></i><b>4.2</b> CNN Examples</a></li>
+<li class="chapter" data-level="4.3" data-path="cnn.html"><a href="cnn.html#object-detection"><i class="fa fa-check"></i><b>4.3</b> Object Detection</a></li>
+<li class="chapter" data-level="4.4" data-path="cnn.html"><a href="cnn.html#face-recognition"><i class="fa fa-check"></i><b>4.4</b> Face Recognition</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rnn.html"><a href="rnn.html"><i class="fa fa-check"></i><b>5</b> Recurrent Neural Networks</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="rnn.html"><a href="rnn.html#basics-of-rnn"><i class="fa fa-check"></i><b>5.1</b> Basics of RNN</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="rnn.html"><a href="rnn.html#intuition-of-sequence-models"><i class="fa fa-check"></i><b>5.1.1</b> <strong>Intuition of Sequence Models</strong></a></li>
+<li class="chapter" data-level="5.1.2" data-path="rnn.html"><a href="rnn.html#intuition-of-rnn"><i class="fa fa-check"></i><b>5.1.2</b> <strong>Intuition of RNN</strong></a></li>
+<li class="chapter" data-level="5.1.3" data-path="rnn.html"><a href="rnn.html#rnn-types"><i class="fa fa-check"></i><b>5.1.3</b> <strong>RNN Types</strong></a></li>
+<li class="chapter" data-level="5.1.4" data-path="rnn.html"><a href="rnn.html#language-model"><i class="fa fa-check"></i><b>5.1.4</b> <strong>Language Model</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="rnn.html"><a href="rnn.html#rnn-variations"><i class="fa fa-check"></i><b>5.2</b> RNN Variations</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="rnn.html"><a href="rnn.html#gru-gated-recurrent-unit"><i class="fa fa-check"></i><b>5.2.1</b> <strong>GRU</strong> (Gated Recurrent Unit)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="rnn.html"><a href="rnn.html#lstm-long-short-term-memory"><i class="fa fa-check"></i><b>5.2.2</b> <strong>LSTM</strong> (Long Short-Term Memory)</a></li>
+<li class="chapter" data-level="5.2.3" data-path="rnn.html"><a href="rnn.html#bidirectional-rnn"><i class="fa fa-check"></i><b>5.2.3</b> <strong>Bidirectional RNN</strong></a></li>
+<li class="chapter" data-level="5.2.4" data-path="rnn.html"><a href="rnn.html#deep-rnn"><i class="fa fa-check"></i><b>5.2.4</b> <strong>Deep RNN</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="rnn.html"><a href="rnn.html#word-embeddings"><i class="fa fa-check"></i><b>5.3</b> Word Embeddings</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="rnn.html"><a href="rnn.html#featurized-representation"><i class="fa fa-check"></i><b>5.3.1</b> <strong>Featurized Representation</strong></a></li>
+<li class="chapter" data-level="5.3.2" data-path="rnn.html"><a href="rnn.html#learning-1-word2vec"><i class="fa fa-check"></i><b>5.3.2</b> Learning 1: <strong>Word2Vec</strong></a></li>
+<li class="chapter" data-level="5.3.3" data-path="rnn.html"><a href="rnn.html#learning-2-negative-sampling"><i class="fa fa-check"></i><b>5.3.3</b> Learning 2: <strong>Negative Sampling</strong></a></li>
+<li class="chapter" data-level="5.3.4" data-path="rnn.html"><a href="rnn.html#learning-3-glove-global-vectors"><i class="fa fa-check"></i><b>5.3.4</b> Learning 3: <strong>GloVe</strong> (Global Vectors)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="rnn.html"><a href="rnn.html#sequence-modeling"><i class="fa fa-check"></i><b>5.4</b> Sequence Modeling</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="rnn.html"><a href="rnn.html#sentiment-classification"><i class="fa fa-check"></i><b>5.4.1</b> <strong>Sentiment Classification</strong></a></li>
+<li class="chapter" data-level="5.4.2" data-path="rnn.html"><a href="rnn.html#seq2seq"><i class="fa fa-check"></i><b>5.4.2</b> <strong>Seq2Seq</strong></a></li>
+<li class="chapter" data-level="5.4.3" data-path="rnn.html"><a href="rnn.html#beam-search"><i class="fa fa-check"></i><b>5.4.3</b> <strong>Beam Search</strong></a></li>
+<li class="chapter" data-level="5.4.4" data-path="rnn.html"><a href="rnn.html#bleu-score"><i class="fa fa-check"></i><b>5.4.4</b> <strong>Bleu Score</strong></a></li>
+<li class="chapter" data-level="5.4.5" data-path="rnn.html"><a href="rnn.html#attention-model"><i class="fa fa-check"></i><b>5.4.5</b> <strong>Attention Model</strong></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Recurrent Neural Networks</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="rnn" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Recurrent Neural Networks</h1>
+<div id="basics-of-rnn" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Basics of RNN</h2>
+<div id="intuition-of-sequence-models" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> <strong>Intuition of Sequence Models</strong></h3>
+<p>These are called sequence modeling:</p>
+<ul>
+<li>Speech recognition</li>
+<li>Music generation</li>
+<li>Sentiment classification</li>
+<li>DNA sequence analysis</li>
+<li>Machine translation</li>
+<li>Video activity recognition</li>
+<li>Name entity recognition</li>
+<li>……</li>
+</ul>
+<p>Forget about the tedious definitions. As a basic intuition of what we are doing in sequence modeling, here is a very simple example:</p>
+<ul>
+<li><p>We have a sentence: “Pewdiepie and MrBeast are two of the greatest youtubers in human history.”</p></li>
+<li><p>We want to know: where are the “names” in this sentence? (i.e. name entity recognition)</p></li>
+<li><p>We convert the input sentence into <span class="math inline">\(X\)</span>: <span class="math inline">\(x^{\langle 1 \rangle}x^{\langle 2 \rangle}...x^{\langle t \rangle}...x^{\langle 12 \rangle}\)</span></p>
+<p>where <span class="math inline">\(x^{\langle t \rangle}\)</span> represents each word in the sentence.</p>
+<p>But how does it represent a word? Notice that we used the capitalized <span class="math inline">\(X\)</span> for a single sentence. Actually, <span class="math inline">\(X.\text{shape}=5000\times12\)</span>, and <span class="math inline">\(x.\text{shape}=5000\times1\)</span>. Why?</p>
+<p>We first make a vocabulary list like <span class="math inline">\(\text{list}=\[\text{a; and; ...; history; ...; MrBeast; ...}]\)</span>.</p>
+<p>Then, we convert each word into a one-hot vector representing the index of the word in the dictionary, e.g.:</p>
+<p><span class="math display">\[\begin{equation}
+  x^{\langle 1 \rangle}=\begin{bmatrix}
+  0 \\ \vdots \\ 1 \\ \vdots \\ 0
+  \end{bmatrix}\longleftarrow 425,\ 
+  x^{\langle 2 \rangle}=\begin{bmatrix}
+  0 \\ \vdots \\ 1 \\ \vdots \\ 0
+  \end{bmatrix}\longleftarrow 3578,\ \cdots\cdots
+  \end{equation}\]</span></p></li>
+<li><p>We then label the output as <span class="math inline">\(y: 1\ 0\ 1\ 0\ 0\ 0\ 0\ 0\ 0\ 0\ 0\ 0\)</span> and train our NN on this.</p></li>
+<li><p>Accordingly, we can use most of the sequences in our daily life as datasets and build our NN models on them to solve such ML problems.</p></li>
+</ul>
+</div>
+<div id="intuition-of-rnn" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> <strong>Intuition of RNN</strong></h3>
+<p>We have very briefly mentioned that Conv1D can be used to scan through a sequence, extract features and make predictions. Then why don’t we just stick to Conv1D or use normal ANNs?</p>
+<ol style="list-style-type: decimal">
+<li>The scope of sequence modeling is not necessarily recognition or classification, meaning that our inputs &amp; outputs can be in very diff lengths for diff examples.</li>
+<li>Neither ANNs nor CNNs share features learned across diff positions of a text or a sequence, whereas context matters quite a lot in most sequence modeling problems.</li>
+</ol>
+<p>Therefore, we need to define a brand new NN structure that can perfectly align with sequence modeling - RNN:</p>
+<center>
+<img src="../../images/DL/rnn.jpg" height="200"/>
+</center>
+<p><br/>
+Forward propagation:
+- <span class="math inline">\(a^{\langle 0 \rangle}=\textbf{0}\)</span>
+- <span class="math inline">\(a^{\langle t \rangle}=g(W_{a}\[a^{\langle t-1 \rangle}; x^{\langle t \rangle}]+b_a)\ \ \ \ \|\ g:\ \text{tanh/ReLU}\)</span></p>
+<pre><code>where $W_a=\[W_{aa}\ W_{ax}]$ with a shape of $(100,10100)$ if we assume a dictionary of 10000 words (i.e. $x^{\langle t \rangle}.\text{shape}=(10000,100)$) and the activation length of 100.</code></pre>
+<ul>
+<li><span class="math inline">\(\hat{y}^{\langle t \rangle}=g(W_{y}a^{\langle t \rangle}+b_y)\ \ \ \ \|\ g:\ \text{sigmoid}\)</span></li>
+</ul>
+<p>Backward propagation:
+- <span class="math inline">\(\mathcal{L}^{\langle t \rangle}(\hat{y}^{\langle t \rangle},y^{\langle t \rangle})=-\sum_i{y_i^{\langle t \rangle}\log{\hat{y}_ i^{\langle t \rangle}}}\ \ \ \ \|\ \)</span>Same loss function as LogReg</p>
+</div>
+<div id="rnn-types" class="section level3" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> <strong>RNN Types</strong></h3>
+<center>
+<img src="../../images/DL/rnntypes.png" width="550"/>
+</center>
+<p><br/>
+There is nothing much to explain here. The images are pretty clear.</p>
+</div>
+<div id="language-model" class="section level3" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> <strong>Language Model</strong></h3>
+<ul>
+<li><p><u>Intuition of Softmax &amp; Conditional Probability</u></p>
+<p>The core of RNN is to calculate the likelihood of a sequence: <span class="math inline">\(P(y^{\langle 1 \rangle},y^{\langle 2 \rangle},...,y^{\langle t \rangle})\)</span> and output the one with the highest probability.</p>
+<p>For example, the sequence “<u>the apple and pair salad</u>” has a much smaller possibility to occur than the sequence “<u>the apple and pear salad</u>.” Therefore, RNN will output the latter. This seems much like <strong>Softmax</strong>, and indeed it is.</p>
+<p>Recall from the formula of conditional probability, we can separate the likelihood into:</p>
+<p><span class="math display">\[\begin{equation}
+  P\big(y^{\langle 1 \rangle},y^{\langle 2 \rangle},...,y^{\langle t \rangle}\big)=P\big(y^{\langle 1 \rangle}\big)P\big(y^{\langle 2 \rangle}|y^{\langle 1 \rangle}\big)...P\big(y^{\langle t \rangle}|y^{\langle 1 \rangle},y^{\langle 2 \rangle},...,y^{\langle t-1 \rangle}\big)
+  \end{equation}\]</span></p>
+<p>For example, to generate the sentence “I like cats.” we calculate:</p>
+<p><span class="math display">\[\begin{equation}
+  P\big(\text{&quot;I like cats&quot;}\big)=P\big(\text{&quot;I&quot;}\big)P\big(\text{&quot;like&quot;}|\text{&quot;I&quot;}\big)P\big(\text{&quot;cats&quot;}|\text{&quot;I like&quot;}\big)
+  \end{equation}\]</span></p></li>
+<li><p><u>Language Modeling Procedure</u></p>
+<ol style="list-style-type: decimal">
+<li>Data Preparation
+<ul>
+<li>Training set: large corpus of English text (or other languages)</li>
+<li><strong>Tokenize</strong>: mark every word into a token
+<ul>
+<li>&lt;EOS&gt;: End of Sentence token</li>
+<li>&lt;UNK&gt;: Unknown word token</li>
+</ul></li>
+<li>e.g. “I hate Minecraft and kids.” <span class="math inline">\(\Rightarrow\)</span> “I hate &lt;UNK&gt; and kids. &lt;EOS&gt;”<br />
+<br/></li>
+</ul></li>
+<li>Training
+<center>
+<img src="../../images/DL/rnnlm.png" width="700"/>
+</center>
+<br/>
+We use the sentence “I hate Minecraft and kids. &lt;EOS&gt;” as one training example.<br />
+At the beginning, we initialize <span class="math inline">\(a^{&lt;0&gt;}\)</span> and <span class="math inline">\(x^{&lt;1&gt;}\)</span> as <span class="math inline">\(\vec{0}\)</span> and let the RNN try to guess the first word.<br />
+At each step, we use the original word at the same index <span class="math inline">\(y^{\&lt;i-1&gt;}\)</span> and the previous activation <span class="math inline">\(a^{\&lt;i-1&gt;}\)</span> to let the RNN try to guess the next word <span class="math inline">\(\hat{y}^{\&lt;i&gt;}\)</span> from Softmax regression.<br />
+During the training process, we try to minimize the loss function <span class="math inline">\(\mathcal{L}(\hat{y},y)\)</span> to ensure the training is effective to predict the sentence correctly.
+<br/></li>
+<li>Sequence Sampling
+<center>
+<img src="../../images/DL/rnnsample.png" width="700"/>
+</center>
+<br>
+After the RNN is trained, we can use it to generate a sentence by itself. In each step, the RNN will take the previous word it generated <span class="math inline">\(\hat{y}^{\&lt;i-1&gt;}\)</span> as <span class="math inline">\(x^{\&lt;i&gt;}\)</span> to generate the next word <span class="math inline">\(\hat{y}^{\&lt;i&gt;}\)</span>.</li>
+</ol></li>
+<li><p><u>Character-level LM</u></p>
+<ul>
+<li>Dictionary
+<ul>
+<li>Normal LM: [a, abandon, …, zoo, &lt;UNK&gt;]</li>
+<li>Char-lv LM: [a, b, c, …, z]</li>
+</ul></li>
+<li>Pros &amp; Cons
+<ul>
+<li>Pros: never need to worry about unknown words &lt;UNK&gt;</li>
+<li>Cons: sequence becomes much much longer; the RNN doesn’t really learn anything about the words.<br />
+<br></li>
+</ul></li>
+</ul></li>
+<li><p><u>Problems with current RNN</u><br />
+One of the most significant problems with our current simple RNN is <strong>vanishing gradients</strong>. As shown in the figures above, the next word always has a very strong dependency on the previous word, and the dependency between two words weakens as the distance between them gets longer. In other words, the current RNN are very bad at catching long-line dependencies, for example,</p>
+<center>
+<p>the <strong>cat</strong>, which already ……, <strong>was</strong> full.   </p>
+</center>
+<center>
+<p>the <strong>cats</strong>, which already ……, <strong>were</strong> full.</p>
+</center>
+<p><br>
+“be” verbs have high dependencies on the “subject,” but RNN doesn’t know that. Since the distance between these two words are too long, the gradient on the “subject” nouns would barely affect the training on the “be” verbs.</p></li>
+</ul>
+</div>
+</div>
+<div id="rnn-variations" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> RNN Variations</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="center">RNN</th>
+<th align="center">GRU</th>
+<th align="center">LSTM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><img src="../../images/DL/rnnblock.png" width="330"/></td>
+<td align="center"><img src="../../images/DL/gru.png" width="330"/></td>
+<td align="center"><img src="../../images/DL/lstm.png" width="330"/></td>
+</tr>
+</tbody>
+</table>
+<p>As shown above, there are currently 3 most used RNN blocks. The original RNN block activates the linear combination of <span class="math inline">\(a^{\&lt;t-1&gt;}\)</span> and <span class="math inline">\(x^{\&lt;t&gt;}\)</span> with a <span class="math inline">\(\text{tanh}\)</span> function and then passes the output value onto the next block.</p>
+<p>However, because of the previously mentioned problem with the original RNN, scholars have created some variations, such as GRU &amp; LSTM.</p>
+<div id="gru-gated-recurrent-unit" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> <strong>GRU</strong> (Gated Recurrent Unit)</h3>
+<center>
+<img src="../../images/DL/gru.png" width="400"/>
+</center>
+<p><br>
+As the name implies, GRU is an advancement of normal RNN block with “gates.” There are 2 gates in GRU:</p>
+<ul>
+<li><strong>R gate</strong>: (Remember) determine whether to remember the previous cell</li>
+<li><strong>U gate</strong>: (Update) determine whether to update the computation with the candidate</li>
+</ul>
+<p>Computing process of GRU:</p>
+<ol style="list-style-type: decimal">
+<li><p>Compute R gate:</p>
+<p><span class="math display">\[\begin{equation}
+ \Gamma_r=\sigma\big(w_r\big[a^{&lt;t-1&gt;};x^{&lt;t&gt;}\big]+b_r\big)
+ \end{equation}\]</span></p></li>
+<li><p>Compute U gate:</p>
+<p><span class="math display">\[\begin{equation}
+ \Gamma_u=\sigma\big(w_u\big[a^{&lt;t-1&gt;};x^{&lt;t&gt;}\big]+b_u\big)
+ \end{equation}\]</span></p></li>
+<li><p>Compute Candidate:</p>
+<p><span class="math display">\[\begin{equation}
+ \tilde{c}^{&lt;t&gt;}=\tanh{\big(w_c\big[\Gamma_r * a^{&lt;t-1&gt;};x^{&lt;t&gt;}\big]+b_c\big)}
+ \end{equation}\]</span></p>
+<p>When <span class="math inline">\(\Gamma_r=0\)</span>, <span class="math inline">\(\tilde{c}^{\&lt;t&gt;}=\tanh{\big(w_cx^{\&lt;t&gt;}+b_c\big)}\)</span>, the previous word has no effect on the word choice of this cell.</p></li>
+<li><p>Compute Memory Cell:</p>
+<p><span class="math display">\[\begin{equation}
+ c^{&lt;t&gt;}=\Gamma_u \cdot \tilde{c}^{&lt;t&gt;} + (1-\Gamma_u) \cdot c^{&lt;t-1&gt;}
+ \end{equation}\]</span></p>
+<p>When <span class="math inline">\(\Gamma_u=1\)</span>,  <span class="math inline">\(c^{\&lt;t&gt;}=\tilde{c}^{\&lt;t&gt;}\)</span>. The candidate updates.<br />
+When <span class="math inline">\(\Gamma_u=0\)</span>,  <span class="math inline">\(c^{\&lt;t&gt;}=c^{\&lt;t-1&gt;}\)</span>. The candidate does not update.</p></li>
+<li><p>Output:</p>
+<p><span class="math display">\[\begin{equation}
+ a^{&lt;t&gt;}=c^{&lt;t&gt;}
+ \end{equation}\]</span></p></li>
+</ol>
+</div>
+<div id="lstm-long-short-term-memory" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> <strong>LSTM</strong> (Long Short-Term Memory)</h3>
+<center>
+<img src="../../images/DL/lstm.png" width="400"/>
+</center>
+<p><br>
+LSTM is an advancement of GRU. While GRU relatively saves more computing power, LSTM is more powerful. There are 3 gates in LSTM:</p>
+<ul>
+<li><strong>F gate</strong>: (Forget) determine whether to forget the previous cell</li>
+<li><strong>U gate</strong>: (Update) determine whether to update the computation with the candidate</li>
+<li><strong>O gate</strong>: (Update) Compute the normal activation</li>
+</ul>
+<p>Computing process of GRU:</p>
+<ol style="list-style-type: decimal">
+<li><p>Compute F gate:</p>
+<p><span class="math display">\[\begin{equation}
+ \Gamma_f=\sigma\big(w_f\big[a^{&lt;t-1&gt;};x^{&lt;t&gt;}\big]+b_f\big)
+ \end{equation}\]</span></p></li>
+<li><p>Compute U gate:</p>
+<p><span class="math display">\[\begin{equation}
+ \Gamma_u=\sigma\big(w_u\big[a^{&lt;t-1&gt;};x^{&lt;t&gt;}\big]+b_u\big)
+ \end{equation}\]</span></p></li>
+<li><p>Compute O gate:</p>
+<p><span class="math display">\[\begin{equation}
+ \Gamma_o=\sigma\big(w_o\big[a^{&lt;t-1&gt;};x^{&lt;t&gt;}\big]+b_o\big)
+ \end{equation}\]</span></p></li>
+<li><p>Compute Candidate:</p>
+<p><span class="math display">\[\begin{equation}
+ \tilde{c}^{&lt;t&gt;}=\tanh{\big(w_c\big[a^{&lt;t-1&gt;};x^{&lt;t&gt;}\big]+b_c\big)}
+ \end{equation}\]</span></p></li>
+<li><p>Compute Memory Cell:</p>
+<p><span class="math display">\[\begin{equation}
+ c^{&lt;t&gt;}=\Gamma_u \cdot \tilde{c}^{&lt;t&gt;} + \Gamma_f \cdot c^{&lt;t-1&gt;}
+ \end{equation}\]</span></p></li>
+<li><p>Output:</p>
+<p><span class="math display">\[\begin{equation}
+ a^{&lt;t&gt;}=\Gamma_o \cdot \tanh{c^{&lt;t&gt;}}
+ \end{equation}\]</span></p></li>
+</ol>
+<p><strong>Peephole Connection</strong>: as shown in the formulae, the gate values <span class="math inline">\(\Gamma \propto c^{\&lt;t-1&gt;}\)</span>, therefore, we can always include <span class="math inline">\(c^{\&lt;t-1&gt;}\)</span> into gate calculations to simplify the computing.</p>
+</div>
+<div id="bidirectional-rnn" class="section level3" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> <strong>Bidirectional RNN</strong></h3>
+<p><u>Problem</u>: Sometimes, our choices of previous words are dependent on the latter words. For example,</p>
+<center>
+<strong>Teddy</strong> Roosevelt was a nice president.
+</center>
+<center>
+<strong>Teddy</strong> bears are now on sale!!!    
+</center>
+<p><br>
+The word “Teddy” represents two completely different things, but without the context from the latter part, we cannot determine what the “Teddy” stands for. (This example is cited from Andrew Ng’s Coursera Specialization)</p>
+<p><u>Solution</u>: We make the RNN bidirectional:</p>
+<center>
+<img src="../../images/DL/birnn.png" height="250"/>
+</center>
+<p><br>
+Each output is calculated as: <span class="math inline">\(\hat{y}^{\&lt;t&gt;}=g\Big(W_y\Big[\overrightarrow{a}^{\&lt;t&gt;};\overleftarrow{a}^{\&lt;t&gt;}\Big]+b_y\Big)\)</span></p>
+</div>
+<div id="deep-rnn" class="section level3" number="5.2.4">
+<h3><span class="header-section-number">5.2.4</span> <strong>Deep RNN</strong></h3>
+<p>Don’t be fascinated by the name. It’s just stacks of RNN layers:</p>
+<center>
+<img src="../../images/DL/drnn.png" width="700"/>
+</center>
+</div>
+</div>
+<div id="word-embeddings" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Word Embeddings</h2>
+<p>Word embedding is a vectorized representation of a word. Because our PC cannot directly understand the meaning of words, we need to convert these words into numerical values first. So far, we have been using <a name="ohr"></a><strong>One-hot Encoding</strong>:</p>
+<p><span class="math display">\[\begin{equation}
+x^{&lt;1&gt;}=\begin{bmatrix}
+0 \\ \vdots \\ 1 \\ \vdots \\ 0
+\end{bmatrix}\longleftarrow 425,\ 
+x^{&lt;2&gt;}=\begin{bmatrix}
+0 \\ \vdots \\ 1 \\ \vdots \\ 0
+\end{bmatrix}\longleftarrow 3578,\ \cdots\cdots
+\end{equation}\]</span></p>
+<p><u>Problem</u>: our RNN doesn’t really learn anything about these words from one-hot representation.</p>
+<div id="featurized-representation" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> <strong>Featurized Representation</strong></h3>
+<p><u><strong>Intuition:</strong></u> Suppose we have an online shopping review: “Love this dress! Sexy and comfy!” we can represent this sentence as:</p>
+<center>
+<img src="../../images/DL/fr.png" width="600"/>
+</center>
+<p><br>
+We predefine a certain number of features (e.g. gender, royalty, food, size, cost, etc.).</p>
+<p>Then, we give each word (column categories) their relevance to each feature (row categories). As shown in the picture for example, “dress” is very closely related to the feature “gender,” therefore given the value “1.” Meanwhile, “love” is very closely related to the feature “positive,” therefore given the value “0.99.”</p>
+<p>After we define all the featurized values for the words, we get a vectorized representation of each word:</p>
+<p><span class="math display">\[\begin{equation}
+\text{love}=e_ {1479}=\begin{bmatrix}
+0.03 \\ 0.01 \\ 0.99 \\ 1.00 \\ \vdots
+\end{bmatrix},\text{comfy}=e_ {987}=\begin{bmatrix}
+0.01 \\ 0.56 \\ 0.98 \\ 0.00 \\ \vdots
+\end{bmatrix},\cdots\cdots\end{equation}\]</span></p>
+<p>This way, our RNN will get to know the rough meanings of these words.</p>
+<p>For example, when it needs to generate the next word of this sentence: <strong>“I want a glass of orange _____.”</strong></p>
+<p>Since it knows that <strong>“orange”</strong> is a <strong>fruit</strong> and that <strong>“glass”</strong> is closely related to <strong>liquid</strong>, there is a much higher possibility that our RNN will choose <strong>“juice”</strong> to fill in the blank.</p>
+<p><u><strong>Embedding matrix:</strong></u> To acquire the word embeddings such as <span class="math inline">\(\vec{e}_ {1479}\)</span> and <span class="math inline">\(\vec{e}_ {987}\)</span> above, we can multiply our embedding matrix with the one-hot encoding:</p>
+<p><span class="math display">\[\begin{equation}
+E\times \vec{o}_ j=\vec{e}_ j
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(E\)</span> is our featurized representation (i.e. embedding matrix) and <span class="math inline">\(\vec{o}_ j\)</span> is the one-hot encoding of the word (i.e. the index of the word).</p>
+<p>In practice, this is too troublesome since the dimensions of our <span class="math inline">\(E\)</span> tend to be huge (e.g. <span class="math inline">\((500,10000)\)</span>). Thus, we use specialized function to look up an embedding directly from the embedding matrix.</p>
+<p><u><strong>Analogies:</strong></u> One of the most useful properties of word embeddings is analogies. For example, <strong>“man <span class="math inline">\(\rightarrow\)</span> woman”=“king <span class="math inline">\(\rightarrow\)</span> ?”</strong>.</p>
+<p>Suppose we have the following featurized representation:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center">man</th>
+<th align="center">woman</th>
+<th align="center">king</th>
+<th align="center">queen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">gender</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">-0.99</td>
+<td align="center">0.99</td>
+</tr>
+<tr class="even">
+<td align="center">royal</td>
+<td align="center">0.01</td>
+<td align="center">0.02</td>
+<td align="center">0.97</td>
+<td align="center">0.96</td>
+</tr>
+<tr class="odd">
+<td align="center">age</td>
+<td align="center">0.01</td>
+<td align="center">0.01</td>
+<td align="center">0.78</td>
+<td align="center">0.77</td>
+</tr>
+<tr class="even">
+<td align="center">food</td>
+<td align="center">0.03</td>
+<td align="center">0.04</td>
+<td align="center">0.04</td>
+<td align="center">0.02</td>
+</tr>
+</tbody>
+</table>
+<p>In order to learn the analogy, our RNN will have the following thinking process:</p>
+<p><span class="math display">\[\begin{align}
+&amp;\text{Goal: look for}\ w: \mathop{\arg\max}_ w{sim(e_w, e_{\text{king}}-(e_{\text{man}}-e_{\text{woman}}))} \\
+&amp;\because e_{\text{man}}-e_{\text{woman}}\approx\begin{bmatrix}-2 \\ 0 \\ 0 \\ 0\end{bmatrix}, e_{\text{king}}-e_{\text{queen}}\approx\begin{bmatrix}-2 \\ 0 \\ 0 \\ 0\end{bmatrix} \\
+&amp;\therefore e_{\text{man}}-e_{\text{woman}}\approx e_{\text{king}}-e_{\text{queen}} \\
+&amp;\text{Calculate cosine similarity: } sim(\vec{u},\vec{v})=\cos{\phi}=\frac{\vec{u}^T\vec{v}}{\|\vec{u}\|_ 2\|\vec{v}\|_ 2} \\
+&amp;\text{Confirm: }e_w\approx e_{queen}
+\end{align}\]</span></p>
+</div>
+<div id="learning-1-word2vec" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Learning 1: <strong>Word2Vec</strong></h3>
+<p><u>Problem</u>: We definitely do not want to write the embedding matrix by ourselves. Instead, we train a NN model to learn the word embeddings.</p>
+<p>Suppose we have a sentence “Pewdiepie and MrBeast are two of the greatest youtubers in human history.” Before Word2Vec, let’s define context &amp; target:</p>
+<ul>
+<li><strong>Context</strong>: words around target word
+<ul>
+<li>last 4 words: “two of the greatest ______”</li>
+<li>4 words on both sides: “two of the greatest ______ in human history.”</li>
+<li>last 1 word: “greatest ______”</li>
+<li><strong>skip-gram</strong>: (any nearby word) “… MrBeast … ______ …”</li>
+</ul></li>
+<li><strong>Target</strong>: the word we want our NN to generate
+<ul>
+<li>“youtubers”</li>
+</ul></li>
+</ul>
+<p><u>Algorithm</u>:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Randomly</strong> choose context &amp; target words with <strong>skip-gram</strong>. (e.g. context “MrBeast” &amp; target “youtubers”)</p></li>
+<li><p>Learn <strong>mapping</strong> of “<span class="math inline">\(c\ (\text{&quot;mrbeast&quot;}\[1234])\rightarrow t\ (\text{&quot;youtubers&quot;}\[765])\)</span>”</p></li>
+<li><p>Use <strong>softmax</strong> to calculate the probability of appearance of target given context:</p>
+<p><span class="math display">\[\begin{equation}
+ \hat{y}=P(t|c)=\frac{e^{\theta_t^Te_c}}{\sum_{j=1}^{n}{e^{\theta_j^Te_c}}}
+ \end{equation}\]</span></p></li>
+<li><p>Minimize the <strong>loss</strong> function:</p>
+<p><span class="math display">\[\begin{equation}
+ \mathcal{L}(\hat{y},y)=-\sum_{i=1}^{n}{y_i\log{\hat{y}_ i}}
+ \end{equation}\]</span></p></li>
+</ol>
+<p>Notes:
+* Computation of softmax is very slow: Hierarchical Softmax (i.e. Huffman Tree + LogReg) can solve this problem - with common words at the top and useless words at the bottom.
+* <span class="math inline">\(c\ \&amp;\ t\)</span> should not be entirely random: words like “the/at/on/it/…” should not be chosen.</p>
+</div>
+<div id="learning-2-negative-sampling" class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Learning 2: <strong>Negative Sampling</strong></h3>
+<p><u>Problem</u>: Given a pair of words, predict whether it’s a context-target pair.</p>
+<p>For example, given the word “orange” as the context, we want our model to know that “orange &amp; juice” is a context-target pair but “orange &amp; king” is not.</p>
+<p><u>Algorithm</u>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Pick a context-target pair <span class="math inline">\((c,t)\)</span> (the target should be near the context) from the text corpus as a <strong>positive example</strong>.</p></li>
+<li><p>Pick random words <span class="math inline">\(\\{t_1,\cdots,t_k\\}\)</span> from the dictionary and form word pairs <span class="math inline">\(\\{(c,t_1),\cdots,(c,t_k)\\}\)</span> as <strong>negative examples</strong> based on the following probability that the creator recommended:</p>
+<p><span class="math display">\[\begin{equation}
+ P(w_i)=\frac{f(w_i)^{\frac{3}{4}}}{\sum_{j=1}^{n}{f(w_i)^{\frac{3}{4}}}}
+ \end{equation}\]</span></p>
+<p>where <span class="math inline">\(w_i\)</span> is the <span class="math inline">\(i\)</span>th word in the dictionary.</p></li>
+<li><p>Train a <strong>binary classifier</strong> based on the training examples from previous steps:</p>
+<p><span class="math display">\[\begin{equation}
+ \hat{y}_ i=P(y=1|c,t_i)=\sigma(\theta_{t_i}^Te_c)
+ \end{equation}\]</span></p></li>
+<li><p>Repeat Step 1-3 till we form our final embedding matrix <span class="math inline">\(E\)</span>.</p></li>
+</ol>
+<p>Negative Sampling is relatively faster and less costly compared to Word2Vec, since it replaces softmax with binary classification.</p>
+</div>
+<div id="learning-3-glove-global-vectors" class="section level3" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> Learning 3: <strong>GloVe</strong> (Global Vectors)</h3>
+<p><u>Problem</u>: Learn word embeddings based on how many times target <span class="math inline">\(i\)</span> appears in context of word <span class="math inline">\(j\)</span>.</p>
+<p><u>Algorithm</u>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Minimize</p>
+<p><span class="math display">\[\begin{equation}
+ \sum_{i=1}^{n}{\sum_{j=1}^{n}{f\big(X_{ij}\big)\big(\theta_i^Te_j+b_i+b&#39;_ j-\log{X_{ij}}\big)^2}}
+ \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(X_{ij}\)</span>: #times <span class="math inline">\(i\)</span> appears in context of <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(f\big(X_{ij}\big)\)</span>: weighing term
+<ul>
+<li><span class="math inline">\(f\big(X_{ij}\big)=0\)</span> if <span class="math inline">\(X_{ij}=0\)</span></li>
+<li><span class="math inline">\(f\big(X_{ij}\big)\)</span> high for uncommon words</li>
+<li><span class="math inline">\(f\big(X_{ij}\big)\)</span> low for too-common words</li>
+</ul></li>
+<li><span class="math inline">\(b_i:t\)</span>, <span class="math inline">\(b&#39;_ j:c\)</span></li>
+</ul></li>
+<li><p>Compute the final embedding of word <span class="math inline">\(w\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+ e_w^{\text{final}}=\frac{e_w+\theta_w}{2}
+ \end{equation}\]</span></p></li>
+</ol>
+</div>
+</div>
+<div id="sequence-modeling" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Sequence Modeling</h2>
+<div id="sentiment-classification" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> <strong>Sentiment Classification</strong></h3>
+<p><u>Problem Setting</u>: (many-to-one) given text, predict sentiment.</p>
+<center>
+<img src="../../images/DL/sent.png" width="550"/>
+</center>
+<p><br>
+<u>Model</u>:</p>
+<center>
+<img src="../../images/DL/sentrnn.png" width="550"/>
+</center>
+</div>
+<div id="seq2seq" class="section level3" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> <strong>Seq2Seq</strong></h3>
+<p><u>Problem Setting</u>: (many-to-many) given an entire sequence, generate a new sequence.</p>
+<p><u>Example 1: Machine Translation</u>:</p>
+<center>
+<img src="../../images/DL/seq2seq.png" width="550"/>
+</center>
+<p><br>
+Machine Translation vs Language Model:
+* Language Model: maximize <span class="math inline">\(P(y^{\&lt;1&gt;},\cdots,y^{\&lt;T_y&gt;})\)</span>
+* Machine Translation: maximize <span class="math inline">\(P(y^{\&lt;1&gt;},\cdots,y^{\&lt;T_y&gt;} \| \vec{x})\)</span></p>
+<p><u>Example 2: Image Captioning</u></p>
+<center>
+<img src="../../images/DL/seq2seqic.png" width="550"/>
+</center>
+</div>
+<div id="beam-search" class="section level3" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> <strong>Beam Search</strong></h3>
+<p><u>Problem</u>: So far, when we choose a word from softmax for each RNN block, we are doing <strong>greedy search</strong>, that we only look for <strong>local optimum</strong> instead of <strong>global optimum</strong>.</p>
+<p>That is, we only choose the word with the highest <span class="math inline">\(P(y^{\&lt;1&gt;}\|\vec{x})\)</span> and then the word with the highest <span class="math inline">\(P(y^{\&lt;2&gt;}\|\vec{x})\)</span> and then …</p>
+<p>As we already know, local optimum does not necessarily represent global optimum. In the world of NLP, the word <strong>“going”</strong> always has a much higher probability to appear than the word <strong>“visiting”</strong>, but in certain situations when we need to use “visiting,” the algorithm will still choose “going,” therefore generating a weird sequence as a whole.</p>
+<p><u>Beam Search Algorithm</u>:</p>
+<ol style="list-style-type: decimal">
+<li>Define a beam size of <span class="math inline">\(B\)</span> (usually <span class="math inline">\(B\in\\{1\times10^n,3\times10^n\\},\ n\in\mathbb{Z}^+\)</span>).</li>
+<li>Look at the top <span class="math inline">\(B\)</span> words with the highest <span class="math inline">\(P\)</span>s for the first word. (i.e. look for <span class="math inline">\(P(\vec{y}^{\&lt;1&gt;}\|\vec{x})\)</span>)</li>
+<li>Repeat till &lt;EOS&gt;. Choose the sequence with the highest combined probability.</li>
+</ol>
+<p><u>Improvement</u>: The original Beam Search is very costly in computing, therefore it is necessary to refine it:</p>
+<p><span class="math display">\[\begin{align}
+&amp;\because P(y^{&lt;1&gt;},\cdots,y^{&lt;T_y&gt;}|x)=\prod_{t=1}^{T_y}{P(y^{&lt;t&gt;}|x,y^{&lt;1&gt;},\cdots,y^{&lt;t-1&gt;})} \\
+&amp;\therefore \text{goal}=\mathop{\arg\max}_ y{\prod_{t=1}^{T_y}{P(y^{&lt;t&gt;}|x,y^{&lt;1&gt;},\cdots,y^{&lt;t-1&gt;})}} \\
+&amp;\Rightarrow \mathop{\arg\max}_ y{\sum_{t=1}^{T_y}{\log{P(y^{&lt;t&gt;}|x,y^{&lt;1&gt;},\cdots,y^{&lt;t-1&gt;})}}} \\
+&amp;\Rightarrow \mathop{\arg\max}_ y{\frac{1}{T_y^{\alpha}}\sum_{t=1}^{T_y}{\log{P(y^{&lt;t&gt;}|x,y^{&lt;1&gt;},\cdots,y^{&lt;t-1&gt;})}}}
+\end{align}\]</span></p>
+<ul>
+<li><span class="math inline">\(\prod\rightarrow\sum{\log}\)</span>: log scaling</li>
+<li><span class="math inline">\(\frac{1}{T_y^{\alpha}}\)</span>: length normalization (when you add more negative values (<span class="math inline">\(\log{(P&lt;1)}&lt;0\)</span>), the sum becomes more negative)</li>
+<li><span class="math inline">\(\alpha\)</span>: <strike>learning rate</strike> just a coefficient</li>
+</ul>
+<p><u>Error Analysis</u>: Suppose we want to analyze the following error:</p>
+<ul>
+<li>Human: Jimmy visits Africa in September. (<span class="math inline">\(y^\*\)</span>)</li>
+<li>Algorithm: Jimmy visited Africa last September. (<span class="math inline">\(\hat{y}\)</span>)</li>
+</ul>
+<p>If <span class="math inline">\(P(y^\*\|x)&gt;P(\hat{y}\|x)\)</span>, Beam search is at fault <span class="math inline">\(\rightarrow\)</span> increase <span class="math inline">\(B\)</span><br />
+If <span class="math inline">\(P(y^\*\|x)\leq P(\hat{y}\|x)\)</span>, RNN is at fault <span class="math inline">\(\rightarrow\)</span> improve RNN (data augmentation, regularization, architecture, etc.)</p>
+</div>
+<div id="bleu-score" class="section level3" number="5.4.4">
+<h3><span class="header-section-number">5.4.4</span> <strong>Bleu Score</strong></h3>
+<p><u>Problem</u>: For many sequence modeling problems (especially seq2seq), there is no fixed correct answer. For example, there are many different Chinese translated versions of the same fiction Sherlock Holmes, and they are all correct. In this case, how do we define “correctness” for machine translation?</p>
+<p><u>Bilingual Evaluation Understudy</u>:</p>
+<p><span class="math display">\[\begin{equation}
+p_n=\frac{\sum_{\text{n-gram}\in\hat{y}}{\text{count}_ {clip}(\text{n-gram})}}{\sum_{\text{n-gram}\in\hat{y}}{\text{count}(\text{n-gram})}}
+\end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(\text{n-gram}\)</span>: <span class="math inline">\(n\)</span> consecutive words (e.g. bigram: “I have a pen.” <span class="math inline">\(\rightarrow\)</span> “I have,” “have a,” “a pen”)</li>
+<li><span class="math inline">\(\text{count}_ {clip}(\text{n-gram})\)</span>: maximal #times an n-gram appears in one of the reference sequences</li>
+<li><span class="math inline">\(\text{count}(\text{n-gram})\)</span>: #times an n-gram appears in <span class="math inline">\(\hat{y}\)</span></li>
+</ul>
+<p>For example,</p>
+<ul>
+<li>input: “Le chat est sur le tapis.”</li>
+<li>Reference 1: “The cat is on the mat.”</li>
+<li>Reference 2: “There is a cat on the mat.”</li>
+<li>MT output: “the cat the cat on the mat.”</li>
+</ul>
+<p>The unigrams here are: “the,” “cat,” “on,” “mat.” Then,</p>
+<p><span class="math display">\[\begin{equation}
+p_1=\frac{2+1+1+1}{3+2+1+1}=\frac{5}{7}
+\end{equation}\]</span></p>
+<p>The bigrams here are: “the cat,” “cat the,” “cat on,” “on the,” “the mat.” Then,</p>
+<p><span class="math display">\[\begin{equation}
+p_2=\frac{1+0+1+1+1}{2+1+1+1+1}=\frac{2}{3}
+\end{equation}\]</span></p>
+<p>The final Bleu score will be calculated as:</p>
+<p><span class="math display">\[\begin{equation}
+\text{BLEU}=BP\times e^{\frac{1}{4}\sum_{n=1}^{4}{p_n}}
+\end{equation}\]</span></p>
+<ul>
+<li>usually we take <span class="math inline">\(n=4\)</span> as the upper limit for n-grams.</li>
+<li><span class="math inline">\(BP\)</span>: param to penalize short outputs (<span class="math inline">\(\because\)</span> short outputs tend to have high BLEU scores.)</li>
+<li><span class="math inline">\(BP=1\)</span> if <span class="math inline">\(\text{len}(\hat{y})&gt;\text{len}(\text{ref})\)</span></li>
+<li><span class="math inline">\(BP=e^{\frac{1-\text{len}(\hat{y})}{\text{len}(\text{ref})}}\)</span> if <span class="math inline">\(\text{len}(\hat{y})\leq\text{len}(\text{ref})\)</span></li>
+</ul>
+</div>
+<div id="attention-model" class="section level3" number="5.4.5">
+<h3><span class="header-section-number">5.4.5</span> <strong>Attention Model</strong></h3>
+<p><u>Problem</u>: Our Seq2Seq model memorizes the entire sequence and then start to generate output sequence. However, a better approach to such problems like machine translation is actually to memorize part of the sequence, translate it, then memorize the next part of the sequence, translate it, and then keep going. Memorizing the entire fiction series of Sherlock Holmes and then translate it is just inefficient.</p>
+<p><u>Model</u>:</p>
+<center>
+<img src="../../images/DL/attention.png" width="400"/>
+</center>
+<center>
+Attention Model = Encoding BRNN + Decoding RNN
+</center>
+<p><u>Algorithm</u>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Combine BRNN activations:</p>
+<p><span class="math display">\[\begin{equation}
+ a^{&lt;t&#39;&gt;}=\Big(\overleftarrow{a}^{&lt;t&#39;&gt;},\overrightarrow{a}^{&lt;t&#39;&gt;}\Big)
+ \end{equation}\]</span></p>
+<p>where <span class="math inline">\(t&#39;\)</span> refers to the index of the encoding BRNN layer.</p></li>
+<li><p>Calculate the amount of “attention” that <span class="math inline">\(y^{\&lt;t&gt;}\)</span> should pay to <span class="math inline">\(a^{\&lt;t&#39;&gt;}\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+ \alpha^{&lt;t,t&#39;&gt;}=\frac{e^{(e^{&lt;t,t&#39;&gt;})}}{\sum_{t&#39;=1}^{T_x}{e^{(e^{&lt;t,t&#39;&gt;})}}}
+ \end{equation}\]</span></p>
+<p>where <span class="math inline">\(e^{\&lt;t,t&#39;&gt;}=W_e^{\&lt;t,t&#39;&gt;}\[s^{\&lt;t-1&gt;};a^{\&lt;t&#39;&gt;}] +b_e^{\&lt;t,t&#39;&gt;}\)</span> is a linear combination of both encoding activation <span class="math inline">\(a^{\&lt;t&#39;&gt;}\)</span> and decoding activation <span class="math inline">\(s^{\&lt;t-1&gt;}\)</span>. <span class="math inline">\(t\)</span> refers to the index of the decoding RNN layer.</p></li>
+<li><p>Calculate the total attention at <span class="math inline">\(t\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+ c^{&lt;t&gt;}=\sum_{t&#39;}{\alpha^{&lt;t,t&#39;&gt;}a^{&lt;t&#39;&gt;}}
+ \end{equation}\]</span></p></li>
+<li><p>Include the total attention into the input for output calculation:</p>
+<p><span class="math display">\[\begin{equation}
+ \hat{y}^{&lt;t&gt;}=s^{&lt;t&gt;}=g\big(W_y[\hat{y}^{&lt;t-1&gt;};c^{&lt;t&gt;}]+b_y\big)
+ \end{equation}\]</span></p></li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cnn.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/04_rnn.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
