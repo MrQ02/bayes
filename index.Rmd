@@ -1,18 +1,28 @@
 --- 
-title: "Deep Learning"
+title: "Time Series Analysis"
 author: "Renyi Qu"
-date: "2021/01/24"
+date: "2021/01/25"
 site: bookdown::bookdown_site
-# output: bookdown::gitbook
+# header-includes:
+#    - \usepackage{bm}
+# output:
+#   pdf_document:
+#     extra_dependencies: ["bm"]
+    # latex_engine: xelatex
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: MrQ02/dl
+github-repo: MrQ02/tsa
 description: ""
 ---
+<!-- \usepackage{bm} -->
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
 
 # References {-}
 
-- Andrew Ng. <a href="https://www.coursera.org/specializations/deep-learning" target="__blank">Deep Learning Specialization</a>. Coursera Inc.  
-- Goodfellow, I. Bengio, Y. Courville, A. <a href="http://www.deeplearningbook.org/" target="__blank">Deep Learning</a>. MIT Press.
+- Bollerslev, T. (1986). Generalized Autoregressive Conditional Heteroskedasticity. <i>Journal
+of Econometrics</i>. vol. 31. [https://doi.org/10.1016/0304-4076(86)90063-1](https://doi.org/10.1016/0304-4076(86)90063-1).
+- Enders, W. (2015). <i>Applied Econometric Time Series</i>. JohnWiley & Sons Inc. [DOI:10.1198/tech.2004.s813](https://www.tandfonline.com/doi/abs/10.1198/tech.2004.s813). 
+- Engle, R.F. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. <i>Econometrica</i>. vol. 50, issue. 4. [https://doi.org/10.2307/1912773](https://doi.org/10.2307/1912773).

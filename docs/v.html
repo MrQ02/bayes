@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Time Series Analysis</title>
-  <meta name="description" content="Time Series Analysis" />
+  <title>2 Volatility models | Time Series Analysis</title>
+  <meta name="description" content="2 Volatility models | Time Series Analysis" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Time Series Analysis" />
+  <meta property="og:title" content="2 Volatility models | Time Series Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="MrQ02/tsa" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Time Series Analysis" />
+  <meta name="twitter:title" content="2 Volatility models | Time Series Analysis" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="m.html"/>
+<link rel="prev" href="m.html"/>
+<link rel="next" href="cnn.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -130,28 +130,68 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Time Series Analysis</h1>
-<p class="author"><em>Renyi Qu</em></p>
-<p class="date"><em>2021/01/25</em></p>
-</div>
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="v" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Volatility models</h1>
+<div id="arch-autoregressive-conditional-heteroskedasticity-model" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> ARCH (Autoregressive Conditional Heteroskedasticity model)</h2>
+<p><span class="math display">\[\begin{equation*}
+    \varepsilon_t=\sigma_t\zeta_t
+\end{equation*}\]</span></p>
 <ul>
-<li>Bollerslev, T. (1986). Generalized Autoregressive Conditional Heteroskedasticity. <i>Journal
-of Econometrics</i>. vol. 31. <a href="https://doi.org/10.1016/0304-4076(86)90063-1">https://doi.org/10.1016/0304-4076(86)90063-1</a>.</li>
-<li>Enders, W. (2015). <i>Applied Econometric Time Series</i>. JohnWiley &amp; Sons Inc. <a href="https://www.tandfonline.com/doi/abs/10.1198/tech.2004.s813">DOI:10.1198/tech.2004.s813</a>.</li>
-<li>Engle, R.F. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. <i>Econometrica</i>. vol. 50, issue. 4. <a href="https://doi.org/10.2307/1912773">https://doi.org/10.2307/1912773</a>.</li>
+<li><span class="math inline">\(\zeta_t\)</span>: white noise following <span class="math inline">\(N(0,1)\)</span></li>
+<li><span class="math inline">\(\sigma_t^2\)</span>: variance of <span class="math inline">\(\varepsilon_t\)</span>:</li>
 </ul>
+<p><span class="math display">\[\begin{equation*}
+    \sigma_t^2=\alpha_0+\sum_{i=1}^p{\alpha_i\varepsilon_{t-i}^2}
+\end{equation*}\]</span></p>
+<ul>
+<li><span class="math inline">\(\alpha_0&gt;0, \alpha_i\geq0\)</span></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="garch-generalized-autoregressive-conditional-heteroskedasticity-model" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> GARCH (Generalized Autoregressive Conditional Heteroskedasticity model)</h2>
+<p><span class="math display">\[\begin{equation*}
+    \sigma_t^2=\alpha_0+\sum_{i=1}^p{\alpha_i\varepsilon_{t-i}^2}+\sum_{i=1}^q{\beta_j\sigma_{t-j}^2}
+\end{equation*}\]</span></p>
+<p>
+ 
+</p>
+<div id="estimation-4" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Estimation</h3>
+<ul>
+<li>MLE:</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+        l_t(\boldsymbol{\theta},\boldsymbol{\varphi})=-\frac{1}{2}\log{2\pi}-\frac{1}{2}\log{\sigma_t^2}-\frac{\varepsilon_t^2}{2\sigma_t^2}
+    \end{equation*}\]</span></p>
+<ul>
+<li>FOC:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    \frac{\partial l_t}{\partial\boldsymbol{\theta}}&amp;=\frac{\varepsilon_t\omega_t}{\sigma_t^2}+\frac{\sigma_t^2}{2}\frac{\partial\sigma_t^2}{\partial\boldsymbol{\theta}}\bigg(\frac{\varepsilon_t^2}{\sigma_t^2}-1\bigg)=0 \\
+    \frac{\partial l_t}{\partial\boldsymbol{\varphi}}&amp;=\frac{1}{2\sigma_t^2}\frac{\partial\sigma_t^2}{\partial\boldsymbol{\varphi}}\bigg(\frac{\varepsilon_t^2}{\sigma_t^2}-1\bigg)=0
+\end{align*}\]</span></p>
+<ul>
+<li>Recursive algorithm:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    \frac{\partial\sigma_t^2}{\partial\boldsymbol{\theta}}&amp;=\sum_{j=1}^q{\beta_j\frac{\partial\sigma_{t-j}^2}{\partial\boldsymbol{\theta}}}-2\sum_{i=1}^p{\alpha_i\boldsymbol{\omega}_t\varepsilon_{t-i}} \\
+    \frac{\partial\sigma_t^2}{\partial\boldsymbol{\varphi}}&amp;=\sum_{j=1}^q{\beta_j\frac{\partial\sigma_{t-j}^2}{\partial\boldsymbol{\varphi}}}+\boldsymbol{\epsilon}_t
+\end{align*}\]</span></p>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="m.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="m.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cnn.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -182,7 +222,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jules32/bookdown-tutorial/edit/master/index.Rmd",
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/02_volatility.Rmd",
 "text": "Edit"
 },
 "history": {

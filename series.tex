@@ -1,0 +1,1990 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Time Series Analysis},
+  pdfauthor={Renyi Qu},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bm}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Time Series Analysis}
+\author{Renyi Qu}
+\date{2021/01/25}
+
+\begin{document}
+\frontmatter
+\maketitle
+
+\mainmatter
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+\addcontentsline{toc}{chapter}{References}
+
+\begin{itemize}
+\tightlist
+\item
+  Bollerslev, T. (1986). Generalized Autoregressive Conditional
+  Heteroskedasticity. Journal of Econometrics. vol.~31.
+  \url{https://doi.org/10.1016/0304-4076(86)90063-1}.
+\item
+  Enders, W. (2015). Applied Econometric Time Series. JohnWiley \& Sons
+  Inc.~\href{https://www.tandfonline.com/doi/abs/10.1198/tech.2004.s813}{DOI:10.1198/tech.2004.s813}.
+\item
+  Engle, R.F. (1982). Autoregressive Conditional Heteroscedasticity with
+  Estimates of the Variance of United Kingdom Inflation. Econometrica.
+  vol.~50, issue. 4. \url{https://doi.org/10.2307/1912773}.
+\end{itemize}
+
+\hypertarget{m}{%
+\chapter{Mean Models}\label{m}}
+
+\hypertarget{ar-autoregressive-model}{%
+\section{AR (Autoregressive model)}\label{ar-autoregressive-model}}
+
+\hypertarget{model}{%
+\subsection{Model}\label{model}}
+
+\textbf{AR(p) - General}:
+
+\[\begin{equation*} x_t=\alpha_0+\sum_{i=1}^{p}{\alpha_i x_{t-i}}+\varepsilon_t
+\end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(x_t\): time series to be modeled
+\item
+  \(x_{t-i}\): past time series values
+\item
+  \(p\): lag limit
+\item
+  \(\alpha_i\): params to be estimated
+\item
+  \(\varepsilon_t \sim N(0,\sigma^2)\): i.i.d. white noise
+\end{itemize}
+
+~
+
+\textbf{AR(p) - Markovian}:
+
+\[\begin{align*}
+        p(y_{1:T})&=p(y_{1:p})\prod_{t=p+1}^{T}{p(y_t|y_{(t-p):(t-1)})}\\
+        p(\bm{y}|y_{1:p})&=\prod_{t=p+1}^{T}{p(y_t|y_{(t-p):(t-1)})}\\
+        &=\prod_{t=p+1}^{T}{N(y_t|\bm{f}_t^\prime\bm{\phi},v)}\\
+        &=N(\bm{y}|\bm{F}^\prime\bm{\phi},v\bm{I}_n)
+    \end{align*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(T=n+p\)
+\item
+  \(\phi=(\phi_1,\cdots,\phi_p)\)
+\item
+  \(\bm{f}_t=(y_{t-1},\cdots,y_{t-p})\)
+\item
+  \(\bm{F}=[\bm{f}_T,\cdots,\bm{f}_{p+1}]\)
+\end{itemize}
+
+~
+
+\textbf{AR(p) - State-space}:
+
+\[\begin{align*}
+        y_t&=\bm{F}^\prime\bm{x}_t\\
+        \bm{x}_t&=\bm{G}\bm{x}_{t-1}+\bm{\omega}_t
+    \end{align*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\bm{x}_t=(y_t,\cdots,y_{t-p+1})\): state vector
+\item
+  \(\bm{\omega}_t=(\epsilon_t,0,\cdots,0)\): error vector
+\item
+  \(\bm{F}=(1,0,\cdots,0)\)
+\item
+  \(\bm{G}=\begin{bmatrix}\phi_1 & \phi_2 & \cdots & \phi_{p-1} & \phi_p \\ 1 & 0 & \cdots & 0 & 0 \\ 0 & 1 & \cdots & 0 & 0 \\ \vdots & & \ddots & 0 & \vdots \\ 0 & 0 & \cdots & 1 & 0\end{bmatrix}\)
+\end{itemize}
+
+~
+
+\textbf{AR(p) - Autoorrelation}:
+
+\[\begin{align*}
+        &\rho(h)-\sum_{i=1}^{p}{\phi_i\rho(h-i)}=0\\
+        &\rho(h)=\sum_{j=1}^{r}{\alpha_j^hp_j(h)}
+    \end{align*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\alpha_1,\cdots,\alpha_r\): reciprocal roots of characteristic
+  polynomial
+\item
+  \(m_1,\cdots,m_r\): root multiplicity (\(\sum_{i=1}^r{m_i}=p\))
+\item
+  \(p_j(h)\): polynomial of degree \(m_j-1\)
+\end{itemize}
+
+~
+
+\hypertarget{estimation}{%
+\subsection{Estimation}\label{estimation}}
+
+\textbf{LSE - AR(1)}:
+
+\[\begin{align*}
+        \hat{\alpha}_{ols}&=\mathop{\mathrm{argmin}}_{\alpha}{\sum_{t=1}^{T}{(x_t-\alpha x_{t-1})^2}}\\
+        &=\bigg(\sum_{t=1}^{T}{x_{t-1}^2}\bigg)^{-1}\bigg(\sum_{t=1}^{T}{x_{t-1}x_t}\bigg)
+    \end{align*}\]
+
+~
+
+\textbf{MLE - AR(1)}:
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional likelihood:
+\end{itemize}
+
+\[\begin{equation*}
+        \mathcal{L}(\bm{x|x_{-1}})=\bigg(\frac{1}{\sqrt{2\pi}\sigma}\bigg)^T\exp{\bigg(-\frac{1}{2\sigma^2}\sum_{t=1}^{T}{(x_t-\alpha x_{t-1})^2}\bigg)}
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional log likelihood:
+\end{itemize}
+
+\[\begin{equation*}
+        l(\bm{x|x_{-1}})=-T\log{\sqrt{2\pi}\sigma}-\frac{1}{2\sigma^2}\sum_{t=1}^{T}{(x_t-\alpha x_{t-1})^2}
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional ML estimator:
+\end{itemize}
+
+\[\begin{align*}
+        \hat{\alpha}_{ml}&=\mathop{\mathrm{argmax}}_\alpha{l(\bm{x|x_{-1}})} \\
+        &=\mathop{\mathrm{argmax}}_\alpha{\bigg(-\sum_{t=1}^{T}{(x_t-\alpha x_{t-1})^2}\bigg)} \\
+        &=\mathop{\mathrm{argmin}}_\alpha{\sum_{t=1}^{T}{(x_t-\alpha x_{t-1})^2}} \\
+    \end{align*}\]
+
+~
+
+\hypertarget{ma-moving-average-model}{%
+\section{MA (Moving Average model)}\label{ma-moving-average-model}}
+
+\hypertarget{model-1}{%
+\subsection{Model}\label{model-1}}
+
+\textbf{MA(q)}:
+
+\[\begin{equation*}
+        x_t=\mu+\sum_{i=1}^{q}{\beta_i \varepsilon_{t-i}}+\varepsilon_t
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\mu\): mean of \(x_t\)
+\item
+  \(\varepsilon_{t-i}\): past error values
+\item
+  \(q\): lag limit
+\item
+  \(\beta_i\): params to be estimated
+\item
+  \(\varepsilon_t\): unobservable white noise at the current time
+\end{itemize}
+
+~
+
+\hypertarget{estimation-1}{%
+\subsection{Estimation}\label{estimation-1}}
+
+\textbf{LSE - MA(1)}:
+
+\[\begin{equation*}
+        \hat{\beta}_{ols}=\mathop{\mathrm{argmin}}_\beta{\sum_{t=1}^T{(x_t-\beta\varepsilon_{t-1})^2}}
+    \end{equation*}\]
+
+How to deal with unknown random disturbances:
+
+\begin{align*}
+        &\varepsilon_1=x_1-\beta\varepsilon_0 \\
+        &\varepsilon_2=x_2-\beta(x_1-\beta\varepsilon_0) \\
+        &\varepsilon_3=x_3-\beta(x_2-\beta(x_1-\beta\varepsilon_0)) \\
+        
+&\varepsilon_{t-1}=(-\beta)^{t-1}\varepsilon_0+\sum_{k=0}^{t-2}{(-\beta)^kx_{t-1-k}}\end{align*}
+
+Thus, we obtain the Nonlinear LS estimator:
+
+\[\begin{equation*}
+        \hat{\beta}_{nls}=\mathop{\mathrm{argmin}}_{\beta}{\sum_{t=1}^{T}{\bigg(x_t-\beta\sum_{k=0}^{t-2}{(-\beta)^kx_{t-1-k}}\bigg)^2}}
+    \end{equation*}\]
+
+~
+
+\textbf{MLE - MA(1)}:
+
+How to deal with unknown random disturbances:
+
+\begin{align*}
+        &\mathcal{L}(x_1)=\frac{1}{\sqrt{2\pi}\sigma}\exp{\bigg(-\frac{\varepsilon_1^2}{2\sigma^2}\bigg)} \\
+        &\mathcal{L}(x_2|x_1)=\frac{1}{\sqrt{2\pi}\sigma}\exp{\bigg(-\frac{(x_2-\beta\varepsilon_1)^2}{2\sigma^2}\bigg)}=\frac{1}{\sqrt{2\pi}\sigma}\exp{\bigg(-\frac{\varepsilon_2^2}{2\sigma^2}\bigg)} \\
+        &\cdots \\
+        &\mathcal{L}(x_t|x_{t-1},\cdots,x_1)=\frac{1}{\sqrt{2\pi}\sigma}\exp{\bigg(-\frac{(x_t-\beta\varepsilon_{t-1})^2}{2\sigma^2}\bigg)}\\
+        &=\frac{1}{\sqrt{2\pi}\sigma}\exp{\bigg(-\frac{\varepsilon_t^2}{2\sigma^2}\bigg)}
+    \end{align*}
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional likelihood:
+\end{itemize}
+
+\[\begin{equation*}
+        \mathcal{L}(\bm{x|x_{-1}})=\bigg(\frac{1}{\sqrt{2\pi}\sigma}\bigg)^T\exp{\bigg(-\frac{1}{2\sigma^2}\sum_{t=1}^T{\varepsilon_t^2}\bigg)}
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional log likelihood:
+\end{itemize}
+
+\[\begin{equation*}
+        l(\bm{x|x_{-1}})=-T\log{\sqrt{2\pi}\sigma}-\frac{1}{2\sigma^2}\sum_{t=1}^T{\varepsilon_t^2}
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional ML estimator:
+\end{itemize}
+
+\[\begin{equation*}
+        \hat{\beta}_{ml}=\mathop{\mathrm{argmax}}_\beta{l(\bm{x|x_{-1}})}=\mathop{\mathrm{argmin}}_\beta{\sum_{t=1}^T{\varepsilon_t^2}}
+    \end{equation*}\]
+
+~
+
+\hypertarget{arma-autoregressive-moving-average-model}{%
+\section{ARMA (Autoregressive Moving Average
+model)}\label{arma-autoregressive-moving-average-model}}
+
+\hypertarget{model-2}{%
+\subsection{Model}\label{model-2}}
+
+\textbf{ARMA(p,q) - General}:
+
+\[\begin{equation*}
+        x_t=\alpha_0+\sum_{i=1}^{p}{\alpha_i x_{t-i}}+\sum_{i=1}^{q}{\beta_i \varepsilon_{t-i}}+\varepsilon_t
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Explanatory variables: \(x_{t-i}\ \&\ \varepsilon_{t-i}\)
+\item
+  Parameters: \(\alpha_i\ \&\ \beta_i\)
+\item
+  Hyperparameters: \(p\ \&\ q\)
+\item
+  Random disturbance: \(\varepsilon_t\)
+\end{itemize}
+
+~
+
+\textbf{ARMA(p,q) - State-space}:
+
+\begin{align*}
+        y_t&=\bm{E}_m^\prime\bm{\theta}_t\\
+        \bm{\theta}_t&=\bm{G}\bm{\theta}_{t-1}+\bm{\omega}_t
+    \end{align*}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\bm{E}_m=(1,0,\cdots,0)\), shape \(m=\max{(p,q+1)}\)
+\item
+  \(\bm{\omega}_t=(1,\theta_1,\cdots,\theta_{m-1})\epsilon_t\)
+\item
+  \(\bm{G}=\begin{bmatrix}\phi_1 & \phi_2 & \cdots & \phi_{m-1} & \phi_m \\ 1 & 0 & \cdots & 0 & 0 \\ 0 & 1 & \cdots & 0 & 0 \\ \vdots & & \ddots & 0 & \vdots \\ 0 & 0 & \cdots & 1 & 0\end{bmatrix}\)
+\end{itemize}
+
+~
+
+\hypertarget{estimation-2}{%
+\subsection{Estimation}\label{estimation-2}}
+
+\textbf{LSE - ARMA(p,q)}:
+
+\begin{itemize}
+\tightlist
+\item
+  Minimize:
+\end{itemize}
+
+\[\begin{equation*}
+        S(\bm{\theta})=\sum_{t=1}^{T}{\frac{(y_t-y_t^{t-1})^2}{r_t^{t-1}}}
+    \end{equation*}\]
+
+\begin{verbatim}
+- $\bm{\theta}=(\alpha_1,\cdots,\alpha_p,\beta_1,\cdots,\beta_q)$: parameter set
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional LS:
+\end{itemize}
+
+\[\begin{equation*}
+        S_c(\bm{\theta})=\sum_{t=p+1}^T{\epsilon_t(\bm{\theta})^2}
+    \end{equation*}\]
+
+\begin{verbatim}
+- $\epsilon_t(\bm{\theta})=y_t-\hat{y}_t$
+\end{verbatim}
+
+~
+
+\textbf{MLE - ARMA(p,q)}:
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional likelihood:
+\end{itemize}
+
+\[\begin{equation*}
+        p(y_{1:T}|\bm{\theta},v)=\prod_{t=1}^T{p(y_t|y_{1:(t-1)},\bm{\theta},v)}
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Conditional log likelihood:
+\end{itemize}
+
+\[\begin{equation*}
+        \log{p(y_{1:T}|\bm{\theta},v)}=-\frac{T}{2}\log{2\pi v}-\frac{1}{2}\sum_{t=1}^T{\Big(\log{r_t^{t-1}}+\frac{(y_t-y_t^{t-1})^2}{r_t^{t-1}}\Big)}
+    \end{equation*}\]
+
+\begin{verbatim}
+- $y_t^{t-1}=\text{E}[y_t|y_{1:(t-1)}]$
+- $vr_t^{t-1}=\text{Var}[y_t|y_{1:(t-1)}]$
+\end{verbatim}
+
+~
+
+\textbf{Bayesian - ARMA(p,q)}:
+
+Likelihood based on parameters:
+
+\[\begin{equation*}
+        p(y_{1:T}|\bm{\varphi})=\big(\frac{1}{\sqrt{2\pi v}}\big)^T\exp{\bigg(-\frac{1}{2v}\sum_{t=1}^T{(y_t-\mu_t)^2}\bigg)}
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\bm{\varphi}=(\bm{\alpha},\bm{\beta},v,\bm{x}_0,\bm{\epsilon}_0)\)
+\item
+  \(\bm{\epsilon}_0=(\epsilon_0,\epsilon_{-1},\cdots,\epsilon_{1-q})\)
+\item
+  \(\mu_1=\sum_{i=1}^p{\alpha_iy_{1-i}}+\sum_{i=1}^q{\beta_i\epsilon_{1-i}}\)
+\item
+  \(\mu_t=\sum_{i=1}^p{\alpha_iy_{t-i}}+\sum_{i=1}^{t-1}{\beta_i(y_{t-i}-\mu_{t-i})}+\sum_{i=1}^q{\beta_i\epsilon_{t-i}},t=2:q\)
+\item
+  \(\mu_t=\sum_{i=1}^p{\alpha_iy_{t-i}}+\sum_{i=1}^{t-1}{\beta_i(y_{t-i}-\mu_{t-i})},t=q+1:T\)
+\end{itemize}
+
+Prior:
+
+\[\begin{equation*}
+        \pi(\bm{\varphi})=\pi(\bm{x}_0,\bm{\epsilon}_0|\bm{\alpha},\bm{\beta},v)\pi(v)\pi(\bm{\alpha},\bm{\beta})
+    \end{equation*}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\pi(\bm{x}_0,\bm{\epsilon}_0|\bm{\alpha},\bm{\beta},v)=N(\bm{0},v\Omega)\)
+\item
+  \(\pi(v)\propto\frac{1}{v}\)
+\item
+  \(\pi(\bm{\alpha},\bm{\beta})\): uniform distribution
+\item
+  \(v\Omega=\text{Cov}[\bm{x}_0,\bm{\epsilon}_0]\)
+\end{itemize}
+
+Joint Posterior:
+
+\[\begin{equation*}
+        p(\bm{\varphi}|y_{1:T})\propto (v)^{-\frac{T+2}{2}}\exp{-\frac{1}{2v}\sum_{t=1}^T{(y_t-\mu_t)^2}}\times N((\bm{x}_0,\bm{\epsilon}_0)|\bm{0},v\Omega)
+    \end{equation*}\]
+
+MCMC:
+
+\begin{itemize}
+\tightlist
+\item
+  Sample \((v|\bm{\alpha},\bm{\beta},\bm{x}_0,\bm{\epsilon}_0)\) from
+  inverse-gamma full conditional distribution:
+\item
+  Sample \((\bm{x}_0,\bm{\epsilon}_0|\bm{\alpha},\bm{\beta},v)\) using a
+  Metropolis step with Gaussian proposal distributions
+\item
+  Sample \((\bm{\alpha},\bm{\beta}|v,\bm{x}_0,\bm{\epsilon}_0)\) from
+  \hyperlink{PACF}{PACF}
+\end{itemize}
+
+\hypertarget{imp}{%
+\chapter{Improvements on Neural Networks}\label{imp}}
+
+\hypertarget{traintest-split}{%
+\section{Train/Test Split}\label{traintest-split}}
+
+\begin{itemize}
+\tightlist
+\item
+  Dataset = training set + development/validation set + test set
+\item
+  Split ratio:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    old era: 70/0/30\%, 60/20/20\%, \ldots{}
+  \item
+    big data era: 98/1/1\%, 99.5/0.4/0.1\%, 99.5/0.5/0\%, \ldots{}
+    \textbackslash{} (trend: testset as small as possible)
+  \end{itemize}
+\item
+  All 3 subsets should come from the exact same distribution (mismatch)
+\end{itemize}
+
+\hypertarget{initialization}{%
+\section{Initialization}\label{initialization}}
+
+\begin{itemize}
+\tightlist
+\item
+  \(W\) should be initialized with \textbf{small random values} to break
+  symmetry (to make sure that different hidden nodes can learn different
+  things)
+\item
+  \(b\) can be initialized to \textbf{zeros} (\(\because\) symmetry is
+  still broken when \(W\) is randomly initialized)
+\item
+  Different initializations \(\rightarrow\) different results
+\item
+  Refer to \href{https://keras.io/initializers/}{keras documentation}
+  for initializers.
+\end{itemize}
+
+\hypertarget{data-fitting}{%
+\section{Data Fitting}\label{data-fitting}}
+
+\textbf{Underfitting}:
+
+\textbf{Proper fitting}:
+
+\textbf{Overfitting}:
+
+~
+
+Tradeoff: \emph{train error} vs \emph{validation error}: -
+\textbf{\emph{train err} too small \(\longrightarrow\) high variance
+(overfitting)}\\
+(e.g.~train err = 1\%; val err = 11\%) - \textbf{\emph{train err} too
+big \(\longrightarrow\) high bias (underfitting)}\\
+(e.g.~train err = 17\%; val err = 16\%) - \textbf{\emph{train err} too
+big \& \emph{val err} even bigger \(\longrightarrow\) both probs}\\
+(e.g.~train err = 17\%; val err = 34\%) - \textbf{\emph{train err} too
+small \& \emph{val err} also small \(\longrightarrow\)
+congratulations!}\\
+(e.g.~train err = 0.5\%; val err = 1\%) ~\\
+\hspace*{0.333em}
+
+\textbf{The Procedure}:
+
+\hypertarget{regularization}{%
+\section{Regularization}\label{regularization}}
+
+Idea: add a regularization term to the original loss function:
+
+\[\begin{equation}
+\mathcal{J}(w,b)=\frac{1}{m}\sum_{i=1}^{m}{\mathcal{L}(\hat{y}^{(i)},y^{(i)})}+\frac{\lambda}{2m}f(w)
+\end{equation}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \(\lambda\): regularization parameter
+\item
+  \(f(w)\): regularization on \(w\)
+\end{itemize}
+
+How does regularization prevent overfitting?
+
+\begin{itemize}
+\tightlist
+\item
+  set \(\lambda\) as big as possible \(\Rightarrow w^{[l]}\approx 0\)
+  \(\Rightarrow z^{[l]}\approx 0\) \(\Rightarrow\) as if some hidden
+  nodes don't exist any more
+\item
+  \(\Rightarrow\) less complexity \(\Rightarrow\) variance
+  \(\downarrow\)
+\end{itemize}
+
+~\\
+\textbf{Regularization on LogReg}: - \textbf{L2 Regularization}:
+
+\[\begin{equation}
+\mathcal{J}(w,b)=\frac{1}{m}\sum_{i=1}^{m}{\mathcal{L}(\hat{y}^{(i)},y^{(i)})}+\frac{\lambda}{2m}\|w\|^2_2 \\
+\|w\|^2_2=\sum_{j=1}^{n_x}w_j^2=w^Tw
+\end{equation}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{L1 Regularization}:
+\end{itemize}
+
+\[\begin{equation}
+\mathcal{J}(w,b)=\frac{1}{m}\sum_{i=1}^{m}{\mathcal{L}(\hat{y}^{(i)},y^{(i)})}+\frac{\lambda}{2m}\|w\|_1 \\
+\|w\|_1=\sum_{j=1}^{n_x}{|w|}
+\end{equation}\]
+
+\textbf{Regularization on NN}:
+
+\[\begin{equation}
+\mathcal{J}(W^{[k]},b^{[k]})=\frac{1}{m}\sum_{i=1}^{m}{\mathcal{L}(\hat{y}^{(i)},y^{(i)})}+\frac{\lambda}{2m}\sum_{l=1}^L{\|W^{[l]}\|^2_F}
+\end{equation}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Frobenius Norm:
+\end{itemize}
+
+\[\begin{equation}
+\|W^{[l]}\|^2_F=\sum_{i=1}^{n_{l-1}}\sum_{j=1}^{n_l}{(w_{ij}^{[l]})^2}
+\end{equation}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Weight Decay on GD:
+\end{itemize}
+
+\[\begin{align}
+W^{[l]}&:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}} \\
+&=w^{[l]}-\alpha\cdot\Big(\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}}(\text{original})+\frac{\lambda}{m}W^{[l]}\Big)
+\end{align}\]
+
+~\\
+\textbf{Dropout}: each node has a probability to be kicked out of the NN
+(\(\Rightarrow\) NN becomes smaller \& simpler) {[}only used in
+training{]}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Make a \textbf{Boolean} matrix corresponding to the matrix of
+  activation values:
+
+  \[\begin{align}
+   A^{[k]}&=\begin{bmatrix}
+   a_{11}^{[k]} & \cdots & a_{1m}^{[k]} \\
+   \vdots & \ddots & \vdots \\ 
+   a_{n_k1}^{[k]} & \cdots & a_{n_km}^{[k]}
+   \end{bmatrix}\quad\quad\quad A^{[k]}\in\mathbb{R}^{n_k\times m} \\ \\
+   B^{[k]}&=\begin{bmatrix}
+   b_{11}^{[k]} & \cdots & b_{1m}^{[k]} \\
+   \vdots & \ddots & \vdots \\ 
+   b_{n_k1}^{[k]} & \cdots & b_{n_km}^{[k]}
+   \end{bmatrix}\quad\quad\quad B^{[k]}\in\mathbb{R}^{n_k\times m}
+   \end{align}\]
+
+  where \(b_{ji}^{[k]}\in\\{\text{True}, \text{False}\\}\). The Boolean
+  values are assigned randomly based on a keep-probability \(p\) (can be
+  chosen differently for diff layers).
+\item
+  Multiply both matrices element-wise:
+
+  \[\begin{equation}
+   A^{[k]}=A^{[k]}* B^{[k]}
+   \end{equation}\]
+
+  so that some activation values are now zero (they are kicked out of
+  the neural network)
+\item
+  Invert the matrix element-wise:
+
+  \[\begin{equation}
+   A^{[k]}=A^{[k]}/p
+   \end{equation}\]
+
+  to ensure consistency in activation values
+\end{enumerate}
+
+\textbf{Data Augmentation}: modify the dataset to get more data (mostly
+used in Computer Vision) {[}Benefit: a very low-cost regularization{]}
+
+Examples: - flip picture - slight rotation - zoom in/out - distortions -
+\ldots{}
+
+\textbf{Early Stopping}: stop the training iterations in the middle
+
+Why do we stop in the middle?
+
+The goal of our training is NOT to finish training BUT to find the
+optimal weight parameters that minimizes the cost/error.
+
+As shown in the figure, sometimes we should just stop in the middle with
+the minimal validation error instead of keeping the training going to
+get overfitting.
+
+\textbf{Orthogonalization}: implement controls that only affect
+\textbf{ONE single component} of your algorithms performance at a time
+
+\textbf{Feature Scaling (normalization)}: normalize inputs for higher
+efficiency
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Set to zero mean:
+
+  \[\begin{align}
+   \mu&=\frac{1}{m}\sum_{i=1}^{m}{x^{(i)}} \\
+   x&=x-\mu
+   \end{align}\]
+\item
+  Normalize variance:
+
+  \[\begin{align}
+   \sigma^2&=\frac{1}{m}\sum_{i=1}^{m}{x^{(i)}\text{**}2}\quad\quad \text{**: element-wise squaring} \\
+   x&=x/\sigma^2
+   \end{align}\]
+\end{enumerate}
+
+\textbf{Gradient Checking}
+
+\begin{itemize}
+\item
+  Why?
+
+  Backprop is a very complex system of mathematical computations. It is
+  very possible that there might be some miscalculation or bugs in these
+  tremendous differentiations, even though the entire training appears
+  as if it's working properly.
+
+  Gradient Checking is the approach to prevent such issue by checking if
+  each gradient is calculated properly.
+\item
+  Equation
+
+  \[\begin{equation}
+    \frac{\partial{\mathcal{J}}}{\partial{w}}=\lim_{\varepsilon\rightarrow 0}\frac{\mathcal{J}(w+\varepsilon)-\mathcal{J}(w-\varepsilon)}{2\varepsilon}\approx\frac{\mathcal{J}(w+\varepsilon)-\mathcal{J}(w-\varepsilon)}{2\varepsilon}
+    \end{equation}\]
+\item
+  Implementation: Calculate the difference between actual gradient and
+  approximated gradient to see if the difference is reasonable:
+
+  \[\begin{equation}
+    \text{diff}=\frac{||g-g'||_ 2}{||g||_ 2+||g'||_ 2}
+    \end{equation}\]
+\end{itemize}
+
+\hypertarget{optimization}{%
+\section{Optimization}\label{optimization}}
+
+\textbf{Mini-Batch Gradient Descent}
+
+\begin{itemize}
+\item
+  Why?
+
+  To allow faster and more efficient computing when there is a large
+  number of training examples (e.g.~\(m=10000000\))
+\item
+  Implementation (see \href{../../DL/ANN/\#gd}{gradient descent} for
+  more details)
+
+  \[\begin{align}
+    \mathcal{L}(\hat{Y},Y)&=\frac{1}{2}\sum_{i=1}^{m'}{(\hat{Y_i}-Y_i)^2} \\
+    W&=W-\alpha\frac{\partial\mathcal{L}}{\partial W}
+    \end{align}\]
+\item
+  Performance
+
+  \begin{itemize}
+  \tightlist
+  \item
+    BGD vs MBGD
+  \end{itemize}
+
+  \begin{itemize}
+  \item
+    BGD vs SGD
+
+    BGD: large steps, low noise, too long per iteration\\
+    SGD: small steps, insane noise, lose vectorization\\
+    MBGD: in between \(\rightarrow\) optimal in most cases
+  \end{itemize}
+\end{itemize}
+
+\textbf{Gradient Descent with Momentum}
+
+\begin{itemize}
+\item
+  \textbf{Exponentially Weighted (Moving) Average}
+
+  \begin{itemize}
+  \item
+    Intuition
+
+    The blue dots represent the raw data points, while the red and green
+    curves represent the two EMAs of the blue dots. As clearly indicated
+    by the figure, EMA is used to reduce the huge oscillation of such
+    time-series data.
+  \item
+    Formula
+
+    \[\begin{equation}
+      V_t=\beta V_{t-1}+(1-\beta)\theta_t
+      \end{equation}\]
+
+    \begin{itemize}
+    \item
+      \(\theta_t\): the original time-series data point at time \(t\)
+    \item
+      \(V_t\): the EMA data point at time \(t\)
+    \item
+      \(\beta\): an indicator of how many time units (e.g.~days) this
+      algorithm is approximately averaging over:
+
+      \[\begin{equation}
+        \text{#time units}=\frac{1}{1-\beta}
+        \end{equation}\]
+
+      e.g.~\(\beta=0.9 \rightarrow\) average over 10 days;
+      \(\beta=0.96 \rightarrow\) average over 25 days
+    \end{itemize}
+  \item
+    Performance: easy computation + one-line code + memory efficiency
+  \item
+    \textbf{Bias Correction}
+
+    Assume \(\beta=0.99\):
+
+    \[\begin{align}
+      &V_0=0 \\
+      &V_1=0.99 V_0+0.01\theta_1=0.01\theta_1 \\
+      &V_2=0.99 V_2+0.01\theta_2=0.099\theta_1+0.01\theta_2 \\
+      &...
+      \end{align}\]
+
+    Notice that \(V_1 \& V_2\) are very tiny portions of
+    \(\theta_1 \& \theta_2\), meaning that they do not accurately
+    represent the actual data points.
+
+    Thus, it is necessary to rescale the early EMA values, with the
+    following formula:
+
+    \[\begin{equation}
+      V_t:=\frac{V_t}{1-\beta^t}
+      \end{equation}\]
+
+    In the later calculations, bias correction is not so necessary.
+  \end{itemize}
+\item
+  \textbf{Momentum}: application of EMA in GD
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \item
+    Compute \(dW,db\) on the current MB
+  \item
+    Compute EMA
+
+    \[\begin{align}
+     &V_{dW}:=\beta V_{dW}+(1-\beta)dW \\
+     &V_{db}:=\beta V_{db}+(1-\beta)db
+     \end{align}\]
+  \item
+    Compute GD
+
+    \[\begin{align}
+     &W:=W-\alpha V_{dW} \\
+     &b:=b-\alpha V_{db}
+     \end{align}\]
+  \end{enumerate}
+
+  \(\beta\) is often chosen as \(0.9\) in GD with Momentum.
+
+  Why named ``momentum?'' Think of \(dW\) as acceleration, \(V_{dW}\) as
+  velocity, and \(\beta\) as friction.
+\item
+  Performance
+
+  Red steps represent Momentum, while blue steps represent normal GD.
+
+  Slower learning vertically + Faster learning horizontally
+
+  \(\rightarrow\) Momentum is always better than SGD
+\end{itemize}
+
+\textbf{RMSprop (Root Mean Square Propagation)}
+
+\begin{itemize}
+\item
+  Intuition: a modified version of GD with Momentum
+
+  Why? To further minimize the oscillation of GD and maximize the speed
+  of convergence.
+\item
+  Steps:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \item
+    Compute \(dW,db\) on the current MB
+  \item
+    Compute RMS step
+
+    \[\begin{align}
+     &S_{dW}:=\beta S_{dW}+(1-\beta)dW^2 \\
+     &S_{db}:=\beta S_{db}+(1-\beta)db^2
+     \end{align}\]
+
+    where \(dW^2=dW* dW\)
+  \item
+    Compute GD
+
+    \[\begin{align}
+     &W:=W-\alpha \frac{dW}{\sqrt{S_{dW}}+\varepsilon} \\
+     &b:=b-\alpha \frac{db}{\sqrt{S_{db}}+\varepsilon}
+     \end{align}\]
+  \end{enumerate}
+
+  \(\varepsilon\) is added to ensure \(\text{denominator}\neq0\)
+  (normally \(\varepsilon=10^{-8}\))
+\end{itemize}
+
+\textbf{Adam}
+
+\begin{itemize}
+\item
+  Intuition: \textbf{Momentum + RMSprop}
+\item
+  Steps:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \item
+    Compute \(dW,db\) on the current MB
+  \item
+    Compute Momentum:
+
+    \[\begin{align}
+     &V_{dW}:=\beta_1 V_{dW}+(1-\beta_1)dW \\
+     &V_{db}:=\beta_1 V_{db}+(1-\beta_1)db
+     \end{align}\]
+
+    Compute RMSprop:
+
+    \[\begin{align}
+     &S_{dW}:=\beta_2 S_{dW}+(1-\beta_2)dW^2 \\
+     &S_{db}:=\beta_2 S_{db}+(1-\beta_2)db^2
+     \end{align}\]
+  \item
+    Bias Correction:
+
+    \[\begin{align}
+     &V_{dW}:=\frac{V_{dW}}{1-\beta_1^t}, V_{db}:=\frac{V_{db}}{1-\beta_1^t} \\
+     &S_{dW}:=\frac{S_{dW}}{1-\beta_2^t}, S_{db}:=\frac{S_{db}}{1-\beta_2^t}
+     \end{align}\]
+  \item
+    Compute GD:
+
+    \[\begin{align}
+     &W:=W-\alpha \frac{V_{dW}}{\sqrt{S_{dW}}+\varepsilon} \\
+     &b:=b-\alpha \frac{V_{db}}{\sqrt{S_{db}}+\varepsilon}
+     \end{align}\]
+
+    Hyperparameter choices:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(\alpha\): depends
+    \item
+      \(\beta_1: 0.9\)
+    \item
+      \(\beta_2: 0.999\)
+    \item
+      \(\varepsilon: 10^{-8}\)
+    \end{itemize}
+  \end{enumerate}
+\end{itemize}
+
+\textbf{Learning Rate Decay}
+
+\begin{itemize}
+\item
+  Intuition: as \(\alpha\) slowly decreases, training steps become
+  smaller \(\rightarrow\) oscillating closely around the minimum
+  (instead of jumping over the minimum)
+\item
+  Main Method:
+
+  \[\begin{equation}
+    \alpha=\frac{1}{1+r_{\text{decay}}\cdot \text{#epoch}}\cdot\alpha_0
+    \end{equation}\]
+
+  where 1 epoch means passing through data once.
+
+  Normally, \(\alpha_0=0.2,r_{\text{decay}}=1\)
+\item
+  Other Methods:
+
+  \begin{itemize}
+  \item
+    Exponential Decay:
+
+    \[\begin{equation}
+      \alpha=0.95^{\text{#epoch}}\cdot\alpha_0
+      \end{equation}\]
+  \item
+    Root Decay:
+
+    \[\begin{equation}
+      \alpha=\frac{k}{\sqrt{\text{#epoch}}}\cdot\alpha_0
+      \end{equation}\]
+  \item
+    Discrete Staircase:
+  \item
+    Manual Decay
+  \end{itemize}
+\end{itemize}
+
+\textbf{Problems with optimization}
+
+As learnt in Calculus, no matter how we try to find the optimum, we
+always have problems:
+
+\begin{itemize}
+\tightlist
+\item
+  Local Optima: we get stuck in local optima instead of moving to global
+  optima
+\item
+  Saddle Points: we find GD=0 at saddle points before we find global
+  optima
+\item
+  Plateau: long saddle that makes learning super slow
+\end{itemize}
+
+\hypertarget{hyperparameter-tuning}{%
+\section{Hyperparameter Tuning}\label{hyperparameter-tuning}}
+
+\textbf{Intuition}: try to find the optimal hyperparameter for the NN
+
+\textbf{List of Hyperparameters} (in the order of priority) - Tier 1:
+\(\alpha\) - Tier 2: \#hidden units, MB size - Tier 3: \#layers,
+\(\alpha\) decay - Tier 4: \(\beta_1\), \(\beta_2\), \(\varepsilon\)
+
+\textbf{Random Picking}: e.g.~\(n^{[l]}\in [50,100], L\in [2,4]\)
+
+\textbf{Appropriate Scale}: e.g.~\(\alpha\in [0.0001,1]\) is obviously
+NOT an appropriate scale, because 90\% of the values are in \([0.1,1]\).
+
+Instead, \(\alpha\in[0.0001,1]_ {\text{log}}\) is an appropriate scales
+because the random picking is equally distributed on the log scale.
+
+e.g.~for \(\beta\in[0.9,0.999]\), the code implementation should be -
+\(r\in[-3,-1]\) - \(\beta=1-10^r\)
+
+\hypertarget{batch-normalization}{%
+\section{Batch Normalization}\label{batch-normalization}}
+
+\textbf{Intuition}: Feature scaling normalizes the inputs to speed up
+learning for the 1st layer. Similarly, can we normalize \(a^{[l-1]}\) to
+train \(W^{[l]} \& b^{[l]}\) faster? Obviously.
+
+\textbf{Implementation}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Calculate mean \& variance
+
+  \[\begin{align}
+   \mu&=\frac{1}{m}\sum_{i=1}^{m}{z^{[l](i)}} \\
+   \sigma^2&=\frac{1}{m}\sum_{i=1}^{m}{(z^{[l](i)}-\mu)^2}
+   \end{align}\]
+\item
+  Normalize Node Output:
+
+  \[\begin{equation}
+   z_{\text{norm}}^{[l](i)}=\gamma\frac{z^{[l](i)}-\mu}{\sqrt{\sigma^2+\varepsilon}}+\beta
+   \end{equation}\]
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\gamma\ \&\ \beta\) = learnable parameters
+  \item
+    \(\gamma\neq\sqrt{\sigma^2+\varepsilon}\) and \(\beta\neq\mu\)
+  \item
+    Make sure to add \(\gamma\ \&\ \beta\) to the dictionary of
+    parameter updates during coding
+  \item
+    Batch Normalization eliminates \(b^{[l]}\) during \(\mu\)
+    calculation
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{cnn}{%
+\chapter{Convolutional Neural Networks}\label{cnn}}
+
+\hypertarget{basics-of-cnn}{%
+\section{Basics of CNN}\label{basics-of-cnn}}
+
+\begin{itemize}
+\item
+  \textbf{Intuition of CNN}
+
+  \begin{itemize}
+  \item
+    CNN is mostly used in Computer Vision (image classification, object
+    detection, neural style transfer, etc.)
+  \item
+    \textbf{Input}: images \(\rightarrow\) volume of numerical values in
+    the shape of \textbf{width \(\times\) height \(\times\) color-scale}
+    (color-scale=3 \(\rightarrow\) RGB; color-scale=1 \(\rightarrow\)
+    BW)
+
+    In the gif above, the input shape is \(5\times5\times3\), meaning
+    that the image is colored and the image size \(5\times5\). The
+    ``\(7\times7\times3\)'' results from \textbf{padding}, which will be
+    discussed below.
+  \item
+    \textbf{Convolution}:
+
+    \begin{enumerate}
+    \def\labelenumi{\arabic{enumi}.}
+    \tightlist
+    \item
+      For each color layer of the input image, we apply a 2d
+      \textbf{filter} that \textbf{scans} through the layer in order.
+    \item
+      For each block that the filter scans, we \textbf{multiply} the
+      corresponding filter value and the cell value, and we \textbf{sum}
+      them up.
+    \item
+      We \textbf{sum} up the output values from all layers of the filter
+      (and add a bias value to it) and \textbf{output} this value to the
+      corresponding output cell.
+    \item
+      (If there are multiple filters, ) After the first filter finishes
+      scanning, the next filter starts scanning and outputs into a new
+      layer.\\
+    \end{enumerate}
+  \item
+    In the gif above,
+
+    \begin{enumerate}
+    \def\labelenumi{\arabic{enumi}.}
+    \item
+      Apply 2 filters of the shape \(3\times3\times3\).
+    \item
+      1st filter - 1st layer - 1st block:
+
+      \[\begin{equation}
+       0+0+0+0+0+0+0+(1\times-1)+0=-1
+       \end{equation}\]
+
+      1st filter - 2nd layer - 1st block:
+
+      \[\begin{equation}
+       0+0+0+0+(2\times-1)+(1\times1)+0+(2\times1)+0=1
+       \end{equation}\]
+
+      1st filter - 3rd layer - 1st block:
+
+      \[\begin{equation}
+       0+0+0+0+(2\times1)+0+0+(1\times-1)+0=1
+       \end{equation}\]
+    \item
+      Sum up + bias \(\rightarrow\) 1st cell of 1st output layer
+
+      \[\begin{equation}
+       -1+1+1+1=2
+       \end{equation}\]
+    \item
+      Repeat till we finish scanning\\
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{Edge Detection \& Filter}
+
+  \begin{itemize}
+  \item
+    Sample filters
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Gray Scale: 1 = lighter, 0 = gray, -1 = darker\\
+    \end{itemize}
+  \item
+    Notice that we don't really need to define any filter values.
+    Instead, we are supposed to train the filter values.\\
+    All the convolution operations above are just the same as the
+    operations in ANN. Filters here correspond to \(W\) in ANN.
+  \end{itemize}
+\item
+  \textbf{Padding}
+
+  \begin{itemize}
+  \item
+    Problem: corner cells \& edge cells are detected much fewer times
+    than the middle cells \(\rightarrow\) info loss of corner \& edge
+  \item
+    Solution: pad the edges of the image with ``0'' cells (as shown in
+    the gif above)
+  \end{itemize}
+\item
+  \textbf{Stride}: the step size the filter takes (\(s=2\) in the gif
+  above)
+\item
+  \textbf{General Formula of Convolution}:
+
+  \[\begin{equation}
+    \text{Output Size}=\left\lfloor\frac{n+2p-f}{s}+1\right\rfloor\times\left\lfloor\frac{n+2p-f}{s}+1\right\rfloor
+    \end{equation}\]
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(n\times n\): image size
+  \item
+    \(f\times f\): filter size
+  \item
+    \(p\): padding
+  \item
+    \(s\): stride
+  \item
+    Floor: ignore the computation when the filter sweeps the region
+    outside the image matrix\\
+  \end{itemize}
+\item
+  \textbf{CNN Layers}:
+
+  \begin{itemize}
+  \item
+    \textbf{Convolution} (CONV): as described above
+  \item
+    \textbf{Pooling} (POOL): to reduce \#params \& computations (most
+    common pooling size = \(2\times2\))
+
+    \begin{itemize}
+    \item
+      Max Pooling
+
+      \begin{enumerate}
+      \def\labelenumi{\arabic{enumi}.}
+      \tightlist
+      \item
+        Divide the matrix evenly into regions
+      \item
+        Take the max value in that region as output value\\
+      \end{enumerate}
+    \item
+      Average Pooling
+
+      \begin{enumerate}
+      \def\labelenumi{\arabic{enumi}.}
+      \tightlist
+      \item
+        Divide the matrix evenly into regions
+      \item
+        Take the average value of the cells in that region as output
+        value\\
+      \end{enumerate}
+    \item
+      Stochastic Pooling
+
+      \begin{enumerate}
+      \def\labelenumi{\arabic{enumi}.}
+      \item
+        Divide the matrix evenly into regions
+      \item
+        Normalize each cell based on the regional sum:
+
+        \[\begin{equation}
+         p_i=\frac{a_i}{\sum_{k\in R_j}{a_k}}
+         \end{equation}\]
+      \item
+        Take a random cell based on multinomial distribution as output
+        value\\
+      \end{enumerate}
+    \end{itemize}
+  \item
+    \textbf{Fully Connected} (FC): to flatten the 2D/3D matrices into a
+    single vector (each neuron is connected with all input values)
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{cnn-examples}{%
+\section{CNN Examples}\label{cnn-examples}}
+
+\textbf{LeNet-5}: LeNet-5 Digit Recognizer
+
+\begin{longtable}[]{@{}cccc@{}}
+\toprule
+Layer & Shape & Total Size & \#params\tabularnewline
+\midrule
+\endhead
+INPUT & 32 x 32 x 3 & 3072 & 0\tabularnewline
+CONV1 (Layer 1) & 28 x 28 x 6 & 4704 & 156\tabularnewline
+POOL1 (Layer 1) & 14 x 14 x 6 & 1176 & 0\tabularnewline
+CONV2 (Layer 2) & 10 x 10 x 16 & 1600 & 416\tabularnewline
+POOL2 (Layer 2) & 5 x 5 x 16 & 400 & 0\tabularnewline
+FC3 (Layer 3) & 120 x 1 & 120 & 48001\tabularnewline
+FC4 (Layer 4) & 84 x 1 & 84 & 10081\tabularnewline
+Softmax & 10 x 1 & 10 & 841\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Calculation of \#params for CONV: \((f\times f+1)\times n_f\)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(f\): filter size
+  \item
+    \(+1\): bias
+  \item
+    \(n_f\): \#filter
+  \end{itemize}
+\end{itemize}
+
+\textbf{AlexNet}: winner of 2012 ImageNet Large Scale Visual Recognition
+Challenge
+
+\begin{longtable}[]{@{}cccc@{}}
+\toprule
+Layer & Shape & Total Size & \#params\tabularnewline
+\midrule
+\endhead
+INPUT & 227 x 227 x 3 & 154587 & 0\tabularnewline
+CONV1 (Layer 1) & 55 x 55 x 96 & 290400 & 11712\tabularnewline
+POOL1 (Layer 1) & 27 x 27 x 96 & 69984 & 0\tabularnewline
+CONV2 (Layer 2) & 27 x 27 x 256 & 186624 & 6656\tabularnewline
+POOL2 (Layer 2) & 13 x 13 x 256 & 43264 & 0\tabularnewline
+CONV3 (Layer 3) & 13 x 13 x 384 & 64896 & 3840\tabularnewline
+CONV4 (Layer 3) & 13 x 13 x 384 & 64896 & 3840\tabularnewline
+CONV5 (Layer 3) & 13 x 13 x 256 & 43264 & 2560\tabularnewline
+POOL5 (Layer 3) & 6 x 6 x 256 & 9216 & 0\tabularnewline
+FC5 (Flatten) & 9216 x 1 & 9216 & 0\tabularnewline
+FC6 (Layer 4) & 4096 x 1 & 4096 & 37748737\tabularnewline
+FC7 (Layer 5) & 4096 x 1 & 4096 & 16777217\tabularnewline
+Softmax & 1000 x 1 & 1000 & 4096000\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Significantly bigger than LeNet-5 (60M params to be trained)
+\item
+  Require multiple GPUs to speed the training up
+\end{itemize}
+
+\textbf{VGG}: made by Visual Geometry Group from Oxford
+
+\begin{itemize}
+\tightlist
+\item
+  Too large: 138M params
+\end{itemize}
+
+\textbf{Inception}
+
+\begin{itemize}
+\item
+  \textbf{ResNets}
+
+  \begin{itemize}
+  \item
+    Residual Block
+
+    \[\begin{equation}
+      a^{[l+2]}=g(z^{[l+2]}+a^{[l]})
+      \end{equation}\]
+
+    Intuition: we add activation values from layer \(l\) to the
+    activation in layer \(l+2\)
+  \item
+    Why ResNets?
+
+    \begin{itemize}
+    \item
+      ResNets allow parametrization for the identity function \(f(x)=x\)
+    \item
+      ResNets are proven to be more effective than plain networks:
+    \item
+      ResNets add more complexity to the NN in a very simple way
+    \item
+      The idea of ResNets further inspired the development of RNN\\
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{1x1 Conv} (i.e.~Network in Network {[}NiN{]})
+
+  \begin{itemize}
+  \item
+    WHY??? This sounds like the stupidest idea ever!!
+  \item
+    Watch this.
+
+    In a normal CNN layer like this, we need to do in total 210M
+    calculations.
+
+    However, if we add a 1x1 Conv layer in between, we only need to do
+    in total 17M calculations.
+  \item
+    Therefore, 1x1 Conv is significantly more useful than what newbies
+    expect. When we would like to keep the matrix size but reduce
+    \#layers, using 1x1 Conv can significantly reduce \#computations
+    needed, thus requiring less computing power.\\
+  \end{itemize}
+\item
+  \textbf{The Inception}: We need to go deeper!
+
+  \begin{itemize}
+  \item
+    Inception Module
+  \item
+    Inception Network
+  \end{itemize}
+\end{itemize}
+
+\textbf{Conv1D \& Conv3D}:
+
+Although CNN (Conv2D) is undoubtedly most useful in Computer Vision,
+there are also some other forms of CNN used in other fields:
+
+\begin{itemize}
+\item
+  \textbf{Conv1D}: e.g.~text classification, heartbeat detection,
+  \ldots{}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    use a 1D filter to convolve a 1D input vector
+  \item
+    e.g.~\(14\times1\xrightarrow{5\times1,16}10\times16\xrightarrow{5\times16,32}6\times32\)
+  \item
+    However, this is almost never used since we have \textbf{RNN}\\
+  \end{itemize}
+\item
+  \textbf{Conv3D}: e.g.~CT scan, \ldots{}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    use a 3D filter to convolve a 3D input cube
+  \item
+    e.g.~\(14\times14\times14\times1\xrightarrow{5\times5\times5\times1,16}10\times10\times10\times16\xrightarrow{5\times5\times5\times16,32}6\times6\times6\times32\)
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{object-detection}{%
+\section{Object Detection}\label{object-detection}}
+
+\begin{itemize}
+\item
+  Object Localization \(\rightarrow\) 1 obj; Detection \(\rightarrow\)
+  multiple objs.
+\item
+  \textbf{Bounding Box}: to capture the obj in the img with a box
+
+  \begin{itemize}
+  \item
+    Params:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(b_x, b_y\) = central point
+    \item
+      \(b_h, b_w\) = full height/width
+    \end{itemize}
+  \item
+    New target label (in place of image classification output):
+
+    \[\begin{equation}
+      y=\begin{bmatrix}
+      p_c \\ b_x \\ b_y \\ b_h \\ b_w \\ c_1 \\ \vdots \\ c_n
+      \end{bmatrix}
+      \end{equation}\]
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(p_c\): ``is there any object in this box?''
+
+      \begin{itemize}
+      \tightlist
+      \item
+        if \(p_c=0\), we ignore the remaining params
+      \end{itemize}
+    \item
+      \(c_i\): class label \(i\) (e.g.~\(c_1\): cat, \(c_2\): dog,
+      \(c_3\): bird, \ldots)\\
+      ~\\
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Landmark Detection}: to capture the obj in the img with points
+
+  \begin{itemize}
+  \item
+    Params: \((l_{ix},l_{iy})\) = each landmark point
+  \item
+    New target label:
+
+    \[\begin{equation}
+      y=\begin{bmatrix}
+      p_c \\ l_{1x} \\ l_{1y} \\ \vdots \\ l_{nx} \\ l_{ny} \\ c_1 \\ \vdots \\ c_n
+      \end{bmatrix}
+      \end{equation}\]
+  \item
+    THE LABELS MUST BE CONSISTENT!
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Always start from the exact same location of the object! (e.g.~if
+      you start with the left corner of the left eye for one image, you
+      should always start with the left corner of the left eye for all
+      images.)
+    \item
+      \#landmarks should be the same!
+    \end{itemize}
+  \end{itemize}
+
+  I personally have a very awful experience with Landmark Detection.
+  When the algorithms of object detection were not yet well-known in the
+  IT industry, I worked on a project of digital screen defects detection
+  in a Finnish company. Since digital screen defects are 1) black \&
+  white 2) in very simple geometric shapes, the usage of bounding boxes
+  could have significantly reduced the complexity of both data
+  collection and NN model building.\\
+  However, the team insisted to use landmark detection. Due to 1) that
+  screen defects are unstructured 2) that the number of landmark points
+  for two different screen defects can hardly be the same, the dataset
+  was basically unusable, and none of the models we built could learn
+  accurate patterns from it, leading to an unfortunate failure.\\
+  I personally would argue that bounding box is much better than
+  landmark detection in most practical cases.
+\item
+  \textbf{Sliding Window}
+
+  \begin{itemize}
+  \item
+    Apply a sliding window with a fixed size to scan every part of the
+    img left-right and top-bottom (just like CONV), and feed each part
+    to CNN
+  \item
+    In order to capture the same type of objects in different sizes and
+    positions in the img, shrink the img (i.e.~enlarge the sliding
+    window) and scan again, and repeat.
+  \item
+    Problem: HUGE computational cost!
+  \item
+    Solution: (contemporary)
+
+    \begin{enumerate}
+    \def\labelenumi{\arabic{enumi}.}
+    \item
+      Convert FC layer into CONV layer
+    \item
+      Share the former FC info with latter convolutions
+
+      \begin{enumerate}
+      \def\labelenumii{\arabic{enumii}.}
+      \tightlist
+      \item
+        First run of the CNN.
+      \item
+        Second run of the same CNN with a bigger size of the same img
+        (due to sliding window). Notice that the FC info from the first
+        run is shared in the second run.
+      \item
+        Latter runs of the same CNN with bigger sizes of the same img
+        (due to sliding window). Notice that the FC info from all
+        previous runs is shared in this run, thus saving computation
+        power and memories.\\
+        ~\\
+      \end{enumerate}
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{Intersection over Union}
+
+  Is the purple box a good prediction of the car location?
+
+  Intersection over Union is defined as:
+
+  \[\begin{equation}
+    \text{IoU}=\frac{\text{area of intersection}}{\text{area of union}}
+    \end{equation}\]
+
+  In this case, area of intersection is the intersection between the red
+  and purple box, and area of union is the total area covered by the red
+  and purple box.\\
+  If \(\text{IoU}\leq 0.5\), then the prediction box is correct. (Other
+  threshold values are also okay but 0.5 is conventional.)
+\item
+  \textbf{YOLO (You Only Look Once)}
+
+  \begin{itemize}
+  \item
+    \textbf{Grids}: divide the image into grids \& use each grid as a
+    bounding box
+
+    \begin{itemize}
+    \tightlist
+    \item
+      when \(p_c=0\), we ignore the entire grid
+    \item
+      \(p_c=1\) only when the central point of the object \(\in\) the
+      grid
+    \item
+      target output:
+      \(Y.\text{shape}=n_{\text{grid}}\times n_{\text{grid}}\times y.\text{length}\)\\
+    \end{itemize}
+  \item
+    \textbf{Non-Max Suppression}: what happens when the grid is too
+    small to capture the entire object?
+
+    \begin{enumerate}
+    \def\labelenumi{\arabic{enumi}.}
+    \tightlist
+    \item
+      Discard all boxes with \(p_c\leq 0.6\)
+    \item
+      Pick the box with the largest \(p_c\) as the prediction
+    \item
+      Discard any remaining box with \(\text{IoU}\geq 0.5\) with the
+      prediction
+    \item
+      Repeat till there is only one box left.\\
+    \end{enumerate}
+  \item
+    \textbf{Anchor Boxes}: what happens when two objects overlap?
+    (e.g.~a hot girl standing in front of a car)
+
+    \begin{enumerate}
+    \def\labelenumi{\arabic{enumi}.}
+    \item
+      Predefine Anchor boxes for different objects
+    \item
+      Redefine the target value as a combination of Anchor 1 + Anchor 2
+
+      \[\begin{equation}
+       y=\begin{bmatrix}
+       p_{c1} \\
+       \vdots \\ 
+       p_{c2} \\
+       \vdots 
+       \end{bmatrix}
+       \end{equation}\]
+    \item
+      Each object in the image is assigned to grid cell that contains
+      object's central point \& anchor box for the grid cell with the
+      highest \(\text{IoU}\)\\
+      ~\\
+    \end{enumerate}
+  \item
+    \textbf{General Procedure}:
+
+    \begin{enumerate}
+    \def\labelenumi{\arabic{enumi}.}
+    \tightlist
+    \item
+      Divide the images into grids and label the objects
+    \item
+      Train the CNN
+    \item
+      Get the prediction for each anchor box in each grid cell
+    \item
+      Get rid of low probability predictions
+    \item
+      Get final predictions through non-max suppression for each class\\
+    \end{enumerate}
+  \end{itemize}
+\item
+  \textbf{R-CNN}
+
+  TO BE CONTINUED
+\end{itemize}
+
+\hypertarget{face-recognition}{%
+\section{Face Recognition}\label{face-recognition}}
+
+\begin{itemize}
+\item
+  Face Verification vs Face Recognition
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Verification
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Input image, name/ID
+    \item
+      Output whether the input image is that of the claimed person (1:1)
+    \end{itemize}
+  \item
+    Recognition
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Input image
+    \item
+      Output name/ID if the image is any of the \(K\) ppl in the
+      database (1:K)\\
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Siamese Network}
+
+  \begin{itemize}
+  \item
+    \textbf{One Shot Learning}: learn a similarity function
+
+    The major difference between normal image classification and face
+    recognition is that we don't have enough training examples.
+    Therefore, rather than learning image classification, we
+
+    \begin{enumerate}
+    \def\labelenumi{\arabic{enumi}.}
+    \tightlist
+    \item
+      Calculate the degree of diff between the imgs as \(d\)
+    \item
+      If \(d\leq\tau\): same person; If \(d>\tau\): diff person\\
+    \end{enumerate}
+  \item
+    Preparation \& Objective:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Encode \(x^{(i)}\) as \(f(x^{(i)})\) (defined by the params of the
+      NN)
+    \item
+      Compute
+      \(d(x^{(i)},x^{(j)})=\left\lVert{f(x^{(i)})-f(x^{(j)})}\right\lVert_ 2^2\)
+
+      \begin{itemize}
+      \tightlist
+      \item
+        i.e.~distance between the two encoding vectors
+      \item
+        if \(x^{(i)},x^{(j)}\) are the same person,
+        \(\left\lVert{f(x^{(i)})-f(x^{(j)})}\right\lVert_ 2^2\) is small
+      \item
+        if \(x^{(i)},x^{(j)}\) are different people,~
+        \(\left\lVert{f(x^{(i)})-f(x^{(j)})}\right\lVert_ 2^2\) is
+        large\\
+      \end{itemize}
+    \end{itemize}
+  \item
+    \textbf{Method 1: Triplet Loss}
+
+    \begin{itemize}
+    \item
+      Learning Objective: distinguish between Anchor image \&
+      Positive/Negative images (i.e.~\textbf{A vs P / A vs N})
+
+      \begin{enumerate}
+      \def\labelenumi{\arabic{enumi}.}
+      \item
+        Initial Objective:
+        \(\left\lVert{f(A)-f(P)}\right\lVert_ 2^2 \leq \left\lVert{f(A)-f(N)}\right\lVert_ 2^2\)
+
+        Intuition: We want to make sure the difference of A vs P is
+        smaller than the difference of A vs N, so that this Anchor image
+        is classified as positive (i.e.~recognized)
+      \item
+        Problem: \(\exists\ "0-0\leq0"\), in which case we can't tell
+        any difference
+      \item
+        Final Objective:
+        \(\left\lVert{f(A)-f(P)}\right\lVert_ 2^2-\left\lVert{f(A)-f(N)}\right\lVert_ 2^2+\alpha\leq0\)
+
+        Intuition: We apply a margin \(\alpha\) to solve the problem and
+        meanwhile make sure ``A vs N'' is significantly larger than ``A
+        vs P''
+      \end{enumerate}
+    \item
+      Loss Function:
+
+      \[\begin{equation}
+        \mathcal{L}(A,P,N)=\max{(\left\lVert{f(A)-f(P)}\right\lVert_ 2^2-\left\lVert{f(A)-f(N)}\right\lVert_ 2^2+\alpha, 0)}
+        \end{equation}\]
+
+      \begin{itemize}
+      \tightlist
+      \item
+        Intuition: As long as this thing is less than 0, the loss is 0
+        and that's a successful recognition!\\
+      \end{itemize}
+    \item
+      Training Process:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        Given 10k imgs of 1k ppl: use the 10k images to generate
+        triplets \(A^{(i)}, P^{(i)}, N^{(i)}\)
+      \item
+        Make sure to have multiple imgs of the same person in the
+        training set
+      \item
+        random choosing
+      \item
+        Choose triplets that are quite ``hard'' to train on
+      \end{itemize}
+    \end{itemize}
+  \item
+    \textbf{Method 2: Binary Classification}
+
+    \begin{itemize}
+    \item
+      Learning Objective: Check if two imgs represent the same person or
+      diff ppl
+
+      \begin{itemize}
+      \tightlist
+      \item
+        \(y=1\): same person
+      \item
+        \(y=0\): diff ppl
+      \end{itemize}
+    \item
+      Training output:
+
+      \[\begin{equation}
+        \hat{y}=\sigma\Bigg(\sum_{k=1}^{128}{w_i \Big|f(x^{(i)})_ k-f(x^{(j)})_ k\Big|+b}\Bigg)
+        \end{equation}\]
+
+      \begin{itemize}
+      \tightlist
+      \item
+        Precompute the output vectors \(f(x^{(i)})\ \&\ f(x^{(j)})\) so
+        that you don't have to compute them again during each training
+        process\\
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Neural Style Transfer}
+
+  \begin{itemize}
+  \item
+    Intuition: \textbf{Content(C) + Style(S) = Generated Image(G)}
+
+    Combine Content image with Style image to Generate a brand new image
+  \item
+    Cost Function:
+
+    \[\begin{equation}
+      \mathcal{J}(G)=\alpha\mathcal{J}_ \text{content}(C,G)+\beta\mathcal{J}_ \text{style}(S,G)
+      \end{equation}\]
+
+    \begin{itemize}
+    \item
+      \(\mathcal{J}\): the diff between C/S and G
+    \item
+      \(\alpha,\beta\): weight params
+    \item
+      Style: correlation between activations across channels
+
+      When there is some pattern in one patch, and there is another
+      pattern that changes similarly in the other patch, they are
+      \textbf{correlated}.
+
+      e.g.~vertical texture in one patch \(\leftrightarrow\) orange
+      color in another patch
+
+      The more often they occur together, the more correlated they are.
+    \item
+      Content Cost Function:
+
+      \[\begin{equation}
+        \mathcal{J}_ \text{content}(C,G)=\frac{1}{2}\left\lVert{a^{[l](C)}-a^{[1](G)}}\right\lVert^2
+        \end{equation}\]
+
+      \begin{itemize}
+      \tightlist
+      \item
+        Use hidden layer \(l\) to compute content cost
+      \item
+        Use pre-trained CNN (e.g.~VGG)
+      \item
+        If \(a^{[l](C)}\ \&\ a^{[l](G)}\) are similar, then both imgs
+        have similar content\\
+      \end{itemize}
+    \item
+      Style Cost Function:
+
+      \[\begin{equation}
+        \mathcal{J}_ \text{style}(S,G)=\sum_l{\lambda^{[l]}\mathcal{J}_ \text{style}^{[l]}(S,G)}
+        \end{equation}\]
+
+      \begin{itemize}
+      \item
+        Style Cost per layer:
+
+        \[\begin{equation}
+          \mathcal{J}^{[l]}_ \text{style}(S,G)=\frac{1}{(2n_h^{[l]}n_w^{[l]}n_c^{[l]})^2}\left\lVert{G^{[l](S)}-G^{[1](G)}}\right\lVert^2_F
+          \end{equation}\]
+
+        \begin{itemize}
+        \tightlist
+        \item
+          the first term is simply a normalization param
+        \end{itemize}
+      \item
+        Style Matrix:
+
+        \[\begin{equation}
+          G_{kk'}^{[l]}=\sum_{i=1}^{n_H^{[l]}}{\sum_{j=1}^{n_W^{[l]}}{a_{i,j,k}^{[l]}\cdot a_{i,j,k'}^{[l]}}}
+          \end{equation}\]
+
+        \begin{itemize}
+        \tightlist
+        \item
+          \(a_{i,j,k}^{[l]}\): activation at height \(i\), width \(j\),
+          channel \(k\)
+        \item
+          \(G^{[l]}.\text{shape}=n_c^{[l]}\times n_c^{[l]}\)
+        \item
+          Intuition: sum up the multiplication of the two activations on
+          the same cell in two different channels
+        \end{itemize}
+      \end{itemize}
+    \item
+      Training Process:
+
+      \begin{itemize}
+      \tightlist
+      \item
+        Intialize \(G\) randomly (e.g.~100 x 100 x 3)
+      \item
+        Use GD to minimize \(\mathcal{J}(G)\):
+        \(G := G-\frac{\partial{\mathcal{J}(G)}}{\partial{G}}\)
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\backmatter
+\end{document}
