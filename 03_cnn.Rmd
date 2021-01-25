@@ -457,7 +457,7 @@ Although CNN (Conv2D) is undoubtedly most useful in Computer Vision, there are a
             
             - Use hidden layer $l$ to compute content cost
             - Use pre-trained CNN (e.g. VGG)
-            - If $a^{\[l\](C)}\ \&\ a^{\[l\](G)}$ are similar, then both imgs have similar content  
+            - If $a^{[l](C)}\ \&\ a^{[l](G)}$ are similar, then both imgs have similar content  
         <br/>
         - Style Cost Function:
         
@@ -479,8 +479,8 @@ Although CNN (Conv2D) is undoubtedly most useful in Computer Vision, there are a
                 G_{kk'}^{[l]}=\sum_{i=1}^{n_H^{[l]}}{\sum_{j=1}^{n_W^{[l]}}{a_{i,j,k}^{[l]}\cdot a_{i,j,k'}^{[l]}}}
                 \end{equation}$$
             
-                - $a_{i,j,k}^{\[l]}$: activation at height $i$, width $j$, channel $k$
-                - $G^{\[l]}.\text{shape}=n_c^{\[l]}\times n_c^{\[l]}$
+                - $a_{i,j,k}^{[l]}$: activation at height $i$, width $j$, channel $k$
+                - $G^{[l]}.\text{shape}=n_c^{[l]}\times n_c^{[l]}$
                 - <u>Intuition</u>: sum up the multiplication of the two activations on the same cell in two different channels
                 
         - Training Process:

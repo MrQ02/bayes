@@ -794,7 +794,7 @@ If <span class="math inline">\(\text{IoU}\leq 0.5\)</span>, then the prediction 
 <ul>
 <li>Use hidden layer <span class="math inline">\(l\)</span> to compute content cost</li>
 <li>Use pre-trained CNN (e.g. VGG)</li>
-<li>If <span class="math inline">\(a^{\[l\](C)}\ \&amp;\ a^{\[l\](G)}\)</span> are similar, then both imgs have similar content<br />
+<li>If <span class="math inline">\(a^{[l](C)}\ \&amp;\ a^{[l](G)}\)</span> are similar, then both imgs have similar content<br />
 <br/></li>
 </ul></li>
 <li><p>Style Cost Function:</p>
@@ -814,8 +814,8 @@ If <span class="math inline">\(\text{IoU}\leq 0.5\)</span>, then the prediction 
   G_{kk&#39;}^{[l]}=\sum_{i=1}^{n_H^{[l]}}{\sum_{j=1}^{n_W^{[l]}}{a_{i,j,k}^{[l]}\cdot a_{i,j,k&#39;}^{[l]}}}
   \end{equation}\]</span></p>
 <ul>
-<li><span class="math inline">\(a_{i,j,k}^{\[l]}\)</span>: activation at height <span class="math inline">\(i\)</span>, width <span class="math inline">\(j\)</span>, channel <span class="math inline">\(k\)</span></li>
-<li><span class="math inline">\(G^{\[l]}.\text{shape}=n_c^{\[l]}\times n_c^{\[l]}\)</span></li>
+<li><span class="math inline">\(a_{i,j,k}^{[l]}\)</span>: activation at height <span class="math inline">\(i\)</span>, width <span class="math inline">\(j\)</span>, channel <span class="math inline">\(k\)</span></li>
+<li><span class="math inline">\(G^{[l]}.\text{shape}=n_c^{[l]}\times n_c^{[l]}\)</span></li>
 <li><u>Intuition</u>: sum up the multiplication of the two activations on the same cell in two different channels</li>
 </ul></li>
 </ul></li>

@@ -172,7 +172,7 @@
 <li><p>We convert the input sentence into <span class="math inline">\(X\)</span>: <span class="math inline">\(x^{\langle 1 \rangle}x^{\langle 2 \rangle}...x^{\langle t \rangle}...x^{\langle 12 \rangle}\)</span></p>
 <p>where <span class="math inline">\(x^{\langle t \rangle}\)</span> represents each word in the sentence.</p>
 <p>But how does it represent a word? Notice that we used the capitalized <span class="math inline">\(X\)</span> for a single sentence. Actually, <span class="math inline">\(X.\text{shape}=5000\times12\)</span>, and <span class="math inline">\(x.\text{shape}=5000\times1\)</span>. Why?</p>
-<p>We first make a vocabulary list like <span class="math inline">\(\text{list}=\[\text{a; and; ...; history; ...; MrBeast; ...}]\)</span>.</p>
+<p>We first make a vocabulary list like <span class="math inline">\(\text{list}=[\text{a; and; ...; history; ...; MrBeast; ...}]\)</span>.</p>
 <p>Then, we convert each word into a one-hot vector representing the index of the word in the dictionary, e.g.:</p>
 <p><span class="math display">\[\begin{equation}
   x^{\langle 1 \rangle}=\begin{bmatrix}
@@ -200,8 +200,8 @@
 <p><br/>
 Forward propagation:
 - <span class="math inline">\(a^{\langle 0 \rangle}=\textbf{0}\)</span>
-- <span class="math inline">\(a^{\langle t \rangle}=g(W_{a}\[a^{\langle t-1 \rangle}; x^{\langle t \rangle}]+b_a)\ \ \ \ \|\ g:\ \text{tanh/ReLU}\)</span></p>
-<pre><code>where $W_a=\[W_{aa}\ W_{ax}]$ with a shape of $(100,10100)$ if we assume a dictionary of 10000 words (i.e. $x^{\langle t \rangle}.\text{shape}=(10000,100)$) and the activation length of 100.</code></pre>
+- <span class="math inline">\(a^{\langle t \rangle}=g(W_{a}[a^{\langle t-1 \rangle}; x^{\langle t \rangle}]+b_a)\ \ \ \ \|\ g:\ \text{tanh/ReLU}\)</span></p>
+<pre><code>where $W_a=[W_{aa}\ W_{ax}]$ with a shape of $(100,10100)$ if we assume a dictionary of 10000 words (i.e. $x^{\langle t \rangle}.\text{shape}=(10000,100)$) and the activation length of 100.</code></pre>
 <ul>
 <li><span class="math inline">\(\hat{y}^{\langle t \rangle}=g(W_{y}a^{\langle t \rangle}+b_y)\ \ \ \ \|\ g:\ \text{sigmoid}\)</span></li>
 </ul>
@@ -521,7 +521,7 @@ E\times \vec{o}_ j=\vec{e}_ j
 <p><u>Algorithm</u>:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Randomly</strong> choose context &amp; target words with <strong>skip-gram</strong>. (e.g. context “MrBeast” &amp; target “youtubers”)</p></li>
-<li><p>Learn <strong>mapping</strong> of “<span class="math inline">\(c\ (\text{&quot;mrbeast&quot;}\[1234])\rightarrow t\ (\text{&quot;youtubers&quot;}\[765])\)</span>”</p></li>
+<li><p>Learn <strong>mapping</strong> of “<span class="math inline">\(c\ (\text{&quot;mrbeast&quot;}[1234])\rightarrow t\ (\text{&quot;youtubers&quot;}[765])\)</span>”</p></li>
 <li><p>Use <strong>softmax</strong> to calculate the probability of appearance of target given context:</p>
 <p><span class="math display">\[\begin{equation}
  \hat{y}=P(t|c)=\frac{e^{\theta_t^Te_c}}{\sum_{j=1}^{n}{e^{\theta_j^Te_c}}}
@@ -701,7 +701,7 @@ Attention Model = Encoding BRNN + Decoding RNN
 <p><span class="math display">\[\begin{equation}
  \alpha^{&lt;t,t&#39;&gt;}=\frac{e^{(e^{&lt;t,t&#39;&gt;})}}{\sum_{t&#39;=1}^{T_x}{e^{(e^{&lt;t,t&#39;&gt;})}}}
  \end{equation}\]</span></p>
-<p>where <span class="math inline">\(e^{\&lt;t,t&#39;&gt;}=W_e^{\&lt;t,t&#39;&gt;}\[s^{\&lt;t-1&gt;};a^{\&lt;t&#39;&gt;}] +b_e^{\&lt;t,t&#39;&gt;}\)</span> is a linear combination of both encoding activation <span class="math inline">\(a^{\&lt;t&#39;&gt;}\)</span> and decoding activation <span class="math inline">\(s^{\&lt;t-1&gt;}\)</span>. <span class="math inline">\(t\)</span> refers to the index of the decoding RNN layer.</p></li>
+<p>where <span class="math inline">\(e^{\&lt;t,t&#39;&gt;}=W_e^{\&lt;t,t&#39;&gt;}[s^{\&lt;t-1&gt;};a^{\&lt;t&#39;&gt;}] +b_e^{\&lt;t,t&#39;&gt;}\)</span> is a linear combination of both encoding activation <span class="math inline">\(a^{\&lt;t&#39;&gt;}\)</span> and decoding activation <span class="math inline">\(s^{\&lt;t-1&gt;}\)</span>. <span class="math inline">\(t\)</span> refers to the index of the decoding RNN layer.</p></li>
 <li><p>Calculate the total attention at <span class="math inline">\(t\)</span>:</p>
 <p><span class="math display">\[\begin{equation}
  c^{&lt;t&gt;}=\sum_{t&#39;}{\alpha^{&lt;t,t&#39;&gt;}a^{&lt;t&#39;&gt;}}

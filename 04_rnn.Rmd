@@ -25,7 +25,7 @@ Forget about the tedious definitions. As a basic intuition of what we are doing 
     
     But how does it represent a word? Notice that we used the capitalized $X$ for a single sentence. Actually, $X.\text{shape}=5000\times12$, and $x.\text{shape}=5000\times1$. Why?
     
-    We first make a vocabulary list like $\text{list}=\[\text{a; and; ...; history; ...; MrBeast; ...}]$.
+    We first make a vocabulary list like $\text{list}=[\text{a; and; ...; history; ...; MrBeast; ...}]$.
     
     Then, we convert each word into a one-hot vector representing the index of the word in the dictionary, e.g.:
     
@@ -55,9 +55,9 @@ Therefore, we need to define a brand new NN structure that can perfectly align w
 <br/>
 Forward propagation:
 - $a^{\langle 0 \rangle}=\textbf{0}$
-- $a^{\langle t \rangle}=g(W_{a}\[a^{\langle t-1 \rangle}; x^{\langle t \rangle}]+b_a)\ \ \ \ \|\ g:\ \text{tanh/ReLU}$  
+- $a^{\langle t \rangle}=g(W_{a}[a^{\langle t-1 \rangle}; x^{\langle t \rangle}]+b_a)\ \ \ \ \|\ g:\ \text{tanh/ReLU}$  
     
-    where $W_a=\[W_{aa}\ W_{ax}]$ with a shape of $(100,10100)$ if we assume a dictionary of 10000 words (i.e. $x^{\langle t \rangle}.\text{shape}=(10000,100)$) and the activation length of 100.
+    where $W_a=[W_{aa}\ W_{ax}]$ with a shape of $(100,10100)$ if we assume a dictionary of 10000 words (i.e. $x^{\langle t \rangle}.\text{shape}=(10000,100)$) and the activation length of 100.
 
 - $\hat{y}^{\langle t \rangle}=g(W_{y}a^{\langle t \rangle}+b_y)\ \ \ \ \|\ g:\ \text{sigmoid}$  
 
@@ -113,8 +113,8 @@ There is nothing much to explain here. The images are pretty clear.
         
 - <u>Character-level LM</u>
     - Dictionary
-        - Normal LM: \[a, abandon, ..., zoo, \<UNK>]
-        - Char-lv LM: \[a, b, c, ..., z]
+        - Normal LM: [a, abandon, ..., zoo, \<UNK>]
+        - Char-lv LM: [a, b, c, ..., z]
     - Pros & Cons
         - Pros: never need to worry about unknown words \<UNK>
         - Cons: sequence becomes much much longer; the RNN doesn't really learn anything about the words.  
@@ -341,7 +341,7 @@ Suppose we have a sentence "Pewdiepie and MrBeast are two of the greatest youtub
 <u>Algorithm</u>:
 
 1. **Randomly** choose context & target words with **skip-gram**. (e.g. context "MrBeast" & target "youtubers") 
-2. Learn **mapping** of "$c\ (\text{"mrbeast"}\[1234])\rightarrow t\ (\text{"youtubers"}\[765])$"
+2. Learn **mapping** of "$c\ (\text{"mrbeast"}[1234])\rightarrow t\ (\text{"youtubers"}[765])$"
 3. Use **softmax** to calculate the probability of appearance of target given context:
 
     $$\begin{equation}
@@ -542,7 +542,7 @@ $$\begin{equation}
     \alpha^{<t,t'>}=\frac{e^{(e^{<t,t'>})}}{\sum_{t'=1}^{T_x}{e^{(e^{<t,t'>})}}}
     \end{equation}$$
 
-    where $e^{\<t,t'>}=W_e^{\<t,t'>}\[s^{\<t-1>};a^{\<t'>}] +b_e^{\<t,t'>}$ is a linear combination of both encoding activation $a^{\<t'>}$ and decoding activation $s^{\<t-1>}$. $t$ refers to the index of the decoding RNN layer.
+    where $e^{\<t,t'>}=W_e^{\<t,t'>}[s^{\<t-1>};a^{\<t'>}] +b_e^{\<t,t'>}$ is a linear combination of both encoding activation $a^{\<t'>}$ and decoding activation $s^{\<t-1>}$. $t$ refers to the index of the decoding RNN layer.
 
 3. Calculate the total attention at $t$: 
     

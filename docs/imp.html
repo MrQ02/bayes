@@ -160,7 +160,7 @@
 <li>big data era: 98/1/1%, 99.5/0.4/0.1%, 99.5/0.5/0%, … \
 (trend: testset as small as possible)</li>
 </ul></li>
-<li>All 3 subsets should come from the exact same distribution (<strike>mismatch<strike>)</li>
+<li>All 3 subsets should come from the exact same distribution (<strike>mismatch</strike>)</li>
 </ul>
 </div>
 <div id="initialization" class="section level2" number="2.2">
@@ -251,7 +251,7 @@ W^{[l]}&amp;:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}}
 &amp;=w^{[l]}-\alpha\cdot\Big(\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}}(\text{original})+\frac{\lambda}{m}W^{[l]}\Big)
 \end{align}\]</span></p>
 <p> <br />
-<a name="dp"></a><strong>Dropout</strong>: each node has a probability to be kicked out of the NN (<span class="math inline">\(\Rightarrow\)</span> NN becomes smaller &amp; simpler) <span class="math display">\[only used in training\]</span></p>
+<a name="dp"></a><strong>Dropout</strong>: each node has a probability to be kicked out of the NN (<span class="math inline">\(\Rightarrow\)</span> NN becomes smaller &amp; simpler) [only used in training]</p>
 <ol style="list-style-type: decimal">
 <li><p>Make a <strong>Boolean</strong> matrix corresponding to the matrix of activation values:</p>
 <p><span class="math display">\[\begin{align}
@@ -266,8 +266,7 @@ W^{[l]}&amp;:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}}
  b_{n_k1}^{[k]} &amp; \cdots &amp; b_{n_km}^{[k]}
  \end{bmatrix}\quad\quad\quad B^{[k]}\in\mathbb{R}^{n_k\times m}
  \end{align}\]</span></p>
-<p>where <span class="math inline">\(b_{ji}^{[k]}\in\\{\text{True}, \text{False}\\}\)</span>. The Boolean values are assigned randomly based on a keep-probability <span class="math inline">\(p\)</span> (can be chosen differently for diff layers).<br />
-</p></li>
+<p>where <span class="math inline">\(b_{ji}^{[k]}\in\\{\text{True}, \text{False}\\}\)</span>. The Boolean values are assigned randomly based on a keep-probability <span class="math inline">\(p\)</span> (can be chosen differently for diff layers).</p></li>
 <li><p>Multiply both matrices element-wise:</p>
 <p><span class="math display">\[\begin{equation}
  A^{[k]}=A^{[k]}* B^{[k]}
@@ -280,7 +279,7 @@ W^{[l]}&amp;:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}}
 <p>to ensure consistency in activation values</p></li>
 </ol>
 <p><br/>
-<a name="da"></a><strong>Data Augmentation</strong>: modify the dataset to get more data (mostly used in Computer Vision) <span class="math display">\[Benefit: a very low-cost regularization\]</span></p>
+<a name="da"></a><strong>Data Augmentation</strong>: modify the dataset to get more data (mostly used in Computer Vision) [Benefit: a very low-cost regularization]</p>
 <p>Examples:
 - flip picture
 - slight rotation
@@ -523,16 +522,16 @@ The blue dots represent the raw data points, while the red and green curves repr
 - Tier 2: #hidden units, MB size
 - Tier 3: #layers, <span class="math inline">\(\alpha\)</span> decay
 - Tier 4: <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, <span class="math inline">\(\varepsilon\)</span></p>
-<p><strong>Random Picking</strong>: e.g. <span class="math inline">\(n^{[l]}\in \[50,100\], L\in \[2,4\]\)</span></p>
-<p><strong>Appropriate Scale</strong>: e.g. <span class="math inline">\(\alpha\in \[0.0001,1\]\)</span> is obviously NOT an appropriate scale, because 90% of the values are in <span class="math inline">\(\[0.1,1\]\)</span>.</p>
-<p>Instead, <span class="math inline">\(\alpha\in\[0.0001,1\]_ {\text{log}}\)</span> is an appropriate scales because the random picking is equally distributed on the log scale.</p>
-<p>e.g. for <span class="math inline">\(\beta\in\[0.9,0.999\]\)</span>, the code implementation should be
-- <span class="math inline">\(r\in\[-3,-1\]\)</span>
+<p><strong>Random Picking</strong>: e.g. <span class="math inline">\(n^{[l]}\in [50,100], L\in [2,4]\)</span></p>
+<p><strong>Appropriate Scale</strong>: e.g. <span class="math inline">\(\alpha\in [0.0001,1]\)</span> is obviously NOT an appropriate scale, because 90% of the values are in <span class="math inline">\([0.1,1]\)</span>.</p>
+<p>Instead, <span class="math inline">\(\alpha\in[0.0001,1]_ {\text{log}}\)</span> is an appropriate scales because the random picking is equally distributed on the log scale.</p>
+<p>e.g. for <span class="math inline">\(\beta\in[0.9,0.999]\)</span>, the code implementation should be
+- <span class="math inline">\(r\in[-3,-1]\)</span>
 - <span class="math inline">\(\beta=1-10^r\)</span></p>
 </div>
 <div id="batch-normalization" class="section level2" number="2.7">
 <h2><span class="header-section-number">2.7</span> Batch Normalization</h2>
-<p><strong>Intuition</strong>: Feature scaling normalizes the inputs to speed up learning for the 1st layer. Similarly, can we normalize <span class="math inline">\(a^{\[l-1\]}\)</span> to train <span class="math inline">\(W^{\[l\]} \&amp; b^{\[l\]}\)</span> faster? Obviously.</p>
+<p><strong>Intuition</strong>: Feature scaling normalizes the inputs to speed up learning for the 1st layer. Similarly, can we normalize <span class="math inline">\(a^{[l-1]}\)</span> to train <span class="math inline">\(W^{[l]} \&amp; b^{[l]}\)</span> faster? Obviously.</p>
 <p><strong>Implementation</strong>:</p>
 <ol style="list-style-type: decimal">
 <li><p>Calculate mean &amp; variance</p>

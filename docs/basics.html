@@ -197,7 +197,7 @@ w_1^{[k]} \\ \vdots \\ w_{n_k}^{[k]}
 \end{bmatrix}\quad\quad\quad W^{[k]}\in\mathbb{R}^{n_k\times n_{k-1}}
 \end{equation}\]</span></p>
 <ul>
-<li><span class="math inline">\(w_{j,l}^{\[k\]}\)</span>: the weight value for the <span class="math inline">\(l\)</span>th input at the <span class="math inline">\(j\)</span>th node on the <span class="math inline">\(k\)</span>th layer</li>
+<li><span class="math inline">\(w_{j,l}^{[k]}\)</span>: the weight value for the <span class="math inline">\(l\)</span>th input at the <span class="math inline">\(j\)</span>th node on the <span class="math inline">\(k\)</span>th layer</li>
 <li><span class="math inline">\(n_k\)</span>: # nodes/neurons on the <span class="math inline">\(k\)</span>th layer (the current layer)</li>
 <li><span class="math inline">\(n_{k-1}\)</span>: # nodes/neurons on the <span class="math inline">\(k-1\)</span>th layer (the previous layer)</li>
 </ul>
@@ -212,7 +212,7 @@ b_1^{[k]} \\ \vdots \\ b_{n_k}^{[k]}
 z_j^{[k]}=w_j^{[k]}\cdot a^{[k-1]}+b_j^{[k]} \quad\quad\quad z_j^{[k]}\in\mathbb{R}^{n_k}
 \end{equation}\]</span></p>
 <ul>
-<li><span class="math inline">\(z_j^{\[k\]}\)</span>: the unactivated output value from the <span class="math inline">\(j\)</span>th node of the <span class="math inline">\(k\)</span>th layer</li>
+<li><span class="math inline">\(z_j^{[k]}\)</span>: the unactivated output value from the <span class="math inline">\(j\)</span>th node of the <span class="math inline">\(k\)</span>th layer</li>
 </ul>
 <p><strong>Activation</strong>:</p>
 <p><span class="math display">\[\begin{equation}

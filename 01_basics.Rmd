@@ -52,7 +52,7 @@ w_1^{[k]} \\ \vdots \\ w_{n_k}^{[k]}
 \end{bmatrix}\quad\quad\quad W^{[k]}\in\mathbb{R}^{n_k\times n_{k-1}}
 \end{equation}$$
 
-- $w_{j,l}^{\[k\]}$: the weight value for the $l$th input at the $j$th node on the $k$th layer
+- $w_{j,l}^{[k]}$: the weight value for the $l$th input at the $j$th node on the $k$th layer
 - $n_k$: # nodes/neurons on the $k$th layer (the current layer)
 - $n_{k-1}$: # nodes/neurons on the $k-1$th layer (the previous layer)
 
@@ -70,7 +70,7 @@ $$\begin{equation}
 z_j^{[k]}=w_j^{[k]}\cdot a^{[k-1]}+b_j^{[k]} \quad\quad\quad z_j^{[k]}\in\mathbb{R}^{n_k}
 \end{equation}$$
 
-- $z_j^{\[k\]}$: the unactivated output value from the $j$th node of the $k$th layer
+- $z_j^{[k]}$: the unactivated output value from the $j$th node of the $k$th layer
 
 **Activation**:
 

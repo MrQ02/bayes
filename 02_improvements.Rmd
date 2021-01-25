@@ -7,7 +7,7 @@
     - old era: 70/0/30%, 60/20/20%, ...
     - big data era: 98/1/1%, 99.5/0.4/0.1%, 99.5/0.5/0%, ... \\
     (trend: testset as small as possible)
-- All 3 subsets should come from the exact same distribution (<strike>mismatch<strike>)
+- All 3 subsets should come from the exact same distribution (<strike>mismatch</strike>)
 
 ## Initialization
 
@@ -100,7 +100,7 @@ W^{[l]}&:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}} \\
 \end{align}$$
 
 &nbsp;  
-<a name="dp"></a>**Dropout**: each node has a probability to be kicked out of the NN ($\Rightarrow$ NN becomes smaller & simpler) \[only used in training\] 
+<a name="dp"></a>**Dropout**: each node has a probability to be kicked out of the NN ($\Rightarrow$ NN becomes smaller & simpler) [only used in training] 
 
 1. Make a **Boolean** matrix corresponding to the matrix of activation values:
 
@@ -118,6 +118,7 @@ W^{[l]}&:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}} \\
     \end{align}$$
 
     where $b_{ji}^{[k]}\in\\{\text{True}, \text{False}\\}$. The Boolean values are assigned randomly based on a keep-probability $p$ (can be chosen differently for diff layers).  
+    
 2. Multiply both matrices element-wise:
 
     $$\begin{equation}
@@ -125,6 +126,7 @@ W^{[l]}&:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}} \\
     \end{equation}$$
     
     so that some activation values are now zero (they are kicked out of the neural network) 
+    
 3. Invert the matrix element-wise:
 
     $$\begin{equation}
@@ -134,7 +136,7 @@ W^{[l]}&:=w^{[l]}-\alpha\cdot\frac{\partial{\mathcal{L}}}{\partial{W^{[l]}}} \\
     to ensure consistency in activation values
 
 <br/>
-<a name="da"></a>**Data Augmentation**: modify the dataset to get more data (mostly used in Computer Vision) \[Benefit: a very low-cost regularization\]
+<a name="da"></a>**Data Augmentation**: modify the dataset to get more data (mostly used in Computer Vision) [Benefit: a very low-cost regularization]
 
 Examples:
 - flip picture
@@ -429,19 +431,19 @@ As learnt in Calculus, no matter how we try to find the optimum, we always have 
 - Tier 3: #layers, $\alpha$ decay
 - Tier 4: $\beta_1$, $\beta_2$, $\varepsilon$
 
-**Random Picking**: e.g. $n^{[l]}\in \[50,100\], L\in \[2,4\]$
+**Random Picking**: e.g. $n^{[l]}\in [50,100], L\in [2,4]$
 
-**Appropriate Scale**: e.g. $\alpha\in \[0.0001,1\]$ is obviously NOT an appropriate scale, because 90% of the values are in $\[0.1,1\]$.
+**Appropriate Scale**: e.g. $\alpha\in [0.0001,1]$ is obviously NOT an appropriate scale, because 90% of the values are in $[0.1,1]$.
 
-Instead, $\alpha\in\[0.0001,1\]_ {\text{log}}$ is an appropriate scales because the random picking is equally distributed on the log scale.
+Instead, $\alpha\in[0.0001,1]_ {\text{log}}$ is an appropriate scales because the random picking is equally distributed on the log scale.
 
-e.g. for $\beta\in\[0.9,0.999\]$, the code implementation should be
-- $r\in\[-3,-1\]$
+e.g. for $\beta\in[0.9,0.999]$, the code implementation should be
+- $r\in[-3,-1]$
 - $\beta=1-10^r$
 
 ## Batch Normalization
 
-**Intuition**: Feature scaling normalizes the inputs to speed up learning for the 1st layer. Similarly, can we normalize $a^{\[l-1\]}$ to train $W^{\[l\]} \& b^{\[l\]}$ faster? Obviously.
+**Intuition**: Feature scaling normalizes the inputs to speed up learning for the 1st layer. Similarly, can we normalize $a^{[l-1]}$ to train $W^{[l]} \& b^{[l]}$ faster? Obviously.
 
 **Implementation**:
 
