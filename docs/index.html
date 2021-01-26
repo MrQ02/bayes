@@ -4,19 +4,19 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Time Series Analysis</title>
-  <meta name="description" content="Time Series Analysis" />
+  <title>Machine Learning</title>
+  <meta name="description" content="Machine Learning" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Time Series Analysis" />
+  <meta property="og:title" content="Machine Learning" />
   <meta property="og:type" content="book" />
   
   
   
-  <meta name="github-repo" content="MrQ02/tsa" />
+  <meta name="github-repo" content="MrQ02/ml" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Time Series Analysis" />
+  <meta name="twitter:title" content="Machine Learning" />
   
   
   
@@ -31,7 +31,7 @@
   
   
 
-<link rel="next" href="m.html"/>
+<link rel="next" href="reg.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -72,44 +72,36 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="1" data-path="m.html"><a href="m.html"><i class="fa fa-check"></i><b>1</b> Mean Models</a>
+<li class="chapter" data-level="1" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>1</b> Regression</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="m.html"><a href="m.html#ar-autoregressive-model"><i class="fa fa-check"></i><b>1.1</b> AR (Autoregressive model)</a>
+<li class="chapter" data-level="1.1" data-path="reg.html"><a href="reg.html#linear-regression"><i class="fa fa-check"></i><b>1.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="1.2" data-path="reg.html"><a href="reg.html#polynomial-regression"><i class="fa fa-check"></i><b>1.2</b> Polynomial Regression</a></li>
+<li class="chapter" data-level="1.3" data-path="reg.html"><a href="reg.html#locally-weighted-linear-regression"><i class="fa fa-check"></i><b>1.3</b> Locally Weighted Linear Regression</a></li>
+<li class="chapter" data-level="1.4" data-path="reg.html"><a href="reg.html#ridge-regression"><i class="fa fa-check"></i><b>1.4</b> Ridge Regression</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="m.html"><a href="m.html#model"><i class="fa fa-check"></i><b>1.1.1</b> Model</a></li>
-<li class="chapter" data-level="1.1.2" data-path="m.html"><a href="m.html#estimation"><i class="fa fa-check"></i><b>1.1.2</b> Estimation</a></li>
+<li class="chapter" data-level="1.4.1" data-path="reg.html"><a href="reg.html#bias-variance-trade-off"><i class="fa fa-check"></i><b>1.4.1</b> <strong>Bias-Variance Trade-off</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="m.html"><a href="m.html#ma-moving-average-model"><i class="fa fa-check"></i><b>1.2</b> MA (Moving Average model)</a>
+<li class="chapter" data-level="1.5" data-path="reg.html"><a href="reg.html#lasso-regression"><i class="fa fa-check"></i><b>1.5</b> Lasso Regression</a></li>
+<li class="chapter" data-level="1.6" data-path="reg.html"><a href="reg.html#glm"><i class="fa fa-check"></i><b>1.6</b> GLM</a>
 <ul>
-<li class="chapter" data-level="1.2.1" data-path="m.html"><a href="m.html#model-1"><i class="fa fa-check"></i><b>1.2.1</b> Model</a></li>
-<li class="chapter" data-level="1.2.2" data-path="m.html"><a href="m.html#estimation-1"><i class="fa fa-check"></i><b>1.2.2</b> Estimation</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="m.html"><a href="m.html#arma-autoregressive-moving-average-model"><i class="fa fa-check"></i><b>1.3</b> ARMA (Autoregressive Moving Average model)</a>
-<ul>
-<li class="chapter" data-level="1.3.1" data-path="m.html"><a href="m.html#model-2"><i class="fa fa-check"></i><b>1.3.1</b> Model</a></li>
-<li class="chapter" data-level="1.3.2" data-path="m.html"><a href="m.html#estimation-2"><i class="fa fa-check"></i><b>1.3.2</b> Estimation</a></li>
-</ul></li>
-<li class="chapter" data-level="1.4" data-path="m.html"><a href="m.html#arima-autoregressive-integrated-moving-average-model"><i class="fa fa-check"></i><b>1.4</b> ARIMA (Autoregressive Integrated Moving Average model)</a>
-<ul>
-<li class="chapter" data-level="1.4.1" data-path="m.html"><a href="m.html#model-3"><i class="fa fa-check"></i><b>1.4.1</b> Model</a></li>
-<li class="chapter" data-level="1.4.2" data-path="m.html"><a href="m.html#estimation-3"><i class="fa fa-check"></i><b>1.4.2</b> Estimation</a></li>
+<li class="chapter" data-level="1.6.1" data-path="reg.html"><a href="reg.html#method-of-constructing-glms"><i class="fa fa-check"></i><b>1.6.1</b> Method of Constructing GLMs</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="v.html"><a href="v.html"><i class="fa fa-check"></i><b>2</b> Volatility models</a>
+<li class="chapter" data-level="2" data-path="cls.html"><a href="cls.html"><i class="fa fa-check"></i><b>2</b> Classification</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="v.html"><a href="v.html#arch-autoregressive-conditional-heteroskedasticity-model"><i class="fa fa-check"></i><b>2.1</b> ARCH (Autoregressive Conditional Heteroskedasticity model)</a></li>
-<li class="chapter" data-level="2.2" data-path="v.html"><a href="v.html#garch-generalized-autoregressive-conditional-heteroskedasticity-model"><i class="fa fa-check"></i><b>2.2</b> GARCH (Generalized Autoregressive Conditional Heteroskedasticity model)</a>
+<li class="chapter" data-level="2.1" data-path="cls.html"><a href="cls.html#logistic-regression"><i class="fa fa-check"></i><b>2.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="2.2" data-path="cls.html"><a href="cls.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>2.2</b> k-Nearest Neighbors</a></li>
+<li class="chapter" data-level="2.3" data-path="cls.html"><a href="cls.html#gaussian-discriminant-analysis"><i class="fa fa-check"></i><b>2.3</b> Gaussian Discriminant Analysis</a></li>
+<li class="chapter" data-level="2.4" data-path="cls.html"><a href="cls.html#naive-bayes-classifier"><i class="fa fa-check"></i><b>2.4</b> Naive Bayes Classifier</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="v.html"><a href="v.html#estimation-4"><i class="fa fa-check"></i><b>2.2.1</b> Estimation</a></li>
+<li class="chapter" data-level="2.4.1" data-path="cls.html"><a href="cls.html#laplace-smoothing"><i class="fa fa-check"></i><b>2.4.1</b> <strong>Laplace Smoothing</strong></a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="order-selection.html"><a href="order-selection.html"><i class="fa fa-check"></i><b>3</b> Order Selection</a>
+<li class="chapter" data-level="2.5" data-path="cls.html"><a href="cls.html#svm"><i class="fa fa-check"></i><b>2.5</b> SVM</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="order-selection.html"><a href="order-selection.html#stationarity"><i class="fa fa-check"></i><b>3.1</b> Stationarity</a></li>
-<li class="chapter" data-level="3.2" data-path="order-selection.html"><a href="order-selection.html#adf-test-augmented-dickey-fuller-test"><i class="fa fa-check"></i><b>3.2</b> ADF Test (Augmented Dickey-Fuller Test)</a></li>
-<li class="chapter" data-level="3.3" data-path="order-selection.html"><a href="order-selection.html#acf-autocorrelation-function"><i class="fa fa-check"></i><b>3.3</b> ACF (Autocorrelation Function)</a></li>
-<li class="chapter" data-level="3.4" data-path="order-selection.html"><a href="order-selection.html#pacf-partial-autocorrelation-function"><i class="fa fa-check"></i><b>3.4</b> PACF (Partial Autocorrelation Function)</a></li>
-<li class="chapter" data-level="3.5" data-path="order-selection.html"><a href="order-selection.html#information-criteria"><i class="fa fa-check"></i><b>3.5</b> Information Criteria</a></li>
+<li class="chapter" data-level="2.5.1" data-path="cls.html"><a href="cls.html#intro"><i class="fa fa-check"></i><b>2.5.1</b> Intro</a></li>
+<li class="chapter" data-level="2.5.2" data-path="cls.html"><a href="cls.html#margins"><i class="fa fa-check"></i><b>2.5.2</b> Margins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="cls.html"><a href="cls.html#optimization-lagrange-duality"><i class="fa fa-check"></i><b>2.5.3</b> Optimization: Lagrange Duality</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
@@ -123,7 +115,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning</a>
           </h1>
         </div>
 
@@ -132,17 +124,16 @@
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Time Series Analysis</h1>
+<h1 class="title">Machine Learning</h1>
 <p class="author"><em>Renyi Qu</em></p>
-<p class="date"><em>2021/01/25</em></p>
+<p class="date"><em>2021/01/26</em></p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <ul>
-<li>Bollerslev, T. (1986). Generalized Autoregressive Conditional Heteroskedasticity. <i>Journal
-of Econometrics</i>. vol. 31. <a href="https://doi.org/10.1016/0304-4076(86)90063-1">https://doi.org/10.1016/0304-4076(86)90063-1</a>.</li>
-<li>Enders, W. (2015). <i>Applied Econometric Time Series</i>. JohnWiley &amp; Sons Inc. <a href="https://www.tandfonline.com/doi/abs/10.1198/tech.2004.s813">DOI:10.1198/tech.2004.s813</a>.</li>
-<li>Engle, R.F. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. <i>Econometrica</i>. vol. 50, issue. 4. <a href="https://doi.org/10.2307/1912773">https://doi.org/10.2307/1912773</a>.</li>
+<li>ColumbiaX. <a href="https://www.edx.org/micromasters/columbiax-artificial-intelligence" target="__blank">Artificial Intelligence MicroMasters Program</a>. edX Inc.</li>
+<li>Andrew Ng. <a href="https://see.stanford.edu/Course/CS229" target="__blank">CS229 - Machine Learning</a>. Stanford University.</li>
+<li>Mitchell, T. <a href="http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml" target="__blank">10-701 - Machine Learning</a>. Carnegie Mellon University.</li>
 </ul>
 
 </div>
@@ -152,7 +143,7 @@ of Econometrics</i>. vol. 31. <a href="https://doi.org/10.1016/0304-4076(86)900
         </div>
       </div>
 
-<a href="m.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reg.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

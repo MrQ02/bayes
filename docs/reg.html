@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Regression | Machine Learning</title>
+  <meta name="description" content="1 Regression | Machine Learning" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Regression | Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="MrQ02/ml" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Regression | Machine Learning" />
+  
+  
+  
+
+<meta name="author" content="Renyi Qu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="cls.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Time Series Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="1" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>1</b> Regression</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="reg.html"><a href="reg.html#linear-regression"><i class="fa fa-check"></i><b>1.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="1.2" data-path="reg.html"><a href="reg.html#polynomial-regression"><i class="fa fa-check"></i><b>1.2</b> Polynomial Regression</a></li>
+<li class="chapter" data-level="1.3" data-path="reg.html"><a href="reg.html#locally-weighted-linear-regression"><i class="fa fa-check"></i><b>1.3</b> Locally Weighted Linear Regression</a></li>
+<li class="chapter" data-level="1.4" data-path="reg.html"><a href="reg.html#ridge-regression"><i class="fa fa-check"></i><b>1.4</b> Ridge Regression</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="reg.html"><a href="reg.html#bias-variance-trade-off"><i class="fa fa-check"></i><b>1.4.1</b> <strong>Bias-Variance Trade-off</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="reg.html"><a href="reg.html#lasso-regression"><i class="fa fa-check"></i><b>1.5</b> Lasso Regression</a></li>
+<li class="chapter" data-level="1.6" data-path="reg.html"><a href="reg.html#glm"><i class="fa fa-check"></i><b>1.6</b> GLM</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="reg.html"><a href="reg.html#method-of-constructing-glms"><i class="fa fa-check"></i><b>1.6.1</b> Method of Constructing GLMs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="cls.html"><a href="cls.html"><i class="fa fa-check"></i><b>2</b> Classification</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="cls.html"><a href="cls.html#logistic-regression"><i class="fa fa-check"></i><b>2.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="2.2" data-path="cls.html"><a href="cls.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>2.2</b> k-Nearest Neighbors</a></li>
+<li class="chapter" data-level="2.3" data-path="cls.html"><a href="cls.html#gaussian-discriminant-analysis"><i class="fa fa-check"></i><b>2.3</b> Gaussian Discriminant Analysis</a></li>
+<li class="chapter" data-level="2.4" data-path="cls.html"><a href="cls.html#naive-bayes-classifier"><i class="fa fa-check"></i><b>2.4</b> Naive Bayes Classifier</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="cls.html"><a href="cls.html#laplace-smoothing"><i class="fa fa-check"></i><b>2.4.1</b> <strong>Laplace Smoothing</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="cls.html"><a href="cls.html#svm"><i class="fa fa-check"></i><b>2.5</b> SVM</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="cls.html"><a href="cls.html#intro"><i class="fa fa-check"></i><b>2.5.1</b> Intro</a></li>
+<li class="chapter" data-level="2.5.2" data-path="cls.html"><a href="cls.html#margins"><i class="fa fa-check"></i><b>2.5.2</b> Margins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="cls.html"><a href="cls.html#optimization-lagrange-duality"><i class="fa fa-check"></i><b>2.5.3</b> Optimization: Lagrange Duality</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="reg" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Regression</h1>
+<div id="linear-regression" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Linear Regression</h2>
+<ul>
+<li><p><strong>Problem Setting</strong></p>
+<ul>
+<li><strong>Data</strong>: Observed pairs <span class="math inline">\((x,y)\)</span>, where <span class="math inline">\(x\in\mathbb{R}^{n+1}\)</span> (<strong>input</strong>) &amp; <span class="math inline">\(y\in\mathbb{R}\)</span> (<strong>output</strong>)</li>
+<li><strong>Goal</strong>: Find a linear function of the unknown <span class="math inline">\(w\)</span>s: <span class="math inline">\(f:\mathbb{R}^n\rightarrow\mathbb{R}\ \ \text{s.t.}\ \ \forall\ (x,y): y\approx f(x,w)\)</span></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Model</strong></p>
+<p><span class="math display">\[\begin{align}
+  \hat{y}_ i&amp;=\sum_{j=0}^{n}w_jx_{ij} \\ \\
+  \hat{y}&amp;=Xw \\ \\
+  \begin{bmatrix} \hat{y}_ 1 \\ \vdots \\ \hat{y}_ m \end{bmatrix}&amp;=
+  \begin{bmatrix}
+  1 &amp; x_{11} &amp; \cdots &amp; x_{1n} \\
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  1 &amp; x_{m1} &amp; \cdots &amp; x_{mn} \\
+  \end{bmatrix}\begin{bmatrix} w_0 \\ \vdots \\ w_n \end{bmatrix}
+  \end{align}\]</span></p>
+<ul>
+<li><span class="math inline">\(x_{ij}\)</span>: the <span class="math inline">\(j\)</span>th feature in the <span class="math inline">\(i\)</span>th observation</li>
+<li><span class="math inline">\(\hat{y}_ i\)</span>: the model prediction for the <span class="math inline">\(i\)</span>th observation</li>
+<li><span class="math inline">\(w_j\)</span>: the parameter for the <span class="math inline">\(j\)</span>th feature</li>
+<li><span class="math inline">\(m\)</span>: #observations</li>
+<li><span class="math inline">\(n\)</span>: #features</li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Learning</strong></p>
+<ul>
+<li><p><strong>Aim</strong>: find the optimal <span class="math inline">\(w\)</span> that minimizes a loss function (i.e. cost function)</p></li>
+<li><p><strong>Loss Function: OLS [Ordinary Least Squares]</strong></p>
+<p><span class="math display">\[\begin{equation*}
+  \mathcal{L}(w)=\sum_{i=1}^{m}(\hat{y}_ i-y_i)^2
+  \end{equation*}\]</span></p>
+<ul>
+<li>Assumption (i.e. requirement): <span class="math inline">\(m &gt; &gt; n\)</span></li>
+</ul></li>
+<li><p><a name="gd"></a><strong>Minimization Method 1: Gradient Descent</strong> (the practical solution)</p>
+<p><span class="math display">\[\begin{equation}
+  w_j := w_j-\alpha\frac{\partial\mathcal{L}(w)}{\partial w_j}
+  \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(\alpha\)</span>: learning rate</li>
+<li><span class="math inline">\(\frac{\partial\mathcal{L}(w)}{\partial w_j}\)</span>: gradient</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><p><strong>Stochastic GD</strong> (using 1 training observation for each GD step)</p>
+<p><span class="math display">\[\begin{equation}
+ w_j := w_j-\alpha(\hat{y}_ i-y_i)x_{ij}
+ \end{equation}\]</span></p></li>
+<li><p><strong>Mini-batch GD</strong> (using mini-batches of size <span class="math inline">\(m&#39;\)</span> for each GD step)</p>
+<p><span class="math display">\[\begin{equation*}
+ w_j := w_j-\alpha\sum_{i=1}^{m&#39;}(\hat{y}_ i-y_i)x_{ij}
+ \end{equation*}\]</span></p></li>
+<li><p><strong>Batch GD</strong> (LMS) (using the whole training set for each GD step)</p>
+<p><span class="math display">\[\begin{equation}
+ w_j := w_j-\alpha\sum_{i=1}^{m}(\hat{y}_ i-y_i)x_{ij}
+ \end{equation}\]</span></p></li>
+</ol>
+<ul>
+<li><p>Extra: <a name="newton"></a><strong>Newton’s Method</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Newton’s formula</p>
+<p><span class="math display">\[\begin{equation}
+ w := w-\frac{f(w)}{f&#39;(w)}
+ \end{equation}\]</span></p></li>
+<li><p>Newton’s Method in GD</p>
+<p><span class="math display">\[\begin{equation}
+ w := w-H^{-1}\nabla_w\mathcal{L}(w)
+ \end{equation}\]</span></p>
+<p>where <span class="math inline">\(H\)</span> is Hessian Matrix:</p>
+<p><span class="math display">\[\begin{equation}
+ H_{ij}=\frac{\partial^2\mathcal{L}(w)}{\partial w_i \partial w_j}
+ \end{equation}\]</span></p></li>
+<li><p>Newton vs normal GD</p>
+<ul>
+<li>YES: faster convergence, fewer iterations</li>
+<li>NO: expensive computing (inverse of a matrix)</li>
+</ul></li>
+</ol></li>
+</ul></li>
+<li><p><a name="normal"></a><strong>Minimization Method 2: Normal Equation</strong> (the exact solution)</p>
+<p><span class="math display">\[\begin{equation*}
+  w_{\text{LS}}=(X^TX)^{-1}X^Ty\ \Longleftrightarrow\  w_{\text{LS}}=\Big(\sum_{i=1}^m{x_ix_i^T}\Big)^{-1}\Big(\sum_{i=1}^m{y_ix_i}\Big)
+  \end{equation*}\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Derivation (matrix)</p>
+<p><span class="math display">\[\begin{align}
+ \DeclareMathOperator{\Tr}{tr}
+ \nabla_w\mathcal{L}(w)&amp;=\nabla_w(Xw-y)^T(Xw-y) \\
+ &amp;=\nabla_w\Tr(w^TX^TXw-w^TX^Ty-y^TXw+y^Ty) \\
+ &amp;=\nabla_w(\Tr(w^TX^TXw)-2\Tr(y^TXw)) \\
+ &amp;=2X^TXw-2X^Ty \\
+ &amp;\Rightarrow X^TXw-X^Ty=0
+ \end{align}\]</span></p></li>
+<li><p>Derivation (vector)</p>
+<p><span class="math display">\[\begin{align}
+ \nabla_w\mathcal{L}(w)&amp;=\sum_{i=1}^m{\nabla_w(w^Tx_ix_i^Tw-2w^Tx_iy_i+y_i^2)} \\
+ &amp;=-\sum_{i=1}^m{2y_ix_i}+\Big(\sum_{i=1}^m{2x_ix_i^T}\Big)w \\
+ &amp;\Rightarrow \Big(\sum_{i=1}^m{x_ix_i^T}\Big)w-\sum_{i=1}^m{y_ix_i}=0
+ \end{align}\]</span></p></li>
+</ol></li>
+<li><p><strong>GD vs Normal Equation</strong></p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="22%" />
+<col width="47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center">GD</th>
+<th align="center">Normal Equation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Advantage</strong></td>
+<td align="center">faster computing<br>less computing power required</td>
+<td align="center">the exact solution</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Disadvantage</strong></td>
+<td align="center">hard to reach the exact solution</td>
+<td align="center"><span class="math inline">\((X^TX)^{-1}\)</span> must exist<br>(i.e. <span class="math inline">\((X^TX)^{-1}\)</span> must be full rank)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><u>Full rank</u>: when the <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(X\)</span> has <span class="math inline">\(\geq n\)</span> linearly independent rows (i.e. any point in <span class="math inline">\(\mathbb{R}^n\)</span> can be reached by a weighted combination of <span class="math inline">\(n\)</span> rows of <span class="math inline">\(X\)</span>)</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Probabilistic Interpretation</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Probabilistic Model: Gaussian</strong></p>
+<p><span class="math display">\[\begin{equation}
+ p(y_i|x_i,w)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}
+ \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(y_i=w^Tx_i+\epsilon_i\)</span></li>
+<li><span class="math inline">\(\epsilon_i\sim N(0,\sigma)\)</span></li>
+</ul></li>
+<li><p><strong>Likelihood Function</strong></p>
+<p><span class="math display">\[\begin{equation}
+ L(w)=\prod_{i=1}^{m}p(y_i|x_i,w)=\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}
+ \end{equation}\]</span></p></li>
+<li><p><strong>Log Likelihoood</strong></p>
+<p><span class="math display">\[\begin{align}
+ \mathcal{l}(w)&amp;=\log{L(w)} \\
+ &amp;=\log{\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}} \\
+ &amp;=\sum_{i=1}^{m}\log{\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}} \\
+ &amp;=m\log{\frac{1}{\sqrt{2\pi}\sigma}}-\frac{1}{2\sigma^2}\sum_{i=1}^{m}(y_i-w^Tx_i)^2
+ \end{align}\]</span></p>
+<p><u>Why log?</u></p>
+<ol style="list-style-type: decimal">
+<li><p>log = monotonic &amp; increasing on <span class="math inline">\([0,1]\rightarrow\)</span></p>
+<p><span class="math display">\[\mathop{\arg\max}_ {w}L(w)=\mathop{\arg\max}_ {w}\log{L(w)}\]</span></p></li>
+<li><p>log simplifies calculation (especially &amp; obviously for <span class="math inline">\(\prod\)</span>)</p></li>
+</ol></li>
+<li><p><strong>MLE (Maximum Likelihood Estimation)</strong></p>
+<p><span class="math display">\[\begin{align}
+ \mathop{\arg\max}_ {w}\mathcal{l}(w)&amp;=\mathop{\arg\max}_ {w}(m\log{\frac{1}{\sqrt{2\pi}\sigma}}-\frac{1}{2\sigma^2}\sum_{i=1}^{m}(y_i-w^Tx_i)^2) \\
+ &amp;=\mathop{\arg\max}_ {w}(-\sum_{i=1}^{m}(y_i-w^Tx_i)^2) \\
+ &amp;=\mathop{\arg\min}_ {w}\sum_{i=1}^{m}(y_i-w^Tx_i)^2 \\
+ &amp;=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2
+ \end{align}\]</span></p>
+<p><span class="math inline">\(\Rightarrow\)</span> Least Squares &amp; Maximum Likelihood share the exact same solution.</p></li>
+<li><p><strong>Expected Value</strong>:</p>
+<p><span class="math display">\[\begin{align}
+ \mathbb{E}[w_{ML}]&amp;=\mathbb{E}[(X^TX)^{-1}X^Ty] \\
+ &amp;=(X^TX)^{-1}X^TXw \\
+ &amp;=w
+ \end{align}\]</span></p></li>
+<li><p><strong>Variance</strong>:</p>
+<p><span class="math display">\[\begin{align}
+ \text{Var}[w_{ML}]&amp;=\mathbb{E}[(w_{ML}-\mathbb{E}[w_{ML}])(w_{ML}-\mathbb{E}[w_{ML}])^T] \\
+ &amp;=\mathbb{E}[w_{ML}w_{ML}^T]-\mathbb{E}[w_{ML}]\mathbb{E}[w_{ML}]^T \\
+ &amp;=(X^TX)^{-1}X^T\mathbb{E}[yy^T]X(X^TX)^{-1}-ww^T \\
+ &amp;=(X^TX)^{-1}X^T(\sigma^2I+Xww^TX^T)X(X^TX)^{-1}-ww^T\ \ (1) \\
+ &amp;=\sigma^2(X^TX)^{-1} \\
+ \end{align}\]</span></p>
+<p><span class="math inline">\((1)\)</span>:</p>
+<p><span class="math display">\[\begin{align}
+ \sigma=\text{Var}[y]&amp;=\mathbb{E}[(y-\mu)(y-\mu)^T] \\
+ &amp;=\mathbb{E}[yy^T]-2\mu\mu^T+\mu\mu^T \\
+ \Rightarrow \mathbb{E}[yy^T]&amp;=\sigma+\mu\mu^T \\
+ \end{align}\]</span></p></li>
+<li><p><strong>Summary</strong>:</p>
+<ul>
+<li><p>Assumption: Gaussian - <span class="math inline">\(y\ ~\ N(Xw, \sigma^2I)\)</span></p></li>
+<li><p>Expected Value: <span class="math inline">\(\mathbb{E}[w_{ML}]=w\)</span></p></li>
+<li><p>Variance: <span class="math inline">\(\text{Var}[w_{ML}]=\sigma^2(X^TX)^{-1}\)</span></p></li>
+<li><p>Problem: Notice how <span class="math inline">\(w_{ML}\)</span> becomes huge when our variance <span class="math inline">\(\sigma^2(X^TX)^{-1}\)</span> is too large.</p></li>
+</ul></li>
+</ol></li>
+<li><p><strong>Regularization</strong>:</p>
+<ul>
+<li><p><u>Intuition</u>: in order to prevent the problem above, we want to constrain our model parameters <span class="math inline">\(w\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+  w_{op}=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2+\lambda g(w)
+  \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(\lambda&gt;0\)</span>: regularization parameter</li>
+<li><span class="math inline">\(g(w)&gt;0\)</span>: penalty function</li>
+</ul></li>
+<li><p><u>Sample Regularizations</u>: Ridge Regression, LASSO Regression, …</p></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="polynomial-regression" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Polynomial Regression</h2>
+<ul>
+<li><p>Polynomial Regression <span class="math inline">\(\in\)</span> Linear Regression (<span class="math inline">\(f\)</span> = a linear function of unknown parameters <span class="math inline">\(w\)</span>)</p></li>
+<li><p><strong>Different Preprocessing</strong>:</p>
+<p><span class="math display">\[\begin{equation}
+  X=\begin{bmatrix}
+  1 &amp; x_{11} &amp; \cdots &amp; x_{1n} &amp; x_{11}^2 &amp; \cdots &amp; x_{1n}^p \\
+  \vdots &amp;  &amp; \vdots &amp;  &amp;  &amp; \vdots &amp;  \\
+  1 &amp; x_{m1} &amp; \cdots &amp; x_{mn} &amp; x_{m1}^2 &amp; \cdots &amp; x_{mn}^p \\
+  \end{bmatrix}
+  \end{equation}\]</span></p>
+<p>with the width of <span class="math inline">\(p\times n+1\)</span>.</p></li>
+<li><p>Everything else is exactly the same as <a href="#linreg">linear regression</a>.</p></li>
+<li><p>Sample models:</p>
+<ul>
+<li>3rd order with 1 feature: <span class="math inline">\(y_i=w_0+w_1x_i+w_2x_i^2+w_3x_i^3\)</span></li>
+<li>2nd order with 2 features: <span class="math inline">\(y_i=w_0+w_1x_{i1}+w_2x_{i2}+w_3x_{i1}^2+w_4x_{i2}^2\)</span></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Further Extensions</strong>: we can generalize our linear regression model as:</p>
+<p><span class="math display">\[\begin{equation}
+  \hat{y}_ i\approx f(x_i,w)=\sum_{s=1}^S{g_s(x_i)w_s}
+  \end{equation}\]</span></p>
+<p>where <span class="math inline">\(g_s(x_i)\)</span> can be any function of <span class="math inline">\(x_i\)</span>, such as <span class="math inline">\(e^{x_{ij}},\ \log{x_{ij}},\ ...\)</span>.</p>
+<p>Everything else is still the same as <a href="#linreg">linear regression</a>.</p></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="locally-weighted-linear-regression" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Locally Weighted Linear Regression</h2>
+<ul>
+<li><p><a name="lwrprob"></a><strong>Problem Setting</strong></p>
+<ul>
+<li><p><strong>Underfitting</strong>: the model barely fits the data points.</p>
+<center>
+<p><img src="../../images/ML/underfit.png" height="200"/></p>
+</center>
+<p>One single line is usually not enough to capture the pattern of <span class="math inline">\(x\ \&amp;\ y\)</span>. In order to get a better fit, we add more polynomial features (<span class="math inline">\(x^j\)</span>) to the original model:</p></li>
+<li><p><strong>Overfitting</strong>: the model fits the given data points too well that it cannot be used on other data points.</p>
+<center>
+<p><img src="../../images/ML/overfit.png" height="200"/></p>
+</center>
+<p>When we add too much (e.g. <span class="math inline">\(y=\sum_{j=0}^{9}w_jx^j\)</span>), the model captures the pattern of the given data points <span class="math inline">\((x_i,y_i)\)</span> too much that it cannot perform well on new data points.</p></li>
+</ul></li>
+<li><p><strong>Intuition</strong>: When we would like to estimate <span class="math inline">\(y\)</span> at a certain <span class="math inline">\(x\)</span>, instead of applying the original LinReg, we take a subset of data points <span class="math inline">\((x_i,y_i)\)</span> around <span class="math inline">\(x\)</span> and try to do LinReg on that subset only so that we can get a more accurate estimation.</p></li>
+<li><p><strong>Model: Weighted LS</strong></p>
+<ul>
+<li><p>Original LinReg</p>
+<p><span class="math display">\[\begin{equation}
+   w\leftarrow\mathop{\arg\min}_ {w}\sum_{i=1}^{m}(y_i-w^Tx_i)^2
+   \end{equation}\]</span></p>
+<p>We find the <span class="math inline">\(w\)</span> that minimizes the cost function (maximizes the likelihood function) so that our model is optimized to fit the data.</p></li>
+<li><p>LWR</p>
+<p><span class="math display">\[\begin{equation}
+  w\leftarrow\mathop{\arg\min}_ {w}\sum_{i=1}^{m}e^{-\frac{(x_i-x)^2}{2\tau^2}}\cdot(y_i-w^Tx_i)^2
+  \end{equation}\]</span></p>
+<p>We add the weight function <span class="math inline">\(\mathcal{W}_ i=e^{-\frac{(x_i-x)^2}{2\tau^2}}\)</span> to the OLS, where</p>
+<ul>
+<li><p><strong>Numerator</strong>:</p>
+<p><span class="math display">\[\begin{align}
+  &amp;\text{If}\ |x_i-x|=\text{small} \longrightarrow W_i\approx 1 \\
+  &amp;\text{If}\ |x_i-x|=\text{large} \longrightarrow W_i\approx 0
+  \end{align}\]</span></p></li>
+<li><p><strong>Bandwidth Parameter</strong>: <span class="math inline">\(\tau\)</span> (how fast the weight of <span class="math inline">\(x_i\)</span> falls off the query point <span class="math inline">\(x\)</span>)</p>
+<p><span class="math display">\[\begin{align}
+  &amp;\text{When}\ \tau &gt; &gt; 1, \text{LWR} \approx \text{LinReg} \\
+  &amp;\text{When}\ \tau &lt; &lt; 1, \text{LWR} \rightarrow \text{overfitting}
+  \end{align}\]</span></p></li>
+<li><p><strong>Exact Solution</strong>:</p>
+<p><span class="math display">\[\begin{align}
+  \DeclareMathOperator{\Tr}{tr}
+  \nabla_w\mathcal{L}(w)&amp;=\nabla_w \mathcal{W}(Xw-y)^T(Xw-y) \\
+  &amp;\Rightarrow X^T\mathcal{W}Xw-X^T\mathcal{W}y=0 \\
+  \Rightarrow w&amp;=(X^T\mathcal{W}X)^{-1}X^T\mathcal{W}y
+  \end{align}\]</span></p></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="ridge-regression" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Ridge Regression</h2>
+<ul>
+<li><p><strong>Problem Setting</strong></p>
+<ul>
+<li><p>The OLS LinReg method gives us an accurate expected value: <span class="math inline">\(\mathbb{E}[w_{ML}]=w\)</span>.</p></li>
+<li><p>However, the <strong>variance</strong> <span class="math inline">\(\text{Var}[w_{ML}]=\sigma^2(X^TX)^{-1}\)</span> could be <strong>too large</strong> that it ruins our model parameters.</p></li>
+<li><p>Ridge Regression <span class="math inline">\(\in\)</span> <a href="#regular">regularization</a> methods</p></li>
+</ul></li>
+<li><p><strong>Model</strong></p>
+<p><span class="math display">\[\begin{equation}
+  w_{RR}=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2+\lambda\|w\|^2_2
+  \end{equation}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\lambda\)</span>: regularization parameter:</p>
+<p><span class="math display">\[\begin{align}
+  &amp;\text{If}\ \lambda\rightarrow0\ \ \Longrightarrow w_{RR}\rightarrow w_{LS} \\
+  &amp;\text{If}\ \lambda\rightarrow\infty \Longrightarrow w_{RR}\rightarrow \bf{0}
+  \end{align}\]</span></p></li>
+<li><p><span class="math inline">\(g(w)=\\|w\\|^2_2=w^Tw\)</span>: L2 penalty function</p></li>
+</ul></li>
+<li><p><strong>Solution</strong></p>
+<p><span class="math display">\[\begin{align}
+  \mathcal{L}&amp;=(y-Xw)^T(y-Xw)+\lambda w^Tw \\
+  \nabla_w\mathcal{L}&amp;=-2X^Ty+2X^TXw+2\lambda w=0 \\
+  \Rightarrow w_{RR}&amp;=(X^TX+\lambda I)^{-1}X^Ty
+  \end{align}\]</span></p></li>
+<li><p><strong>Data Preprocessing: Standardization</strong></p>
+<ul>
+<li><p><span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+  y\leftarrow y-\frac{1}{m}\sum_{i=1}^m{y_i}
+  \end{equation}\]</span></p></li>
+<li><p><span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+  x_{ij}\leftarrow \frac{x_{ij}-\bar{x}_ j}{\sqrt{\frac{1}{m}\sum_{i=1}^m{(x_{ij}-\bar{x}_ j)^2}}}
+  \end{equation}\]</span></p></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Singular Value Decomposition</strong></p>
+<ul>
+<li><p><u>Definition</u>: We can write any <span class="math inline">\(n\times d\ (n&gt;d)\)</span> matrix <span class="math inline">\(X\)</span> as <span class="math inline">\(X=USV^T\)</span>.</p>
+<ul>
+<li><span class="math inline">\(U\)</span>: left singular vectors <span class="math inline">\((m\times r)\)</span>
+<ul>
+<li>orthonormal in cols (i.e. <span class="math inline">\(U^TU=I\)</span>)</li>
+</ul></li>
+<li><span class="math inline">\(S\)</span>: singular values <span class="math inline">\((r\times r)\)</span>
+<ul>
+<li>non-negative diagonal (i.e. <span class="math inline">\(S_{ii}\geq0, S_{ij}=0\ \forall i\neq j\)</span>)</li>
+<li>sorted in decreasing order (i.e. <span class="math inline">\(\sigma_1\geq\sigma_2\geq\cdots\geq0\)</span>)</li>
+</ul></li>
+<li><span class="math inline">\(V\)</span>: right singular vectors <span class="math inline">\((n\times r)\)</span>
+<ul>
+<li>orthonormal (i.e. <span class="math inline">\(V^TV=VV^T=I\)</span>)</li>
+</ul></li>
+<li><span class="math inline">\(m\)</span>: #samples</li>
+<li><span class="math inline">\(n\)</span>: #features</li>
+<li><span class="math inline">\(r\)</span>: #concepts <span class="math inline">\((r=\text{rank}(X))\)</span></li>
+<li><span class="math inline">\(\sigma_i\)</span>: the strength of the <span class="math inline">\(i\)</span>th concept</li>
+</ul></li>
+<li><p><u>Properties</u>:</p>
+<p><span class="math display">\[\begin{align}
+  X^TX&amp;=VS^2V^T \\
+  XX^T&amp;=US^2U^T \\
+  \text{If}\ \forall i: S_{ii}\neq0 &amp;\Rightarrow (X^TX)^{-1}=VS^{-2}V^T 
+  \end{align}\]</span></p></li>
+<li><p><u>Intuition</u>:</p>
+<p><span class="math display">\[\begin{equation}
+  X=USV^T=\sum{\sigma_i\bf{u_i\times v_i^T}}
+  \end{equation}\]</span></p>
+<center>
+<p><img src="../../images/ML/svd.png" height="200"/></p>
+</center>
+<p>Why do we need this? What’s the practical use of this??</p>
+<p>As an example, suppose we would like to analyze a dataset of the relationship between <u>Users &amp; Movies</u>, in which:</p>
+<ul>
+<li>Each row = a user</li>
+<li>Each col = a movie</li>
+<li>Each entry <span class="math inline">\(X_{ij}\)</span> = the rating of movie <span class="math inline">\(j\)</span> from user <span class="math inline">\(i\)</span> (0=unwatched, 1=hate, 5=love)</li>
+</ul>
+<p>And here is the situation:</p>
+<center>
+<p><img src="../../images/ML/lagunita.jpg" height="300"/></p>
+</center>
+<center>
+<p>cited from Stanford’s <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Mining Massive Datasets</a></p>
+</center>
+<ul>
+<li><span class="math inline">\(U=\)</span> “User-to-Concept” similarity matrix
+<ul>
+<li><span class="math inline">\(U\[:,1]=\)</span> Sci-fi concept of users</li>
+<li><span class="math inline">\(U\[:,2]=\)</span> Romance concept of users</li>
+</ul></li>
+<li><span class="math inline">\(S=\)</span> “Strength of Concept” matrix
+<ul>
+<li><span class="math inline">\(S\[1,1]=\)</span> Strength of Sci-fi concept</li>
+<li><span class="math inline">\(S\[2,2]=\)</span> Strength of Romance concept</li>
+<li><span class="math inline">\(\because S\[3,3]\)</span> is very small <span class="math inline">\(\therefore\)</span> we can ignore this concept and also ignore <span class="math inline">\(U\[:,3]\)</span> and <span class="math inline">\(V^T\[3,:]\)</span>.</li>
+</ul></li>
+<li><span class="math inline">\(V^T=\)</span> “Movie-to-Concept” similarity matrix
+<ul>
+<li><span class="math inline">\(V^T\[1,1:3]=\)</span> Sci-fi concept of the Sci-fi movies</li>
+<li><span class="math inline">\(V^T\[2,4:5]=\)</span> Romance concept of the Romance movies</li>
+</ul></li>
+</ul></li>
+<li><p><a name="svdcalc"></a><u>Calculation of SVD</u>:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(X^TX=VS^2V^T\Rightarrow\)</span> calculate <span class="math inline">\(V,S^2\)</span>
+<ul>
+<li><span class="math inline">\(S^2\ni\)</span> eigenvalues</li>
+<li><span class="math inline">\(V\ni\)</span> eigenvectors</li>
+</ul></li>
+<li><span class="math inline">\(XV=US^2\Rightarrow\)</span> calculate <span class="math inline">\(U\)</span></li>
+<li>GG.</li>
+</ol></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Ridge Regression vs Least Squares LinReg</strong></p>
+<p><span class="math display">\[\begin{equation}
+  w_{\text{LS}}=(X^TX)^{-1}X^Ty\ \Leftrightarrow\ w_{\text{RR}}=(\lambda I+X^TX)^{-1}X^Ty
+  \end{equation}\]</span></p>
+<ul>
+<li><p><u>Problems with LS</u>:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\text{Var}\[w_{ML}]=\sigma^2(X^TX)^{-1}=\sigma^2VS^{-2}V^T\)</span></p>
+<p>When <span class="math inline">\(S_{ii}\)</span> is very small for some values of <span class="math inline">\(i\)</span>, <span class="math inline">\(\text{Var}\[w_{ML}]\)</span> is very large.</p></li>
+<li><p><span class="math inline">\(y_{\text{new}}=x_{\text{new}}^Tw_{LS}=x_{\text{new}}^T(X^TX)^{-1}X^Ty=x_{\text{new}}^TVS^{-1}U^Ty\)</span></p>
+<p>When <span class="math inline">\(S^{-1}\)</span> has very large values, our prediction will be very unstable.</p></li>
+</ol></li>
+<li><p><u>LS = a special case of RR</u>:</p>
+<p><span class="math display">\[\begin{align}
+  w_{\text{RR}}&amp;=(\lambda I+X^TX)^{-1}X^Ty \\
+  &amp;=(\lambda I+X^TX)^{-1}(X^TX)(X^TX)^{-1}X^Ty \\
+  &amp;=[(X^TX)(\lambda(X^TX)^{-1}+I)]^{-1}(X^TX)w_{\text{LS}} \\
+  &amp;=(\lambda(X^TX)^{-1}+I)^{-1}w_{\text{LS}} \\
+  &amp;=(\lambda VS^{-2}V^T+I)^{-1}w_{\text{LS}} \\
+  &amp;=V(\lambda S^{-2}+I)^{-1}V^Tw_{\text{LS}}\ \ \ \ \ \ \ \ \ |\ \ \ VV^T=I\\
+  &amp;:=VMV^Tw_{\text{LS}}
+  \end{align}\]</span></p>
+<p>where <span class="math inline">\(M=(\lambda S^{-2}+I)^{-1}\)</span> is a diagonal matrix with <span class="math inline">\(M_{ii}=\frac{S_{ii}^2}{\lambda+S_{ii}^2}\)</span>,</p>
+<p><span class="math display">\[\begin{align}
+  w_{\text{RR}}&amp;:=VMV^Tw_{\text{LS}} \\
+  &amp;=V(\lambda S^{-2}+I)^{-1}V^T(VS^{-1}U^Ty) \\
+  &amp;=VS^{-1}_ \lambda U^Ty \\
+  \end{align}\]</span></p>
+<p>where <span class="math inline">\(S_\lambda^{-1}\)</span> is a diagonal matrix with <span class="math inline">\(S_{ii}=\frac{S_{ii}}{\lambda+S_{ii}^2}\)</span>.</p>
+<p>Therefore, we get another clearer expression of the relationship between RR and LS:</p>
+<p><span class="math display">\[\begin{equation}
+  w_{\text{LS}}=VS^{-1}U^Ty\ \Leftrightarrow\ w_{\text{RR}}=VS_\lambda^{-1}U^Ty
+  \end{equation}\]</span></p>
+<p>And <span class="math inline">\(w_{LS}\)</span> is simply a special case of <span class="math inline">\(w_{RR}\)</span> where <span class="math inline">\(\lambda=0\)</span>.</p></li>
+<li><p><u>RR = a special case of LS</u>:</p>
+<p>If we do some preprocessing to our model <span class="math inline">\(\hat{y}\approx\hat{X}w\)</span>:</p>
+<p><span class="math display">\[\begin{equation}\begin{bmatrix}
+  y \\ 0 \\ \vdots \\ 0
+  \end{bmatrix}\approx\begin{bmatrix}
+  - &amp; X &amp; - \\ \sqrt{\lambda} &amp; &amp; 0 \\ &amp; \ddots &amp; \\ 0 &amp; &amp; \sqrt{\lambda}
+  \end{bmatrix}\begin{bmatrix}
+  w_1 \\ \vdots \\ w_n
+  \end{bmatrix}\end{equation}\]</span></p>
+<p>Now we have the exact same loss function:</p>
+<p><span class="math display">\[\begin{equation}
+  (\hat{y}-\hat{X}w)^T(\hat{y}-\hat{X}w)=\|y-Xw\|^2+\lambda\|w\|^2
+  \end{equation}\]</span></p></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Probabilistic Interpretation</strong></p>
+<ul>
+<li><p><strong>Expected Value</strong>:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathbb{E}[w_{\text{RR}}]=(\lambda I+X^TX)^{-1}X^TXw
+  \end{equation}\]</span></p></li>
+<li><p><strong>Variance</strong>:</p>
+<p><span class="math display">\[\begin{align}
+  \text{Var}[w_{\text{RR}}]&amp;=\mathbb{E}[w_{\text{RR}}w_{\text{RR}}^T]-\mathbb{E}[w_{\text{RR}}]\mathbb{E}[w_{\text{RR}}]^T \\
+  &amp;=(\lambda I+X^TX)^{-1}X^T\mathbb{E}[yy^T]X(\lambda I+X^TX)^{-1^T} \\
+  &amp;\ \ \ \ \ -(\lambda I+X^TX)^{-1}X^TXww^TX^TX(\lambda I+X^TX)^{-1^T} \\
+  &amp;=(\lambda I+X^TX)^{-1}X^T(\sigma^2I)X(\lambda I+X^TX)^{-1^T}\ \ (1) \\
+  &amp;=\sigma^2Z(X^TX)^{-1}Z^T \\
+  \end{align}\]</span></p>
+<p>where <span class="math inline">\(Z=(I+\lambda(X^TX)^{-1})^{-1}\)</span>.</p></li>
+<li><p><a href="#bvto">See more info</a></p></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<div id="bias-variance-trade-off" class="section level3" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> <strong>Bias-Variance Trade-off</strong></h3>
+<ul>
+<li><p><strong>Ridge vs LS</strong>:</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center">LS</th>
+<th align="center">Ridge</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Expected value</td>
+<td align="center"><span class="math inline">\(\mathbb{E}\[w_{\text{LS}}]=w\)</span></td>
+<td align="center"><span class="math inline">\(\mathbb{E}\[w_{\text{RR}}]=(\lambda I+X^TX)^{-1}X^TXw\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">Variance</td>
+<td align="center"><span class="math inline">\(\text{Var}\[w_{\text{LS}}]=\sigma^2(X^TX)^{-1}\)</span></td>
+<td align="center"><span class="math inline">\(\text{Var}\[w_{\text{LS}}]=\sigma^2Z(X^TX)^{-1}Z^T\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The distribution of <span class="math inline">\(w_{\text{RR}}\)</span> is not centered at <span class="math inline">\(w\)</span>, but the variance gets much smaller.</p></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+</div>
+<div id="lasso-regression" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Lasso Regression</h2>
+<ul>
+<li><p>Everything is the same as <a href="#ridge">Ridge Regression</a> except the <strong>model</strong>:</p>
+<p><span class="math display">\[\begin{equation}
+  w_{\text{lasso}}=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2+\lambda\|w\|_ 1
+  \end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(g(w)=\\|w\\|_ 1=\|w\|\)</span>: L1 penalty function</li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><strong>Solution</strong>: we are yet able to find a solution to the Multivariate LASSO because of the absolute value.</li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="glm" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> GLM</h2>
+<ul>
+<li><p>What are <strong>GLM</strong>s?</p>
+<p>Remember the two models we had in the last post?<br />
+Regression:      <span class="math inline">\(p(y|x,w)\sim N(\mu,\sigma^2)\)</span><br />
+Classification:   <span class="math inline">\(p(y|x,w)\sim \text{Bernoulli}(\phi)\)</span></p>
+<p>They belong to GLM, a collection of models that can be applied to Supervised Learning problems. We will show more examples of GLMs in this markdown.</p></li>
+<li><p><strong>Exponential Family</strong></p>
+<p><span class="math display">\[\begin{equation}
+  p(y,\eta)=b(y)\cdot e^{\eta^TT(y)-a(\eta)}
+  \end{equation}\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\eta\)</span>: natural parameter (i.e. canonical parameter)</p>
+<p> different <span class="math inline">\(\eta \rightarrow\)</span> different distributions within the family</p></li>
+<li><p><span class="math inline">\(T(y)\)</span>: sufficient statistic (usually, <span class="math inline">\(T(y)=y\)</span>)</p></li>
+<li><p><span class="math inline">\(a(\eta)\)</span>: log partition function</p></li>
+<li><p><span class="math inline">\(e^{-a(\eta)}\)</span>: normalization constant (to ensure that <span class="math inline">\(\int{p(y,\eta)dy}=1\)</span>)</p></li>
+<li><p><span class="math inline">\(T,a,b\)</span>: fixed choice that defines a family of distributions parametrized by <span class="math inline">\(\eta\)</span></p></li>
+</ol></li>
+</ul>
+<p><br/><a name="bernoulli"></a>
+- <strong>Bernoulli Distribution</strong> (Classification)</p>
+<pre><code>$$\begin{align}
+p(y|\phi)&amp;=\phi^y(1-\phi)^{1-y} \\
+&amp;=e^{y\log{\phi}+(1-y)\log{(1-\phi)}} \\
+&amp;=e^{y\log{\frac{\phi}{1-\phi}}+\log{(1-\phi)}} \\
+\end{align}$$
+
+1. $\eta=\log{\frac{\phi}{1-\phi}}\Leftrightarrow \phi=\frac{1}{1+e^{-\eta}}$
+    
+2. $T(y)=y$
+    
+3. $a(\eta)=\log{(1+e^\eta)}$
+    
+4. $b(y)=1$</code></pre>
+<p><br/><a name="gaussian"></a>
+- <strong>Gaussian Distribution</strong> (Regression)</p>
+<pre><code>$$\begin{align}
+p(y|\mu,\sigma^2)&amp;=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2\sigma^2}(y-\mu)^2} \\
+&amp;=\frac{1}{\sqrt{2\pi}}e^{\frac{\mu}{\sigma^2}y-\frac{1}{2\sigma^2}y^2-\frac{1}{2\sigma^2}\mu^2-\log{\sigma}}
+\end{align}$$
+
+1. $\eta=\begin{bmatrix}
+       \frac{\mu}{\sigma^2} ;
+       \frac{-1}{2\sigma^2}
+      \end{bmatrix}$
+          
+2. $T(y)=\begin{bmatrix}
+       y;
+       y^2
+      \end{bmatrix}$
+          
+3. $a(\eta)=\frac{1}{2\sigma^2}\mu^2-\log{\sigma}=-\frac{\eta_1^2}{4\eta_2}-\frac{1}{2}\log{(-2\eta_2)}$
+    
+4. $b(y)=\frac{1}{\sqrt{2\pi}}$</code></pre>
+<p><br/><a name="poisson"></a>
+- <strong>Poisson Distribution</strong> (count-data)</p>
+<pre><code>$$\begin{align}
+p(y|\lambda)&amp;=\frac{\lambda^ye^{-\lambda}}{y!}\\
+&amp;=\frac{1}{y!}e^{y\log{\lambda}-\lambda}
+\end{align}$$
+
+1. $\eta=\log{\lambda}$
+    
+2. $T(y)=y$
+    
+3. $a(\eta)=e^\eta$
+    
+4. $b(y)=\frac{1}{y!}$  </code></pre>
+<p><br/><a name="gamma"></a>
+- <strong>Gamma Distribution</strong> (continuous non-negative random variables)</p>
+<pre><code>$$\begin{align}
+p(y|\lambda,a)&amp;=\frac{\lambda^ay^{a-1}e^{-\lambda y}}{\Gamma(a)}\\
+&amp;=\frac{y^{a-1}}{\Gamma(a)}e^{-\lambda y+a\log{\lambda}}
+\end{align}$$
+
+1. $\eta=-\lambda$
+    
+2. $T(y)=y$
+    
+3. $a(\eta)=-a\log{(-\eta)}$
+    
+4. $b(y)=\frac{y^{a-1}}{\Gamma(a)}$  </code></pre>
+<p><br/><a name="beta"></a>
+- <strong>Beta Distribution</strong> (distribution of probabilities)</p>
+<pre><code>$$\begin{align}
+p(y|\alpha,\beta)&amp;=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}y^{\alpha-1}(1-y)^{\beta-1} \\
+&amp;=\frac{(1-y)^\beta}{y(1-y)\Gamma(\beta)}e^{\alpha\log{y}- \log{\frac{\Gamma(\alpha)}{\Gamma(\alpha+\beta)}}} \\
+&amp;=\frac{y^\alpha}{y(1-y)\Gamma(\alpha)}e^{\beta\log{(1-y)}- \log{\frac{\Gamma(\beta)}{\Gamma(\alpha+\beta)}}}
+\end{align}$$
+
+1. $\eta=\alpha\ \text{or}\ \beta$
+    
+2. $T(y)=\log{y}\ \text{or}\ \log{(1-y)}$
+    
+3. $a(\eta)=\log{\frac{\Gamma(\eta)}{\Gamma(\alpha+\beta)}}$
+    
+4. $b(y)=\frac{(1-y)^\beta}{y(1-y)\Gamma(\beta)}\ \text{or}\ \frac{y^\alpha}{y(1-y)\Gamma(\alpha)}$  </code></pre>
+<p><br/><a name="dirichlet"></a>
+- <strong>Dirichlet Distribution</strong> (multivariate beta)</p>
+<pre><code>$$\begin{align}
+p(y|\alpha)&amp;=\frac{\Gamma(\sum_k\alpha_k)}{\prod_k\Gamma(\alpha_k)}\prod_k{y_k^{\alpha_k-1}} \\
+&amp;=\exp{\big(\sum_k{(\alpha_k-1)\log{y_k}}-\big[\sum_k{\log{\Gamma(\alpha_k)}}-\log{\Gamma(\sum_k{\alpha_k})}\big]\big)}
+\end{align}$$
+
+1. $\eta=\alpha-1$
+    
+2. $T(y)=\log{y}$
+    
+3. $a(\eta)=\sum_k{\log{\Gamma(\alpha_k)}}-\log{\Gamma(\sum_k{\alpha_k})}$
+    
+4. $b(y)=1$</code></pre>
+<p>
+ 
+</p>
+<div id="method-of-constructing-glms" class="section level3" number="1.6.1">
+<h3><span class="header-section-number">1.6.1</span> Method of Constructing GLMs</h3>
+<ul>
+<li><p>3 Assumptions</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(y\|x,w \sim \text{ExponentialFamily}(\eta)\)</span></p>
+<p><span class="math inline">\(y\)</span> given <span class="math inline">\(x\&amp;w\)</span> follows some exponential family distribution with natural parameter <span class="math inline">\(\eta\)</span></p></li>
+<li><p><span class="math inline">\(h(x)=\text{E}[y\|x]\)</span></p>
+<p>Our hypothetical model <span class="math inline">\(h(x)\)</span> should predict the expected value of <span class="math inline">\(y\)</span> given <span class="math inline">\(x\)</span></p></li>
+<li><p><span class="math inline">\(\eta=w^Tx\)</span></p>
+<p><span class="math inline">\(\eta\)</span> is linearly related to <span class="math inline">\(x\)</span></p></li>
+</ol></li>
+<li><p>Example 1: OLS (Ordinary Least Squares) (i.e. LinReg)</p>
+<p><span class="math display">\[\begin{align}
+  h(x)&amp;=\text{E}[y\|x,w]\ \ \ \ \ \ &amp;\text{(Assumption 2)} \\
+     &amp;=\mu \\
+     &amp;=\eta\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ &amp;\text{(Assumption 1)} \\
+     &amp;=w^Tx\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ &amp;\text{(Assumption 3)}
+  \end{align}\]</span></p></li>
+<li><p>Example 2: Logistic Regression</p>
+<p><span class="math display">\[\begin{align}
+  h(x)&amp;=\text{E}[y\|x,w]\ \ \ \ \ \ &amp;\text{(Assumption 2)} \\
+     &amp;=\phi \\
+     &amp;=\frac{1}{1+e^{-\eta}}\ \ \ \ \ \ &amp;\text{(Assumption 1)} \\
+     &amp;=\frac{1}{1+e^{-w^Tx}}\ \ \ \ \ \ &amp;\text{(Assumption 3)}
+  \end{align}\]</span></p></li>
+<li><p>Example 3: <strong>Softmax Regression</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Softmax is a method used in <strong>multiclass classification</strong> to select one output value <span class="math inline">\(\phi_i\)</span> of the highest probability among all the output values.</p>
+<p><span class="math display">\[\begin{equation}
+ \hat{y}=\begin{bmatrix}
+ \phi_1 \\
+ \vdots \\
+ \phi_{k-1}
+ \end{bmatrix}
+ \end{equation}\]</span></p></li>
+<li><p><strong>One-hot Encoding</strong></p>
+<p><span class="math display">\[\begin{equation}
+ y\in \{ 1,\cdots,k \} \Rightarrow T(y)\in \mathbb{R}^{k}
+ \end{equation}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[\begin{equation}
+ T(1)=\begin{bmatrix}
+ 1 \\ 0 \\ \vdots \\ 0
+ \end{bmatrix},
+ T(2)=\begin{bmatrix}
+ 0 \\ 1 \\ \vdots \\ 0
+ \end{bmatrix},\cdots,
+ T(k)=\begin{bmatrix}
+ 0 \\ 0 \\ \vdots \\ 1
+ \end{bmatrix}
+ \end{equation}\]</span></p></li>
+<li><p><strong>Dummy Encoding</strong></p>
+<p><span class="math display">\[\begin{equation}
+ y\in \{ 1,\cdots,k \} \Rightarrow T(y)\in \mathbb{R}^{k-1}
+ \end{equation}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[\begin{equation}
+ T(1)=\begin{bmatrix}
+ 1 \\ 0 \\ \vdots \\ 0
+ \end{bmatrix},
+ T(2)=\begin{bmatrix}
+ 0 \\ 1 \\ \vdots \\ 0
+ \end{bmatrix},\cdots,
+ T(k-1)=\begin{bmatrix}
+ 0 \\ 0 \\ \vdots \\ 1
+ \end{bmatrix},
+ T(k)=\begin{bmatrix}
+ 0 \\ 0 \\ \vdots \\ 0
+ \end{bmatrix}
+ \end{equation}\]</span></p>
+<p>Why Dummy Encoding &gt; One-hot Encoding? It reduces 1 entire column!</p></li>
+<li><p>Indicator Function</p>
+<p><span class="math display">\[\begin{equation}
+ \text{I}\{ \text{True} \}=1,\ \text{I}\{ \text{False} \}=0
+ \end{equation}\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[\begin{equation}
+ T(y)_i =\text{I}\{ y=i \}
+ \end{equation}\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[\begin{equation}
+ \text{E}[T(y)_i] =P(y=i)=\phi_i
+ \end{equation}\]</span></p></li>
+<li><p>Exponential Family form</p>
+<p><span class="math display">\[\begin{align}
+ p(y|\phi)&amp;=\prod_{i=1}^{k}{\phi_i^{\text{I}\{ y=i \}}} \\
+ &amp;=\prod_{i=1}^{k-1}{\phi_i^{T(y)_i}} \cdot \phi_k^{1-\sum_{i=1}^{k-1}{T(y)_i}} \\
+ &amp;=\exp{\big(\sum_{i=1}^{k-1}{T(y)_i\log{(\phi_i)}-\sum_{i=1}^{k-1}{T(y)_i}\log{(\phi_k)}}+\log{(\phi_k)}\big)} \\
+ &amp;=\exp{\big(\sum_{i=1}^{k-1}{T(y)_i\log{\big(\frac{\phi_i}{\phi_k}\big)}+\log{(\phi_k)}\big)}} \\
+ \end{align}\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\eta=\begin{bmatrix}\log{\big(\frac{\phi_1}{\phi_k}\big)}\ ;\ \cdots\ ;\ \log{\big(\frac{\phi_{k-1}}{\phi_k}\big)}\end{bmatrix}\)</span></p></li>
+<li><p><span class="math inline">\(T(y)=\begin{bmatrix}T(y)_1\ ;\ \cdots\ ;\ T(y)_k-1\end{bmatrix}\)</span></p></li>
+<li><p><span class="math inline">\(a(\eta)=-\log{(\phi_k)}\)</span></p></li>
+<li><p><span class="math inline">\(b(y)=1\)</span><br />
+ </p></li>
+</ol></li>
+<li><p><strong>Softmax Function</strong> (derived from <span class="math inline">\(\eta_i=\log{\big(\frac{\phi_i}{\phi_k}\big)}\)</span>)</p>
+<p><span class="math display">\[\begin{equation}
+ \phi_i=\frac{e^{\eta_i}}{\sum_{j=1}^k{e^{\eta_j}}}
+ \end{equation}\]</span></p></li>
+<li><p>Probabilistic Interpretation of Softmax Regression</p>
+<p><span class="math display">\[\begin{equation}
+ p(y=i|x,w)=\frac{e^{w_i^Tx}}{\sum_{j=1}^k{e^{w_i^Tx}}}
+ \end{equation}\]</span></p></li>
+<li><p>Log Likelihood</p>
+<p><span class="math display">\[\begin{align}
+ l(w)&amp;=\sum_{i=1}^m{\log{p(y^{(i)}|x^{(i)},w)}} \\
+ &amp;=\sum_{i=1}^m{\log{\prod_{i=1}^{k}{\Bigg(\frac{e^{w_l^Tx^{(i)}}}{\sum_{j=1}^k{e^{w_l^Tx^{(i)}}}}\Bigg)^{\text{I}\{ y^{(i)}=l \}}}}}
+ \end{align}\]</span></p></li>
+</ol></li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cls.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/01_reg.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

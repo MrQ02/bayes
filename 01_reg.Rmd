@@ -1,0 +1,847 @@
+# Regression {#reg}
+
+## Linear Regression
+
+- **Problem Setting**
+
+    - **Data**: Observed pairs $(x,y)$, where $x\in\mathbb{R}^{n+1}$ (**input**) & $y\in\mathbb{R}$ (**output**)
+    - **Goal**: Find a linear function of the unknown $w$s: $f:\mathbb{R}^n\rightarrow\mathbb{R}\ \ \text{s.t.}\ \ \forall\ (x,y): y\approx f(x,w)$  
+
+<p>&nbsp;</p>
+
+- **Model**
+
+    $$\begin{align}
+    \hat{y}_ i&=\sum_{j=0}^{n}w_jx_{ij} \\ \\
+    \hat{y}&=Xw \\ \\
+    \begin{bmatrix} \hat{y}_ 1 \\ \vdots \\ \hat{y}_ m \end{bmatrix}&=
+    \begin{bmatrix}
+    1 & x_{11} & \cdots & x_{1n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    1 & x_{m1} & \cdots & x_{mn} \\
+    \end{bmatrix}\begin{bmatrix} w_0 \\ \vdots \\ w_n \end{bmatrix}
+    \end{align}$$
+
+    - $x_{ij}$: the $j$th feature in the $i$th observation
+    - $\hat{y}_ i$: the model prediction for the $i$th observation
+    - $w_j$: the parameter for the $j$th feature
+    - $m$: #observations
+    - $n$: #features  
+
+<p>&nbsp;</p>
+
+- **Learning**
+    
+    - **Aim**: find the optimal $w$ that minimizes a loss function (i.e. cost function)
+
+    - **Loss Function: OLS \[Ordinary Least Squares]**
+
+        $$\begin{equation*}
+        \mathcal{L}(w)=\sum_{i=1}^{m}(\hat{y}_ i-y_i)^2
+        \end{equation*}$$
+        
+        - Assumption (i.e. requirement): $m > > n$  
+
+    - <a name="gd"></a>**Minimization Method 1: Gradient Descent** (the practical solution)
+
+        $$\begin{equation}
+        w_j := w_j-\alpha\frac{\partial\mathcal{L}(w)}{\partial w_j}
+        \end{equation}$$
+
+        - $\alpha$: learning rate
+        - $\frac{\partial\mathcal{L}(w)}{\partial w_j}$: gradient  
+        
+        1. **Stochastic GD** (using 1 training observation for each GD step)
+
+            $$\begin{equation}
+            w_j := w_j-\alpha(\hat{y}_ i-y_i)x_{ij}
+            \end{equation}$$
+
+        2. **Mini-batch GD** (using mini-batches of size $m'$ for each GD step)
+
+            $$\begin{equation*}
+            w_j := w_j-\alpha\sum_{i=1}^{m'}(\hat{y}_ i-y_i)x_{ij}
+            \end{equation*}$$
+
+        3. **Batch GD** (LMS) (using the whole training set for each GD step)
+
+            $$\begin{equation}
+            w_j := w_j-\alpha\sum_{i=1}^{m}(\hat{y}_ i-y_i)x_{ij}
+            \end{equation}$$
+    
+        - Extra: <a name="newton"></a>**Newton's Method**
+    
+            1. Newton's formula
+
+                $$\begin{equation}
+                w := w-\frac{f(w)}{f'(w)}
+                \end{equation}$$
+
+            2. Newton's Method in GD
+
+                $$\begin{equation}
+                w := w-H^{-1}\nabla_w\mathcal{L}(w)
+                \end{equation}$$
+
+                where $H$ is Hessian Matrix:
+
+                $$\begin{equation}
+                H_{ij}=\frac{\partial^2\mathcal{L}(w)}{\partial w_i \partial w_j}
+                \end{equation}$$
+
+            3. Newton vs normal GD
+                - YES: faster convergence, fewer iterations
+                - NO:  expensive computing (inverse of a matrix)  
+
+    - <a name="normal"></a>**Minimization Method 2: Normal Equation** (the exact solution)
+
+        $$\begin{equation*}
+        w_{\text{LS}}=(X^TX)^{-1}X^Ty\ \Longleftrightarrow\  w_{\text{LS}}=\Big(\sum_{i=1}^m{x_ix_i^T}\Big)^{-1}\Big(\sum_{i=1}^m{y_ix_i}\Big)
+        \end{equation*}$$
+
+        1. Derivation (matrix)
+
+            $$\begin{align}
+            \DeclareMathOperator{\Tr}{tr}
+            \nabla_w\mathcal{L}(w)&=\nabla_w(Xw-y)^T(Xw-y) \\
+            &=\nabla_w\Tr(w^TX^TXw-w^TX^Ty-y^TXw+y^Ty) \\
+            &=\nabla_w(\Tr(w^TX^TXw)-2\Tr(y^TXw)) \\
+            &=2X^TXw-2X^Ty \\
+            &\Rightarrow X^TXw-X^Ty=0
+            \end{align}$$
+            
+        2. Derivation (vector)
+            
+            $$\begin{align}
+            \nabla_w\mathcal{L}(w)&=\sum_{i=1}^m{\nabla_w(w^Tx_ix_i^Tw-2w^Tx_iy_i+y_i^2)} \\
+            &=-\sum_{i=1}^m{2y_ix_i}+\Big(\sum_{i=1}^m{2x_ix_i^T}\Big)w \\
+            &\Rightarrow \Big(\sum_{i=1}^m{x_ix_i^T}\Big)w-\sum_{i=1}^m{y_ix_i}=0
+            \end{align}$$
+
+    - **GD vs Normal Equation** 
+        
+        |           | GD | Normal Equation |
+        |:---------:|:------:|:---------------:|
+        | **Advantage** | faster computing<br>less computing power required | the exact solution |
+        | **Disadvantage** | hard to reach the exact solution | $(X^TX)^{-1}$ must exist<br>(i.e. $(X^TX)^{-1}$ must be full rank) |
+        
+        - <u>Full rank</u>: when the $m\times n$ matrix $X$ has $\geq n$ linearly independent rows (i.e. any point in $\mathbb{R}^n$ can be reached by a weighted combination of $n$ rows of $X$)  
+
+<p>&nbsp;</p>
+
+- **Probabilistic Interpretation**
+    
+    1. **Probabilistic Model: Gaussian**
+    
+        $$\begin{equation}
+        p(y_i|x_i,w)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}
+        \end{equation}$$
+        
+        - $y_i=w^Tx_i+\epsilon_i$
+        - $\epsilon_i\sim N(0,\sigma)$  
+
+    2. **Likelihood Function**
+    
+        $$\begin{equation}
+        L(w)=\prod_{i=1}^{m}p(y_i|x_i,w)=\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}
+        \end{equation}$$
+    
+    3. **Log Likelihoood**
+      
+        $$\begin{align}
+        \mathcal{l}(w)&=\log{L(w)} \\
+        &=\log{\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}} \\
+        &=\sum_{i=1}^{m}\log{\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(y_i-w^Tx_i)^2}{2\sigma^2}}} \\
+        &=m\log{\frac{1}{\sqrt{2\pi}\sigma}}-\frac{1}{2\sigma^2}\sum_{i=1}^{m}(y_i-w^Tx_i)^2
+        \end{align}$$
+    
+        <u>Why log?</u>
+        
+        1. log = monotonic & increasing on $[0,1]\rightarrow$  
+        
+            $$\mathop{\arg\max}_ {w}L(w)=\mathop{\arg\max}_ {w}\log{L(w)}$$
+            
+        2. log simplifies calculation (especially & obviously for $\prod$)  
+
+    4. **MLE (Maximum Likelihood Estimation)**
+    
+        $$\begin{align}
+        \mathop{\arg\max}_ {w}\mathcal{l}(w)&=\mathop{\arg\max}_ {w}(m\log{\frac{1}{\sqrt{2\pi}\sigma}}-\frac{1}{2\sigma^2}\sum_{i=1}^{m}(y_i-w^Tx_i)^2) \\
+        &=\mathop{\arg\max}_ {w}(-\sum_{i=1}^{m}(y_i-w^Tx_i)^2) \\
+        &=\mathop{\arg\min}_ {w}\sum_{i=1}^{m}(y_i-w^Tx_i)^2 \\
+        &=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2
+        \end{align}$$
+        
+        $\Rightarrow$ Least Squares & Maximum Likelihood share the exact same solution.
+        
+    5. **Expected Value**:
+    
+        $$\begin{align}
+        \mathbb{E}[w_{ML}]&=\mathbb{E}[(X^TX)^{-1}X^Ty] \\
+        &=(X^TX)^{-1}X^TXw \\
+        &=w
+        \end{align}$$
+        
+    6. **Variance**:
+    
+        $$\begin{align}
+        \text{Var}[w_{ML}]&=\mathbb{E}[(w_{ML}-\mathbb{E}[w_{ML}])(w_{ML}-\mathbb{E}[w_{ML}])^T] \\
+        &=\mathbb{E}[w_{ML}w_{ML}^T]-\mathbb{E}[w_{ML}]\mathbb{E}[w_{ML}]^T \\
+        &=(X^TX)^{-1}X^T\mathbb{E}[yy^T]X(X^TX)^{-1}-ww^T \\
+        &=(X^TX)^{-1}X^T(\sigma^2I+Xww^TX^T)X(X^TX)^{-1}-ww^T\ \ (1) \\
+        &=\sigma^2(X^TX)^{-1} \\
+        \end{align}$$
+        
+        $(1)$:
+        
+        $$\begin{align}
+        \sigma=\text{Var}[y]&=\mathbb{E}[(y-\mu)(y-\mu)^T] \\
+        &=\mathbb{E}[yy^T]-2\mu\mu^T+\mu\mu^T \\
+        \Rightarrow \mathbb{E}[yy^T]&=\sigma+\mu\mu^T \\
+        \end{align}$$
+        
+    7. **Summary**:
+    
+        - Assumption: Gaussian - $y\ ~\ N(Xw, \sigma^2I)$
+        
+        - Expected Value: $\mathbb{E}[w_{ML}]=w$
+        
+        - Variance: $\text{Var}[w_{ML}]=\sigma^2(X^TX)^{-1}$
+        
+        - Problem: Notice how $w_{ML}$ becomes huge when our variance $\sigma^2(X^TX)^{-1}$ is too large.
+        
+- **Regularization**:
+    
+    - <u>Intuition</u>: in order to prevent the problem above, we want to constrain our model parameters $w$:
+
+        $$\begin{equation}
+        w_{op}=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2+\lambda g(w)
+        \end{equation}$$
+        
+        - $\lambda>0$: regularization parameter
+        - $g(w)>0$: penalty function  
+
+    - <u>Sample Regularizations</u>: Ridge Regression, LASSO Regression, ...  
+
+<p>&nbsp;</p>
+
+## Polynomial Regression
+
+- Polynomial Regression $\in$ Linear Regression ($f$ = a linear function of unknown parameters $w$)
+
+- **Different Preprocessing**:
+
+    $$\begin{equation}
+    X=\begin{bmatrix}
+    1 & x_{11} & \cdots & x_{1n} & x_{11}^2 & \cdots & x_{1n}^p \\
+    \vdots &  & \vdots &  &  & \vdots &  \\
+    1 & x_{m1} & \cdots & x_{mn} & x_{m1}^2 & \cdots & x_{mn}^p \\
+    \end{bmatrix}
+    \end{equation}$$
+    
+    with the width of $p\times n+1$.
+
+- Everything else is exactly the same as [linear regression](#linreg).
+
+- Sample models:
+    - 3rd order with 1 feature: $y_i=w_0+w_1x_i+w_2x_i^2+w_3x_i^3$
+    - 2nd order with 2 features: $y_i=w_0+w_1x_{i1}+w_2x_{i2}+w_3x_{i1}^2+w_4x_{i2}^2$  
+
+<p>&nbsp;</p>
+
+- **Further Extensions**: we can generalize our linear regression model as:
+
+    $$\begin{equation}
+    \hat{y}_ i\approx f(x_i,w)=\sum_{s=1}^S{g_s(x_i)w_s}
+    \end{equation}$$
+    
+    where $g_s(x_i)$ can be any function of $x_i$, such as $e^{x_{ij}},\ \log{x_{ij}},\ ...$.
+    
+    Everything else is still the same as [linear regression](#linreg).
+
+<p>&nbsp;</p>
+
+## Locally Weighted Linear Regression
+
+- <a name="lwrprob"></a>**Problem Setting**
+
+    - **Underfitting**: the model barely fits the data points.
+
+        <center><img src="../../images/ML/underfit.png" height="200"/></center>
+
+        One single line is usually not enough to capture the pattern of $x\ \&\ y$. In order to get a better fit, we add more polynomial features ($x^j$) to the original model:
+
+    - **Overfitting**: the model fits the given data points too well that it cannot be used on other data points.
+
+        <center><img src="../../images/ML/overfit.png" height="200"/></center>
+
+        When we add too much (e.g. $y=\sum_{j=0}^{9}w_jx^j$), the model captures the pattern of the given data points $(x_i,y_i)$ too much that it cannot perform well on new data points.
+        
+- **Intuition**: When we would like to estimate $y$ at a certain $x$, instead of applying the original LinReg, we take a subset of data points $(x_i,y_i)$ around $x$ and try to do LinReg on that subset only so that we can get a more accurate estimation.
+
+- **Model: Weighted LS**
+
+   - Original LinReg
+
+        $$\begin{equation}
+        w\leftarrow\mathop{\arg\min}_ {w}\sum_{i=1}^{m}(y_i-w^Tx_i)^2
+        \end{equation}$$
+
+        We find the $w$ that minimizes the cost function (maximizes the likelihood function) so that our model is optimized to fit the data.
+
+    - LWR
+
+        $$\begin{equation}
+        w\leftarrow\mathop{\arg\min}_ {w}\sum_{i=1}^{m}e^{-\frac{(x_i-x)^2}{2\tau^2}}\cdot(y_i-w^Tx_i)^2
+        \end{equation}$$
+
+        We add the weight function $\mathcal{W}_ i=e^{-\frac{(x_i-x)^2}{2\tau^2}}$ to the OLS, where
+
+        - **Numerator**:
+
+            $$\begin{align}
+            &\text{If}\ |x_i-x|=\text{small} \longrightarrow W_i\approx 1 \\
+            &\text{If}\ |x_i-x|=\text{large} \longrightarrow W_i\approx 0
+            \end{align}$$
+
+        - **Bandwidth Parameter**: $\tau$ (how fast the weight of $x_i$ falls off the query point $x$)
+            
+            $$\begin{align}
+            &\text{When}\ \tau > > 1, \text{LWR} \approx \text{LinReg} \\
+            &\text{When}\ \tau < < 1, \text{LWR} \rightarrow \text{overfitting}
+            \end{align}$$
+        
+        - **Exact Solution**:
+        
+            $$\begin{align}
+            \DeclareMathOperator{\Tr}{tr}
+            \nabla_w\mathcal{L}(w)&=\nabla_w \mathcal{W}(Xw-y)^T(Xw-y) \\
+            &\Rightarrow X^T\mathcal{W}Xw-X^T\mathcal{W}y=0 \\
+            \Rightarrow w&=(X^T\mathcal{W}X)^{-1}X^T\mathcal{W}y
+            \end{align}$$
+
+<p>&nbsp;</p>
+
+## Ridge Regression
+
+- **Problem Setting**
+
+    - The OLS LinReg method gives us an accurate expected value: $\mathbb{E}[w_{ML}]=w$.
+    
+    - However, the **variance** $\text{Var}[w_{ML}]=\sigma^2(X^TX)^{-1}$ could be **too large** that it ruins our model parameters.
+    
+    - Ridge Regression $\in$ [regularization](#regular) methods
+    
+- **Model**
+
+    $$\begin{equation}
+    w_{RR}=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2+\lambda\|w\|^2_2
+    \end{equation}$$
+    
+    - $\lambda$: regularization parameter: 
+        
+        $$\begin{align}
+        &\text{If}\ \lambda\rightarrow0\ \ \Longrightarrow w_{RR}\rightarrow w_{LS} \\
+        &\text{If}\ \lambda\rightarrow\infty \Longrightarrow w_{RR}\rightarrow \bf{0}
+        \end{align}$$
+        
+    - $g(w)=\\|w\\|^2_2=w^Tw$: L2 penalty function
+    
+- **Solution**
+
+    $$\begin{align}
+    \mathcal{L}&=(y-Xw)^T(y-Xw)+\lambda w^Tw \\
+    \nabla_w\mathcal{L}&=-2X^Ty+2X^TXw+2\lambda w=0 \\
+    \Rightarrow w_{RR}&=(X^TX+\lambda I)^{-1}X^Ty
+    \end{align}$$
+    
+- **Data Preprocessing: Standardization**
+
+    - $y$:
+    
+        $$\begin{equation}
+        y\leftarrow y-\frac{1}{m}\sum_{i=1}^m{y_i}
+        \end{equation}$$
+
+    - $x$:
+    
+        $$\begin{equation}
+        x_{ij}\leftarrow \frac{x_{ij}-\bar{x}_ j}{\sqrt{\frac{1}{m}\sum_{i=1}^m{(x_{ij}-\bar{x}_ j)^2}}}
+        \end{equation}$$
+
+
+<p>&nbsp;</p>
+
+- **Singular Value Decomposition**
+
+    - <u>Definition</u>: We can write any $n\times d\ (n>d)$ matrix $X$ as $X=USV^T$.
+        
+        - $U$: left singular vectors $(m\times r)$
+            - orthonormal in cols (i.e. $U^TU=I$)
+        
+        - $S$: singular values $(r\times r)$
+            - non-negative diagonal (i.e. $S_{ii}\geq0, S_{ij}=0\ \forall i\neq j$)
+            - sorted in decreasing order (i.e. $\sigma_1\geq\sigma_2\geq\cdots\geq0$)
+        
+        - $V$: right singular vectors $(n\times r)$
+            - orthonormal (i.e. $V^TV=VV^T=I$)  
+        
+        - $m$: #samples
+        - $n$: #features
+        - $r$: #concepts $(r=\text{rank}(X))$
+        - $\sigma_i$: the strength of the $i$th concept  
+
+    - <u>Properties</u>:
+    
+        $$\begin{align}
+        X^TX&=VS^2V^T \\
+        XX^T&=US^2U^T \\
+        \text{If}\ \forall i: S_{ii}\neq0 &\Rightarrow (X^TX)^{-1}=VS^{-2}V^T 
+        \end{align}$$
+    
+    - <u>Intuition</u>:
+        
+        $$\begin{equation}
+        X=USV^T=\sum{\sigma_i\bf{u_i\times v_i^T}}
+        \end{equation}$$
+        
+        <center><img src="../../images/ML/svd.png" height="200"/></center>
+        
+        Why do we need this? What's the practical use of this??  
+        
+        As an example, suppose we would like to analyze a dataset of the relationship between <u>Users & Movies</u>, in which:
+        
+        - Each row = a user
+        - Each col = a movie
+        - Each entry $X_{ij}$ = the rating of movie $j$ from user $i$ (0=unwatched, 1=hate, 5=love)  
+        
+        And here is the situation: 
+
+        <center><img src="../../images/ML/lagunita.jpg" height="300"/></center>
+        <center>cited from Stanford's <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Mining Massive Datasets</a></center>
+
+        - $U=$ "User-to-Concept" similarity matrix
+            - $U\[:,1]=$ Sci-fi concept of users
+            - $U\[:,2]=$ Romance concept of users  
+
+        - $S=$ "Strength of Concept" matrix
+            - $S\[1,1]=$ Strength of Sci-fi concept
+            - $S\[2,2]=$ Strength of Romance concept
+            - $\because S\[3,3]$ is very small $\therefore$ we can ignore this concept and also ignore $U\[:,3]$ and $V^T\[3,:]$.  
+
+        - $V^T=$ "Movie-to-Concept" similarity matrix
+            - $V^T\[1,1:3]=$ Sci-fi concept of the Sci-fi movies
+            - $V^T\[2,4:5]=$ Romance concept of the Romance movies
+
+    - <a name="svdcalc"></a><u>Calculation of SVD</u>:
+        
+        1. $X^TX=VS^2V^T\Rightarrow$ calculate $V,S^2$
+            - $S^2\ni$ eigenvalues
+            - $V\ni$ eigenvectors
+        2. $XV=US^2\Rightarrow$ calculate $U$
+        3. GG.  
+
+<p>&nbsp;</p>
+
+- **Ridge Regression vs Least Squares LinReg**
+
+    $$\begin{equation}
+    w_{\text{LS}}=(X^TX)^{-1}X^Ty\ \Leftrightarrow\ w_{\text{RR}}=(\lambda I+X^TX)^{-1}X^Ty
+    \end{equation}$$
+    
+    - <u>Problems with LS</u>:
+    
+        1. $\text{Var}\[w_{ML}]=\sigma^2(X^TX)^{-1}=\sigma^2VS^{-2}V^T$
+        
+            When $S_{ii}$ is very small for some values of $i$, $\text{Var}\[w_{ML}]$ is very large.
+            
+        2. $y_{\text{new}}=x_{\text{new}}^Tw_{LS}=x_{\text{new}}^T(X^TX)^{-1}X^Ty=x_{\text{new}}^TVS^{-1}U^Ty$
+        
+            When $S^{-1}$ has very large values, our prediction will be very unstable.
+
+    - <u>LS = a special case of RR</u>:
+    
+        $$\begin{align}
+        w_{\text{RR}}&=(\lambda I+X^TX)^{-1}X^Ty \\
+        &=(\lambda I+X^TX)^{-1}(X^TX)(X^TX)^{-1}X^Ty \\
+        &=[(X^TX)(\lambda(X^TX)^{-1}+I)]^{-1}(X^TX)w_{\text{LS}} \\
+        &=(\lambda(X^TX)^{-1}+I)^{-1}w_{\text{LS}} \\
+        &=(\lambda VS^{-2}V^T+I)^{-1}w_{\text{LS}} \\
+        &=V(\lambda S^{-2}+I)^{-1}V^Tw_{\text{LS}}\ \ \ \ \ \ \ \ \ |\ \ \ VV^T=I\\
+        &:=VMV^Tw_{\text{LS}}
+        \end{align}$$
+        
+        where $M=(\lambda S^{-2}+I)^{-1}$ is a diagonal matrix with $M_{ii}=\frac{S_{ii}^2}{\lambda+S_{ii}^2}$,
+        
+        $$\begin{align}
+        w_{\text{RR}}&:=VMV^Tw_{\text{LS}} \\
+        &=V(\lambda S^{-2}+I)^{-1}V^T(VS^{-1}U^Ty) \\
+        &=VS^{-1}_ \lambda U^Ty \\
+        \end{align}$$
+        
+        where $S_\lambda^{-1}$ is a diagonal matrix with $S_{ii}=\frac{S_{ii}}{\lambda+S_{ii}^2}$.  
+        
+        Therefore, we get another clearer expression of the relationship between RR and LS:
+        
+        $$\begin{equation}
+        w_{\text{LS}}=VS^{-1}U^Ty\ \Leftrightarrow\ w_{\text{RR}}=VS_\lambda^{-1}U^Ty
+        \end{equation}$$
+        
+        And $w_{LS}$ is simply a special case of $w_{RR}$ where $\lambda=0$.
+
+    - <u>RR = a special case of LS</u>:
+    
+        If we do some preprocessing to our model $\hat{y}\approx\hat{X}w$:
+        
+        $$\begin{equation}\begin{bmatrix}
+        y \\ 0 \\ \vdots \\ 0
+        \end{bmatrix}\approx\begin{bmatrix}
+        - & X & - \\ \sqrt{\lambda} & & 0 \\ & \ddots & \\ 0 & & \sqrt{\lambda}
+        \end{bmatrix}\begin{bmatrix}
+        w_1 \\ \vdots \\ w_n
+        \end{bmatrix}\end{equation}$$
+        
+        Now we have the exact same loss function:
+        
+        $$\begin{equation}
+        (\hat{y}-\hat{X}w)^T(\hat{y}-\hat{X}w)=\|y-Xw\|^2+\lambda\|w\|^2
+        \end{equation}$$
+
+
+<p>&nbsp;</p>
+
+- **Probabilistic Interpretation**
+
+    - **Expected Value**:
+    
+        $$\begin{equation}
+        \mathbb{E}[w_{\text{RR}}]=(\lambda I+X^TX)^{-1}X^TXw
+        \end{equation}$$
+        
+    - **Variance**:
+    
+        $$\begin{align}
+        \text{Var}[w_{\text{RR}}]&=\mathbb{E}[w_{\text{RR}}w_{\text{RR}}^T]-\mathbb{E}[w_{\text{RR}}]\mathbb{E}[w_{\text{RR}}]^T \\
+        &=(\lambda I+X^TX)^{-1}X^T\mathbb{E}[yy^T]X(\lambda I+X^TX)^{-1^T} \\
+        &\ \ \ \ \ -(\lambda I+X^TX)^{-1}X^TXww^TX^TX(\lambda I+X^TX)^{-1^T} \\
+        &=(\lambda I+X^TX)^{-1}X^T(\sigma^2I)X(\lambda I+X^TX)^{-1^T}\ \ (1) \\
+        &=\sigma^2Z(X^TX)^{-1}Z^T \\
+        \end{align}$$
+        
+        where $Z=(I+\lambda(X^TX)^{-1})^{-1}$.
+        
+    - [See more info](#bvto)
+
+<p>&nbsp;</p>
+
+
+### <strong>Bias-Variance Trade-off</strong>
+
+- **Ridge vs LS**:
+
+    |  | LS | Ridge |
+    |:-:|:-:|:-:|
+    | Expected value | $\mathbb{E}\[w_{\text{LS}}]=w$ | $\mathbb{E}\[w_{\text{RR}}]=(\lambda I+X^TX)^{-1}X^TXw$ |
+    | Variance | $\text{Var}\[w_{\text{LS}}]=\sigma^2(X^TX)^{-1}$ | $\text{Var}\[w_{\text{LS}}]=\sigma^2Z(X^TX)^{-1}Z^T$ |
+
+    The distribution of $w_{\text{RR}}$ is not centered at $w$, but the variance gets much smaller.
+
+<p>&nbsp;</p>
+
+## Lasso Regression
+
+- Everything is the same as [Ridge Regression](#ridge) except the **model**:
+
+    $$\begin{equation}
+    w_{\text{lasso}}=\mathop{\arg\min}_ {w}\|{y-Xw}\|^2+\lambda\|w\|_ 1
+    \end{equation}$$
+        
+    - $g(w)=\\|w\\|_ 1=\|w\|$: L1 penalty function  
+
+<p>&nbsp;</p>
+    
+- **Solution**: we are yet able to find a solution to the Multivariate LASSO because of the absolute value.
+
+<p>&nbsp;</p>        
+
+## GLM
+
+- What are **GLM**s?  
+
+    Remember the two models we had in the last post?  
+    Regression:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$p(y|x,w)\sim N(\mu,\sigma^2)$  
+    Classification: &nbsp;&nbsp;$p(y|x,w)\sim \text{Bernoulli}(\phi)$  
+    
+    They belong to GLM, a collection of models that can be applied to Supervised Learning problems. We will show more examples of GLMs in this markdown.
+
+- **Exponential Family**
+
+    $$\begin{equation}
+    p(y,\eta)=b(y)\cdot e^{\eta^TT(y)-a(\eta)}
+    \end{equation}$$
+    
+    1. $\eta$: natural parameter (i.e. canonical parameter)  
+        
+        &emsp;different $\eta \rightarrow$ different distributions within the family
+        
+    2. $T(y)$: sufficient statistic (usually, $T(y)=y$)  
+        
+    3. $a(\eta)$: log partition function  
+        
+    4. $e^{-a(\eta)}$: normalization constant (to ensure that $\int{p(y,\eta)dy}=1$) 
+        
+    5. $T,a,b$: fixed choice that defines a family of distributions parametrized by $\eta$
+
+<br/><a name="bernoulli"></a>
+- **Bernoulli Distribution** (Classification)
+
+    $$\begin{align}
+    p(y|\phi)&=\phi^y(1-\phi)^{1-y} \\
+    &=e^{y\log{\phi}+(1-y)\log{(1-\phi)}} \\
+    &=e^{y\log{\frac{\phi}{1-\phi}}+\log{(1-\phi)}} \\
+    \end{align}$$
+    
+    1. $\eta=\log{\frac{\phi}{1-\phi}}\Leftrightarrow \phi=\frac{1}{1+e^{-\eta}}$
+        
+    2. $T(y)=y$
+        
+    3. $a(\eta)=\log{(1+e^\eta)}$
+        
+    4. $b(y)=1$
+
+<br/><a name="gaussian"></a>
+- **Gaussian Distribution** (Regression)
+
+    $$\begin{align}
+    p(y|\mu,\sigma^2)&=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2\sigma^2}(y-\mu)^2} \\
+    &=\frac{1}{\sqrt{2\pi}}e^{\frac{\mu}{\sigma^2}y-\frac{1}{2\sigma^2}y^2-\frac{1}{2\sigma^2}\mu^2-\log{\sigma}}
+    \end{align}$$
+    
+    1. $\eta=\begin{bmatrix}
+           \frac{\mu}{\sigma^2} ;
+           \frac{-1}{2\sigma^2}
+          \end{bmatrix}$
+              
+    2. $T(y)=\begin{bmatrix}
+           y;
+           y^2
+          \end{bmatrix}$
+              
+    3. $a(\eta)=\frac{1}{2\sigma^2}\mu^2-\log{\sigma}=-\frac{\eta_1^2}{4\eta_2}-\frac{1}{2}\log{(-2\eta_2)}$
+        
+    4. $b(y)=\frac{1}{\sqrt{2\pi}}$
+
+<br/><a name="poisson"></a>
+- **Poisson Distribution** (count-data)
+
+    $$\begin{align}
+    p(y|\lambda)&=\frac{\lambda^ye^{-\lambda}}{y!}\\
+    &=\frac{1}{y!}e^{y\log{\lambda}-\lambda}
+    \end{align}$$
+    
+    1. $\eta=\log{\lambda}$
+        
+    2. $T(y)=y$
+        
+    3. $a(\eta)=e^\eta$
+        
+    4. $b(y)=\frac{1}{y!}$  
+
+<br/><a name="gamma"></a>
+- **Gamma Distribution** (continuous non-negative random variables)
+
+    $$\begin{align}
+    p(y|\lambda,a)&=\frac{\lambda^ay^{a-1}e^{-\lambda y}}{\Gamma(a)}\\
+    &=\frac{y^{a-1}}{\Gamma(a)}e^{-\lambda y+a\log{\lambda}}
+    \end{align}$$
+    
+    1. $\eta=-\lambda$
+        
+    2. $T(y)=y$
+        
+    3. $a(\eta)=-a\log{(-\eta)}$
+        
+    4. $b(y)=\frac{y^{a-1}}{\Gamma(a)}$  
+
+<br/><a name="beta"></a>
+- **Beta Distribution** (distribution of probabilities)
+
+    $$\begin{align}
+    p(y|\alpha,\beta)&=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}y^{\alpha-1}(1-y)^{\beta-1} \\
+    &=\frac{(1-y)^\beta}{y(1-y)\Gamma(\beta)}e^{\alpha\log{y}- \log{\frac{\Gamma(\alpha)}{\Gamma(\alpha+\beta)}}} \\
+    &=\frac{y^\alpha}{y(1-y)\Gamma(\alpha)}e^{\beta\log{(1-y)}- \log{\frac{\Gamma(\beta)}{\Gamma(\alpha+\beta)}}}
+    \end{align}$$
+    
+    1. $\eta=\alpha\ \text{or}\ \beta$
+        
+    2. $T(y)=\log{y}\ \text{or}\ \log{(1-y)}$
+        
+    3. $a(\eta)=\log{\frac{\Gamma(\eta)}{\Gamma(\alpha+\beta)}}$
+        
+    4. $b(y)=\frac{(1-y)^\beta}{y(1-y)\Gamma(\beta)}\ \text{or}\ \frac{y^\alpha}{y(1-y)\Gamma(\alpha)}$  
+
+<br/><a name="dirichlet"></a>
+- **Dirichlet Distribution** (multivariate beta)
+
+    $$\begin{align}
+    p(y|\alpha)&=\frac{\Gamma(\sum_k\alpha_k)}{\prod_k\Gamma(\alpha_k)}\prod_k{y_k^{\alpha_k-1}} \\
+    &=\exp{\big(\sum_k{(\alpha_k-1)\log{y_k}}-\big[\sum_k{\log{\Gamma(\alpha_k)}}-\log{\Gamma(\sum_k{\alpha_k})}\big]\big)}
+    \end{align}$$
+    
+    1. $\eta=\alpha-1$
+        
+    2. $T(y)=\log{y}$
+        
+    3. $a(\eta)=\sum_k{\log{\Gamma(\alpha_k)}}-\log{\Gamma(\sum_k{\alpha_k})}$
+        
+    4. $b(y)=1$
+
+<p>&nbsp;</p>
+
+### Method of Constructing GLMs
+
+- 3 Assumptions
+    
+    1. $y\|x,w \sim \text{ExponentialFamily}(\eta)$
+    
+        $y$ given $x\&w$ follows some exponential family distribution with natural parameter $\eta$
+        
+    2. $h(x)=\text{E}[y\|x]$
+    
+        Our hypothetical model $h(x)$ should predict the expected value of $y$ given $x$
+    
+    3. $\eta=w^Tx$
+    
+        $\eta$ is linearly related to $x$
+    
+- Example 1: OLS (Ordinary Least Squares) (i.e. LinReg)
+
+    $$\begin{align}
+    h(x)&=\text{E}[y\|x,w]\ \ \ \ \ \ &\text{(Assumption 2)} \\
+       &=\mu \\
+       &=\eta\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ &\text{(Assumption 1)} \\
+       &=w^Tx\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ &\text{(Assumption 3)}
+    \end{align}$$
+    
+- Example 2: Logistic Regression
+
+    $$\begin{align}
+    h(x)&=\text{E}[y\|x,w]\ \ \ \ \ \ &\text{(Assumption 2)} \\
+       &=\phi \\
+       &=\frac{1}{1+e^{-\eta}}\ \ \ \ \ \ &\text{(Assumption 1)} \\
+       &=\frac{1}{1+e^{-w^Tx}}\ \ \ \ \ \ &\text{(Assumption 3)}
+    \end{align}$$
+    
+- Example 3: **Softmax Regression**
+    
+    1. Softmax is a method used in **multiclass classification** to select one output value $\phi_i$ of the highest probability among all the output values.
+        
+        $$\begin{equation}
+        \hat{y}=\begin{bmatrix}
+        \phi_1 \\
+        \vdots \\
+        \phi_{k-1}
+        \end{bmatrix}
+        \end{equation}$$
+        
+    2. **One-hot Encoding**
+        
+        $$\begin{equation}
+        y\in \{ 1,\cdots,k \} \Rightarrow T(y)\in \mathbb{R}^{k}
+        \end{equation}$$  
+        
+        where
+        
+        $$\begin{equation}
+        T(1)=\begin{bmatrix}
+        1 \\ 0 \\ \vdots \\ 0
+        \end{bmatrix},
+        T(2)=\begin{bmatrix}
+        0 \\ 1 \\ \vdots \\ 0
+        \end{bmatrix},\cdots,
+        T(k)=\begin{bmatrix}
+        0 \\ 0 \\ \vdots \\ 1
+        \end{bmatrix}
+        \end{equation}$$
+    
+    3. **Dummy Encoding**
+
+        
+        $$\begin{equation}
+        y\in \{ 1,\cdots,k \} \Rightarrow T(y)\in \mathbb{R}^{k-1}
+        \end{equation}$$  
+        
+        where
+        
+        $$\begin{equation}
+        T(1)=\begin{bmatrix}
+        1 \\ 0 \\ \vdots \\ 0
+        \end{bmatrix},
+        T(2)=\begin{bmatrix}
+        0 \\ 1 \\ \vdots \\ 0
+        \end{bmatrix},\cdots,
+        T(k-1)=\begin{bmatrix}
+        0 \\ 0 \\ \vdots \\ 1
+        \end{bmatrix},
+        T(k)=\begin{bmatrix}
+        0 \\ 0 \\ \vdots \\ 0
+        \end{bmatrix}
+        \end{equation}$$
+        
+        Why Dummy Encoding > One-hot Encoding? It reduces 1 entire column!
+    
+    4. Indicator Function
+    
+        $$\begin{equation}
+        \text{I}\{ \text{True} \}=1,\ \text{I}\{ \text{False} \}=0
+        \end{equation}$$
+        
+        Therefore,
+        
+        $$\begin{equation}
+        T(y)_i =\text{I}\{ y=i \}
+        \end{equation}$$
+        
+        Therefore,
+        
+        $$\begin{equation}
+        \text{E}[T(y)_i] =P(y=i)=\phi_i
+        \end{equation}$$
+        
+    5. Exponential Family form
+    
+        $$\begin{align}
+        p(y|\phi)&=\prod_{i=1}^{k}{\phi_i^{\text{I}\{ y=i \}}} \\
+        &=\prod_{i=1}^{k-1}{\phi_i^{T(y)_i}} \cdot \phi_k^{1-\sum_{i=1}^{k-1}{T(y)_i}} \\
+        &=\exp{\big(\sum_{i=1}^{k-1}{T(y)_i\log{(\phi_i)}-\sum_{i=1}^{k-1}{T(y)_i}\log{(\phi_k)}}+\log{(\phi_k)}\big)} \\
+        &=\exp{\big(\sum_{i=1}^{k-1}{T(y)_i\log{\big(\frac{\phi_i}{\phi_k}\big)}+\log{(\phi_k)}\big)}} \\
+        \end{align}$$
+
+        1. $\eta=\begin{bmatrix}\log{\big(\frac{\phi_1}{\phi_k}\big)}\ ;\ \cdots\ ;\ \log{\big(\frac{\phi_{k-1}}{\phi_k}\big)}\end{bmatrix}$
+              
+        2. $T(y)=\begin{bmatrix}T(y)_1\ ;\ \cdots\ ;\ T(y)_k-1\end{bmatrix}$
+
+        3. $a(\eta)=-\log{(\phi_k)}$
+
+        4. $b(y)=1$  
+        &nbsp;
+    
+    6. **Softmax Function** (derived from $\eta_i=\log{\big(\frac{\phi_i}{\phi_k}\big)}$)
+    
+        $$\begin{equation}
+        \phi_i=\frac{e^{\eta_i}}{\sum_{j=1}^k{e^{\eta_j}}}
+        \end{equation}$$
+        
+    7. Probabilistic Interpretation of Softmax Regression
+    
+        $$\begin{equation}
+        p(y=i|x,w)=\frac{e^{w_i^Tx}}{\sum_{j=1}^k{e^{w_i^Tx}}}
+        \end{equation}$$
+    
+    8. Log Likelihood
+    
+        $$\begin{align}
+        l(w)&=\sum_{i=1}^m{\log{p(y^{(i)}|x^{(i)},w)}} \\
+        &=\sum_{i=1}^m{\log{\prod_{i=1}^{k}{\Bigg(\frac{e^{w_l^Tx^{(i)}}}{\sum_{j=1}^k{e^{w_l^Tx^{(i)}}}}\Bigg)^{\text{I}\{ y^{(i)}=l \}}}}}
+        \end{align}$$
+            

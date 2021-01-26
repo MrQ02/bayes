@@ -4,8 +4,7 @@ language:
     chapter_name: ""
 rmd_files: [
   "index.Rmd",
-  "01_mean.Rmd",
-  "02_volatility.Rmd",
-  "03_order_selection.Rmd"]
+  "01_reg.Rmd",
+  "02_cls.Rmd"]
 delete_merged_file: true 
 output_dir: "docs"

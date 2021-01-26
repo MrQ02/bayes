@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Classification | Machine Learning</title>
+  <meta name="description" content="2 Classification | Machine Learning" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Classification | Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="MrQ02/ml" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Classification | Machine Learning" />
+  
+  
+  
+
+<meta name="author" content="Renyi Qu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="reg.html"/>
+
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Time Series Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="1" data-path="reg.html"><a href="reg.html"><i class="fa fa-check"></i><b>1</b> Regression</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="reg.html"><a href="reg.html#linear-regression"><i class="fa fa-check"></i><b>1.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="1.2" data-path="reg.html"><a href="reg.html#polynomial-regression"><i class="fa fa-check"></i><b>1.2</b> Polynomial Regression</a></li>
+<li class="chapter" data-level="1.3" data-path="reg.html"><a href="reg.html#locally-weighted-linear-regression"><i class="fa fa-check"></i><b>1.3</b> Locally Weighted Linear Regression</a></li>
+<li class="chapter" data-level="1.4" data-path="reg.html"><a href="reg.html#ridge-regression"><i class="fa fa-check"></i><b>1.4</b> Ridge Regression</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="reg.html"><a href="reg.html#bias-variance-trade-off"><i class="fa fa-check"></i><b>1.4.1</b> <strong>Bias-Variance Trade-off</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="reg.html"><a href="reg.html#lasso-regression"><i class="fa fa-check"></i><b>1.5</b> Lasso Regression</a></li>
+<li class="chapter" data-level="1.6" data-path="reg.html"><a href="reg.html#glm"><i class="fa fa-check"></i><b>1.6</b> GLM</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="reg.html"><a href="reg.html#method-of-constructing-glms"><i class="fa fa-check"></i><b>1.6.1</b> Method of Constructing GLMs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="cls.html"><a href="cls.html"><i class="fa fa-check"></i><b>2</b> Classification</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="cls.html"><a href="cls.html#logistic-regression"><i class="fa fa-check"></i><b>2.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="2.2" data-path="cls.html"><a href="cls.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>2.2</b> k-Nearest Neighbors</a></li>
+<li class="chapter" data-level="2.3" data-path="cls.html"><a href="cls.html#gaussian-discriminant-analysis"><i class="fa fa-check"></i><b>2.3</b> Gaussian Discriminant Analysis</a></li>
+<li class="chapter" data-level="2.4" data-path="cls.html"><a href="cls.html#naive-bayes-classifier"><i class="fa fa-check"></i><b>2.4</b> Naive Bayes Classifier</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="cls.html"><a href="cls.html#laplace-smoothing"><i class="fa fa-check"></i><b>2.4.1</b> <strong>Laplace Smoothing</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="cls.html"><a href="cls.html#svm"><i class="fa fa-check"></i><b>2.5</b> SVM</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="cls.html"><a href="cls.html#intro"><i class="fa fa-check"></i><b>2.5.1</b> Intro</a></li>
+<li class="chapter" data-level="2.5.2" data-path="cls.html"><a href="cls.html#margins"><i class="fa fa-check"></i><b>2.5.2</b> Margins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="cls.html"><a href="cls.html#optimization-lagrange-duality"><i class="fa fa-check"></i><b>2.5.3</b> Optimization: Lagrange Duality</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cls" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Classification</h1>
+<div id="logistic-regression" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Logistic Regression</h2>
+<ul>
+<li><p><strong>Problem Setting</strong></p>
+<ul>
+<li><strong>Data</strong>: Observed pairs <span class="math inline">\((x,y)\)</span>, where <span class="math inline">\(x\in\mathcal{X}\)</span> &amp; <span class="math inline">\(y\in\mathcal{Y}\)</span>
+<ul>
+<li><span class="math inline">\(\mathcal{Y}=\{-1,+1\}\lor\{0,1\}\)</span>: binary classification</li>
+<li><span class="math inline">\(\mathcal{Y}=\{1,...,K\}\)</span>: multiclass classification</li>
+</ul></li>
+<li><strong>Goal</strong>: Find a classifier <span class="math inline">\(f\)</span> that can map input <span class="math inline">\(x\)</span> to class <span class="math inline">\(y\)</span>: <span class="math inline">\(y=f(x):\ &quot;x\in\mathcal{X}&quot;\rightarrow\ &quot;y\in\mathcal{Y}&quot;\)</span></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Model</strong></p>
+<p><span class="math display">\[\begin{equation}
+  \hat{y}=g(w^Tx)
+  \end{equation}\]</span></p>
+<p><span class="math inline">\(g(z)\)</span>: a function that converts <span class="math inline">\(w^Tx\)</span> to binary value</p></li>
+<li><p>Sigmoid Function (see Deep Learning for more funcs)</p>
+<p><span class="math display">\[\begin{equation}
+  g(z)=\sigma(z)=\frac{1}{1+e^{-z}}
+  \end{equation}\]</span></p>
+<ul>
+<li><p>Derivative (you will know why we need this in Deep Learning)</p>
+<p><span class="math display">\[\begin{align}
+  g&#39;(z)&amp;=\frac{d}{dz}\frac{1}{1+e^{-z}} \\
+  &amp;=\frac{e^{-z}(+1-1)}{(1+e^{-z})^2} \\
+  &amp;=g(z)(1-g(z))
+  \end{align}\]</span></p></li>
+</ul></li>
+<li><p>Cost Function</p>
+<ol style="list-style-type: decimal">
+<li><p>single training example (derivation later)</p>
+<p><span class="math display">\[\begin{equation}
+ \mathcal{L}(\hat{y},y)=-(y\log{\hat{y}}+(1-y)\log{(1-\hat{y})})
+ \end{equation}\]</span></p>
+<p>If <span class="math inline">\(y=1\rightarrow\mathcal{L}(\hat{y},y)=-\log{\hat{y}}\rightarrow\)</span> want “<span class="math inline">\(\mathcal{L}\downarrow\leftrightarrow\hat{y}\uparrow\)</span>”<span class="math inline">\(\rightarrow\hat{y}=1\)</span><br />
+If <span class="math inline">\(y=0\rightarrow\mathcal{L}(\hat{y},y)=-\log{(1-\hat{y})}\rightarrow\)</span> want “<span class="math inline">\(\mathcal{L}\downarrow\leftrightarrow\hat{y}\downarrow\)</span>”<span class="math inline">\(\rightarrow\hat{y}=0\)</span></p></li>
+<li><p>entire training set</p>
+<p><span class="math display">\[\begin{equation}
+ \mathcal{J}(w)=\frac{1}{m}\sum_{i=1}^{m}\mathcal{L}(\hat{y}^{(i)},y^{(i)})=\text{mean}(\mathcal{L})
+ \end{equation}\]</span></p></li>
+</ol></li>
+<li><p>Probabilistic Interpretation</p>
+<ol style="list-style-type: decimal">
+<li><p>Assumptions</p>
+<p><span class="math display">\[\begin{align}
+ P(y=1|x,w)&amp;=\hat{y} \\
+ P(y=0|x,w)&amp;=1-\hat{y}
+ \end{align}\]</span></p></li>
+<li><p>Probabilistic Model of LogReg</p>
+<p><span class="math display">\[\begin{equation}
+ p(y|x,w)=\hat{y}^y(1-\hat{y})^{1-y}
+ \end{equation}\]</span></p></li>
+<li><p>Likelihood Function</p>
+<p><span class="math display">\[\begin{equation}
+ L(w)=\prod_{i=1}^{m}(\hat{y}^{(i)})^{y^{(i)}}(1-\hat{y}^{(i)})^{1-y^{(i)}}
+ \end{equation}\]</span></p></li>
+<li><p>Log Likelihood</p>
+<p><span class="math display">\[\begin{align}
+ l(w)&amp;=\sum_{i=1}^{m}(y^{(i)}\log{\hat{y}^{(i)}}+(1-y^{(i)})\log{(1-\hat{y}^{(i)})}) \\
+ l(w)&amp;=-\sum_{i=1}^{m}\mathcal{L}(\hat{y},y)
+ \end{align}\]</span></p></li>
+<li><p>MLE</p>
+<p><span class="math display">\[\begin{align}
+ \frac{\partial l(w)}{\partial w_j}&amp;=(\frac{y}{g(w^Tx)}-\frac{1-y}{1-g(w^Tx)})\frac{\partial g(w^Tx)}{\partial w_j} \\
+ &amp;=(\frac{y}{g(w^Tx)}-\frac{1-y}{1-g(w^Tx)})g(w^Tx)(1-g(w^Tx))\frac{\partial(w^Tx)}{\partial w_j} \\
+ &amp;=(y(1-g(w^Tx))-(1-y)g(w^Tx))x_j \\
+ &amp;=(y-\hat{y})x_j
+ \end{align}\]</span></p></li>
+</ol></li>
+<li><p>Gradient Descent</p>
+<p><span class="math display">\[\begin{align}
+  w_j &amp;:= w_j-\alpha\frac{\partial\mathcal{L}(w)}{\partial w_j} \\
+  &amp;=w_j+\alpha(y-\hat{y})x_j
+  \end{align}\]</span></p>
+<p>Why is it also called “Gradient Ascent?”<br />
+<span class="math inline">\(\because\)</span> we are trying to minimize the loss function <span class="math inline">\(\Leftrightarrow\)</span> maximize the likelihood function</p></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="k-nearest-neighbors" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> k-Nearest Neighbors</h2>
+<ul>
+<li><p><a name="knnalg"></a><strong>Algorithm</strong></p>
+<p>For a new input <span class="math inline">\(x\)</span>,</p>
+<ol style="list-style-type: decimal">
+<li>Return the <span class="math inline">\(k\)</span> points <strong>closest</strong> to <span class="math inline">\(x\)</span>, indexed as <span class="math inline">\(x_{i_1},...,x_{i_k}\)</span>.</li>
+<li>Return the majority votes of <span class="math inline">\(y_{i_1},...,y_{i_k}\)</span>.</li>
+</ol></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Distances</strong> (how to measure “closest”)</p>
+<ul>
+<li><p><strong>Euclidean distance</strong>: default measurement</p>
+<p><span class="math display">\[\begin{equation}
+  \|u-v\|_ 2=\Big(\sum_{i=1}^n(u_i-v_i)^2\Big)^{\frac{1}{2}}
+  \end{equation}\]</span></p></li>
+<li><p><strong><span class="math inline">\(l_p\)</span></strong>: variation on Euclidean</p>
+<p><span class="math display">\[\begin{equation}
+  \|u-v\|_ p=\Big(\sum_{i=1}^n|u_i-v_i|^p\Big)^{\frac{1}{p}}\ \ \ |\ p\in[1,\infty]
+  \end{equation}\]</span></p></li>
+<li><p><strong>Edit distance</strong>: for strings</p>
+<center>
+<p>#modifications required to transform one string to the other</p>
+</center></li>
+<li><p><strong>Correlation distance</strong>: for signals</p>
+<center>
+<p>how correlated 2 vectors are for signal detection</p>
+</center></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong><span class="math inline">\(k\)</span></strong></p>
+<ul>
+<li>Smaller <span class="math inline">\(k\)</span> <span class="math inline">\(\Rightarrow\)</span> smaller training error but could lead to overfitting</li>
+<li>Larger <span class="math inline">\(k\)</span> <span class="math inline">\(\Rightarrow\)</span> more stable predictions due to voting</li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p><strong>Statistical Setting for Classification</strong></p>
+<ul>
+<li><p><strong>Performance</strong></p>
+<ul>
+<li>Prediction accuracy: <span class="math inline">\(P(f(x)=y)\)</span></li>
+<li>Prediction error: <span class="math inline">\(P(f(x)\neq y)\)</span></li>
+</ul></li>
+<li><p><strong>Key Assumption for Supervised Learning</strong></p>
+<p><span class="math display">\[\begin{equation}
+  (x_i,y_i)\sim\mathcal{P}\ \ \ |\ \ \ i=1,\cdots,n
+  \end{equation}\]</span></p>
+<ul>
+<li>i.i.d. (independent &amp; identically distributed)</li>
+<li>We assume that the future should look like the past.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="gaussian-discriminant-analysis" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Gaussian Discriminant Analysis</h2>
+<ul>
+<li><p><a name="bayes"></a>Learning Algorithms</p>
+<ul>
+<li>Discriminative Learning Algorithms</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+  \text{model }p(y|x)\text{ directly}\ \ \ (X \Rightarrow Y)
+  \end{equation}\]</span></p>
+<ul>
+<li>Generative Learning Algorithms</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+  \text{model }p(x|y)\ \&amp;\ p(y)\Rightarrow\text{ use Bayes Theorem to get }p(y|x) 
+  \end{equation}\]</span></p></li>
+<li><p>Bayes Theorem</p>
+<p><span class="math display">\[\begin{equation}
+  p(y|x)=\frac{p(x|y)p(y)}{p(x)}
+  \end{equation}\]</span></p>
+<ul>
+<li><p><strong>Prior</strong>:   <span class="math inline">\(p(y)\)</span></p></li>
+<li><p><strong>Posterior</strong>: <span class="math inline">\(p(y\|x)\)</span></p></li>
+<li><p>Simplification:</p>
+<p><span class="math inline">\(\because\)</span> we are trying to find the output <span class="math inline">\(y\)</span> with the highest probability given <span class="math inline">\(x\)</span><br />
+<span class="math inline">\(\therefore\)</span> we can simplify Bayes Theorem for our purpose:</p>
+<p><span class="math display">\[\begin{align}
+  \mathop{\arg\max}_ {y}{p(y|x)}&amp;=\mathop{\arg\max}_ {y}{\frac{p(x|y)p(y)}{p(x)}} \\
+  &amp;=\mathop{\arg\max}_ {y}{p(x|y)p(y)}
+  \end{align}\]</span></p></li>
+<li><p>Bayes Theorem = the core of Generative Learning Algorithms</p></li>
+</ul></li>
+</ul>
+<p>
+ 
+</p>
+<ul>
+<li><p>Assumption: Multivariate Gaussian Distribution</p>
+<p><span class="math display">\[\begin{equation}
+  p(x|\mu,\Sigma)=\frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{\big(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\big)}
+  \end{equation}\]</span></p>
+<p>It is literally the same as Gaussian Distribution but with vector parameters:</p>
+<ul>
+<li>mean vector:    <span class="math inline">\(\mu\in\mathbb{R}^n\)</span></li>
+<li>covariance matrix: <span class="math inline">\(\Sigma\in\mathbb{R}^{n\times n}\)</span><br />
+ </li>
+</ul>
+<p>As a reminder and a comparison, here is the univariate version:</p>
+<p><span class="math display">\[\begin{equation}
+  p(x|\mu,\sigma)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+  \end{equation}\]</span></p></li>
+<li><p>Model</p>
+<p><span class="math display">\[\begin{align}
+  y&amp;\sim \text{Bernoulli}{(\phi)} \\
+  x|y=0&amp;\sim N(\mu_0,\Sigma) \\
+  x|y=1&amp;\sim N(\mu_1,\Sigma) \\
+  \end{align}\]</span></p></li>
+<li><p>Probabilistic Interpretation</p>
+<p><span class="math display">\[\begin{align}
+  p(y)&amp;=\phi^y(1-\phi)^{1-y} \\
+  p(x|y=0)&amp;=\frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{\big(-\frac{1}{2}(x-\mu_0)^T\Sigma^{-1}(x-\mu_0)\big)} \\
+  p(x|y=1)&amp;=\frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{\big(-\frac{1}{2}(x-\mu_1)^T\Sigma^{-1}(x-\mu_1)\big)}
+  \end{align}\]</span></p></li>
+<li><p>log likelihood</p>
+<p><span class="math display">\[\begin{equation}
+  l(\phi,\mu_0,\mu_1,\Sigma)=\log{\prod_{i=1}^{m}{p(x^{(i)}|y^{(i)};\mu_0,\mu_1,\Sigma)p(y^{(i)};\phi)}}
+  \end{equation}\]</span></p></li>
+<li><p>MLE</p>
+<p><span class="math display">\[\begin{align}
+  \phi &amp;= \frac{1}{m}\sum_{i=1}^m{\text{I}\{ y^{(i)}=l \}} \\
+  \mu_0 &amp;= \frac{\sum_{i=1}^m{\text{I}\{ y^{(i)}=0 \}x^{(i)}}}{\sum_{i=1}^m{\text{I}\{ y^{(i)}=0 \}}} \\
+  \mu_1 &amp;= \frac{\sum_{i=1}^m{\text{I}\{ y^{(i)}=1 \}x^{(i)}}}{\sum_{i=1}^m{\text{I}\{ y^{(i)}=1 \}}} \\
+  \Sigma &amp;= \frac{1}{m}\sum_{i=1}^m{(x^{(i)}-\mu_{y^{(i)}})(x^{(i)}-\mu_{y^{(i)}})^T}
+  \end{align}\]</span></p></li>
+<li><p>GDA vs LogReg</p>
+<ol style="list-style-type: decimal">
+<li>GDA
+<ul>
+<li>makes <strong>stronger</strong> modeling assumptions about data</li>
+<li>data efficient when assumptions (Gaussian distributions) are approximately correct</li>
+</ul></li>
+<li>LogReg
+<ul>
+<li>makes <strong>weaker</strong> modeling assumptions about data</li>
+<li>data efficient when assumptions (Gaussian distributions) are not necessarily correct (e.g. <span class="math inline">\(x\|y\sim \text{Poisson}(\lambda_1)\)</span> instead of <span class="math inline">\(N(\mu_0,\Sigma)\)</span>)</li>
+</ul></li>
+</ol></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="naive-bayes-classifier" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Naive Bayes Classifier</h2>
+<ul>
+<li><p>GDA vs NB</p>
+<ol style="list-style-type: decimal">
+<li>GDA: <span class="math inline">\(x\)</span> = continuous, real-valued vectors</li>
+<li>NB:   <span class="math inline">\(x\)</span> = discrete-valued vectors (e.g. text classification)</li>
+</ol></li>
+<li><p>Text Encoding (more in DL/RNN)</p>
+<p>We encode a text sentence into a vector of the same length as our <strong>dictionary</strong> (like a Python dictionary with vocabulary and their indices as key-value pairs):</p>
+<p><span class="math display">\[\begin{equation}
+  x=\begin{bmatrix}
+  0 \\ 0 \\ \vdots \\ 1 \\ \vdots \\ 1 \\ 1 \\ \vdots \\ 0
+  \end{bmatrix}
+  \begin{matrix}
+  \text{a} \\ \text{abandon} \\ \vdots \\ \text{pewdiepie} \\ \vdots \\ \text{subscribe} \\ \text{to} \\ \vdots \\ \text{zuck}
+  \end{matrix}
+  \end{equation}\]</span></p>
+<p>The original sentence was “Subscribe to Pewdiepie!” and this text encoding method uses lowercases, throws punctuations and ignores the order of the sentence. This is convenient in some cases (e.g. spam email classification) but awful in the other cases (e.g. news/report-writer bots)</p>
+<p>Notice that <span class="math inline">\(x\in \{0,1\}^{\text{len(dict)}}\)</span>. Why notice this? Because we now have <span class="math inline">\(2^\text{len(dict)}\)</span> possible outcomes for <span class="math inline">\(x\)</span>. When we have a dictionary of over 20000 words, we have a <span class="math inline">\(\(2^{20000}-1\)\)</span>-dimensional parameter vector. Have fun with that, laptop.</p></li>
+<li><p>Assumption: Conditional Independence</p>
+<p><span class="math display">\[\begin{equation}
+  p(x_i|y)=p(x_i|y,x_j)\ \ \ \forall j\neq i
+  \end{equation}\]</span></p>
+<p>meaning: Given <span class="math inline">\(y\)</span> as the condition, <span class="math inline">\(x_i\)</span> is independent of <span class="math inline">\(x_j\)</span>.</p>
+<p>In the case of spam email classification, if we know that the email is spam, then whether or not “pewdiepie” is in the sentence does not change our belief of whether or not “subscribe” is in the sentence.</p>
+<p>Therefore, we can simplify our <span class="math inline">\(p(x\|y)\)</span> into:</p>
+<p><span class="math display">\[\begin{equation}
+  p(x_1,...,x_{\text{len(dict)}}|y)=\prod_{i=1}^{n}{p(x_i|y)}
+  \end{equation}\]</span></p></li>
+<li><p>Model</p>
+<p><span class="math display">\[\begin{align}
+  \phi_{i|y=1}&amp;=p(x_i=1|y=1) \\
+  \phi_{i|y=0}&amp;=p(x_i=1|y=0) \\
+  \phi_y&amp;=p(y=1)
+  \end{align}\]</span></p></li>
+<li><p>Joint Likelihood</p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{L}(\phi_y,\phi_{i|y=0},\phi_{i|y=1})=\prod_{i=1}^{m}{p(x^{(i)},y^{(i)})}
+  \end{equation}\]</span></p></li>
+<li><p>MLE</p>
+<p><span class="math display">\[\begin{align}
+  \phi_{j|y=1}&amp;=\frac{\sum_{i=1}^m{I\{x_j^{(i)}=1\land y^{(i)}=1\}}}{\sum_{i=1}^m{I\{y^{(i)}=1\}}} \\
+  \phi_{j|y=0}&amp;=\frac{\sum_{i=1}^m{I\{x_j^{(i)}=1\land y^{(i)}=0\}}}{\sum_{i=1}^m{I\{y^{(i)}=0\}}} \\
+  \phi_y&amp;=\frac{\sum_{i=1}^m{I\{y^{(i)}=1\}}}{m}
+  \end{align}\]</span></p>
+<p>Quite intuitive. For example, <span class="math inline">\(\phi_{j\|y=0}\)</span> = the fraction of non-spam emails with the word <span class="math inline">\(j\)</span> in it.</p></li>
+<li><p>Prediction</p>
+<p><span class="math display">\[\begin{align}
+  p(y=1|x_\text{new})&amp;=\frac{p(x_\text{new}|y=1)p(y=1)}{p(x_\text{new})} \\
+  &amp;=\frac{\prod_{i=1}^n{p(x_i|y=1)}\cdot p(y=1)}{\prod_{i=1}^n{p(x_i|y=1)}\cdot p(y=1)+\prod_{i=1}^n{p(x_i|y=0)}\cdot p(y=0)}
+  \end{align}\]</span></p>
+<p>Again, the formula is tedious but very intuitive. The <span class="math inline">\(y\)</span> with the higher posterior probability will be chosen as the final prediction.</p></li>
+<li><p>Apply NB in GDA cases?</p>
+<p>Discretize: Just cut the continuous, real-valued <span class="math inline">\(x\)</span> into small intervals and label them with a discrete-valued scale.</p></li>
+</ul>
+<p>
+ 
+</p>
+<div id="laplace-smoothing" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> <strong>Laplace Smoothing</strong></h3>
+<p><u>Problem</u>: What if there is a new word “mrbeast” in the email for prediction that our NB classifier has never learnt ever since it was born?</p>
+<p>A human would look it up on a dictionary, and so would our NB classifier.</p>
+<p>Assume the word “mrbeast” is the 1234th word in the dictionary, then:</p>
+<p><span class="math display">\[\begin{align}
+\phi_{1234|y=1}&amp;=\frac{\sum_{i=1}^m{I\{x_{1234}^{(i)}=1\land y^{(i)}=1\}}}{\sum_{i=1}^m{I\{y^{(i)}=1\}}}=0 \\
+\phi_{1234|y=0}&amp;=\frac{\sum_{i=1}^m{I\{x_{1234}^{(i)}=1\land y^{(i)}=0\}}}{\sum_{i=1}^m{I\{y^{(i)}=0\}}}=0 \\
+\end{align}\]</span></p>
+<p>Yes. NB thinks that the probability of seeing this word in either spam or non-spam email is <span class="math inline">\(0\)</span>, and therefore it would predict that:</p>
+<p><span class="math display">\[\begin{align}
+p(y=1|x_\text{new})&amp;=\frac{\prod_{i=1}^n{p(x_i|y=1)}\cdot p(y=1)}{\prod_{i=1}^n{p(x_i|y=1)}\cdot p(y=1)+\prod_{i=1}^n{p(x_i|y=0)}\cdot p(y=0)} \\
+&amp;=\frac{0}{0}
+\end{align}\]</span></p>
+<p>Because both numerator and denominator contains <span class="math inline">\(p(x_{1234\|y})=0\)</span>.</p>
+<p>In summary, during prediction, if NB has never learnt a word <span class="math inline">\(j\)</span>, there will always <span class="math inline">\(\phi_j=0\)</span> ruining the entire prediction. How do we estimate the unknown?</p>
+<p><u>Algorithm</u>:</p>
+<p><span class="math display">\[\begin{equation}
+\phi_j=\frac{\sum_{i=1}^m{I\{z^{(i)}=j\}}+1}{m+k}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(k=\text{#features}\)</span> if you forget.</p>
+<p>Let’s check if it still satisfies our condition:</p>
+<p><span class="math display">\[\begin{equation}
+\sum_{j=1}^k{\phi_j}=\sum_{j=1}^k{\frac{\sum_{i=1}^m{I\{z^{(i)}=j\}}+1}{m+k}}=\frac{m+k}{m+k}=1
+\end{equation}\]</span></p>
+<p>Nice. It still satisfies the basic sum rule. The estimates in NB will now become:</p>
+<p><span class="math display">\[\begin{align}
+\phi_{j|y=1}&amp;=\frac{\sum_{i=1}^m{I\{x_{j}^{(i)}=1\land y^{(i)}=1\}}+1}{\sum_{i=1}^m{I\{y^{(i)}=1\}}+2} \\
+\phi_{j|y=0}&amp;=\frac{\sum_{i=1}^m{I\{x_{j}^{(i)}=1\land y^{(i)}=0\}}+1}{\sum_{i=1}^m{I\{y^{(i)}=0\}}+2} \\
+\end{align}\]</span></p>
+<p>
+ 
+</p>
+</div>
+</div>
+<div id="svm" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> SVM</h2>
+<div id="intro" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Intro</h3>
+<ul>
+<li><p>Problem with Classification:</p>
+<center>
+<p><img src="../../images/ML/SVM1.png" width="300"/></p>
+</center>
+<p>This is a binary classification. The circles &amp; crosses are training examples with two different labels. The black line is the classifier, and it is able to classify “circle” and “cross.” For points like <span class="math inline">\(\text{A}\)</span> that are distant from the classifier, we are quite confident that they belong to “cross.”</p>
+<p>However, what about <span class="math inline">\(\text{B}\)</span> and <span class="math inline">\(\text{C}\)</span> that are super close to the decision boundary? Based on this classifier, <span class="math inline">\(\text{B}\)</span> belongs to “cross” and <span class="math inline">\(\text{C}\)</span> belongs to “circle,” but how confident are we about our classifier? What if our classifier is just slightly off and <span class="math inline">\(\text{C}\)</span> was actually “cross?”</p>
+<center>
+<p><img src="../../images/ML/SVM2.png" width="300"/></p>
+</center>
+<p>This, is SVM in a nutshell.</p></li>
+</ul>
+</div>
+<div id="margins" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Margins</h3>
+<ul>
+<li><p><strong>Functional Margin</strong></p>
+<p><span class="math display">\[\begin{equation}
+  \hat{\gamma}^{(i)}=y^{(i)}(w^Tx+b)\ \ \ \ \ \ \|\ y\in\{-1,1\}
+  \end{equation}\]</span></p>
+<ul>
+<li><p>Intuition: <span class="math inline">\(\hat{\gamma}^{(i)}\uparrow\uparrow\ \rightarrow\text{confidence}\uparrow\uparrow\)</span></p></li>
+<li><p>When <span class="math inline">\(y=1\ \rightarrow w^Tx+b \&gt;\&gt; 0\)</span>.<br />
+When <span class="math inline">\(y=-1\\rightarrow w^Tx+b \&lt;\&lt; 0\)</span>.</p></li>
+<li><p>Problem with functional margin:</p>
+<p>if <span class="math inline">\(w\rightarrow kw\)</span> and <span class="math inline">\(b\rightarrow kb\)</span> (where <span class="math inline">\(k&gt;0\)</span>), then <span class="math inline">\(g(w^Tx+b)=g(k(w^Tx+b))\)</span></p>
+<p>but our <span class="math inline">\(g(z)\)</span> here follows:</p>
+<p><span class="math display">\[g(z)=\begin{cases}
+-1&amp; \text{if $z&lt;0$} \\
+1&amp; \text{if $z&gt;0$} \\
+\end{cases}\]</span></p>
+<p>that is, <span class="math inline">\(z\)</span> and <span class="math inline">\(kz\)</span> makes no difference for <span class="math inline">\(g(z)\)</span>.</p>
+<p>HOWEVER, the functional margin does change by a factor of <span class="math inline">\(k\)</span> here, meaning that a large functional margin does not necessarily represent a confident prediction in this case.</p></li>
+</ul>
+<p> </p></li>
+<li><p><strong>Geometric Margin</strong></p>
+<p>Refer back to the figure above. If we want to find the distance between point <span class="math inline">\(A\)</span> and the decision boundary, which is <span class="math inline">\(AA&#39;=\gamma^{(i)}\)</span>, what should we do?</p>
+<center>
+<p><img src="../../images/ML/SVM3.png" width="300"/></p>
+</center>
+<p>We normalize <span class="math inline">\(w\)</span> to find the unit vector <span class="math inline">\(\frac{w}{\lVert w \rVert}\)</span>, and we also have <span class="math inline">\(A=x^{(i)}\)</span>. Because <span class="math inline">\(AA&#39;\parallel \overrightarrow{w}\)</span>, we can find <span class="math inline">\(A&#39;\)</span> by:</p>
+<p><span class="math display">\[\begin{equation}
+  A&#39;=x^{(i)}-\gamma^{(i)}\frac{w}{\lVert w \rVert}
+  \end{equation}\]</span></p>
+<p>and because <span class="math inline">\(A&#39;\)</span> is on the decision boundary <span class="math inline">\(w^Tx+b=0\)</span>, we get</p>
+<p><span class="math display">\[\begin{align}
+  &amp;w^TA&#39;+b=0 \\
+  \Longrightarrow\ &amp;w^Tx^{(i)}+b=w^T\frac{w}{\lVert w \rVert}\gamma^{(i)} \ \ \ \ \ \ \ \ \ \bigg(w^T\frac{w}{\lVert w \rVert}=\frac{\lVert w \rVert^2}{\lVert w \rVert}\bigg) \\
+  \Longrightarrow\ &amp;\gamma^{(i)}=\bigg(\frac{w}{\lVert w \rVert}\bigg)^Tx^{(i)}+\frac{b}{\lVert w \rVert}
+  \end{align}\]</span></p>
+<p>and if we generalize it with both classes of <span class="math inline">\(y^{(i)}\)</span>:</p>
+<p><span class="math display">\[\begin{equation}
+  \gamma^{(i)}=y^{(i)}\Bigg(\bigg(\frac{w}{\lVert w \rVert}\bigg)^Tx^{(i)}+\frac{b}{\lVert w \rVert}\Bigg)
+  \end{equation}\]</span></p></li>
+</ul>
+<p>
+ 
+</p>
+</div>
+<div id="optimization-lagrange-duality" class="section level3" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Optimization: Lagrange Duality</h3>
+<ul>
+<li><p><strong>Constrained optimization problem</strong></p>
+<p><span class="math display">\[\begin{equation}
+  \mathop{\min}_ {w} f(w)\ \ \text{s.t.}\ h_i(w)=0\ \ \forall i\in\{1,...,m\}
+  \end{equation}\]</span></p>
+<p><u>Interpretation</u>: Minimize a function <span class="math inline">\(f(w)\)</span> on the set <span class="math inline">\(\{w\ \|\ h_i(w)=0\ \forall i\in\{1,...,m\}\}\)</span> where <span class="math inline">\(w\)</span> satisfies the equality constraints.</p></li>
+<li><p><strong>Lagrangian</strong></p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{L}(w,\beta)=f(w)+\sum_{i=1}^{m}{\beta_ih_i(w)}
+  \end{equation}\]</span></p>
+<p>where <span class="math inline">\(\beta_i=\)</span> Lagrange multipliers, and then we solve it by <span class="math inline">\(\frac{\partial{\mathcal{L}}}{\partial{w_i}}=0\)</span> and <span class="math inline">\(\frac{\partial{\mathcal{L}}}{\partial{\beta_i}}=0\)</span></p></li>
+<li><p><strong>Generalized constrained optimization problem</strong></p>
+<p><span class="math display">\[\begin{align}
+  \mathop{\min}_ {w} f(w)\ \ \text{s.t.}\ h_i(w)=0\ \ &amp;\forall i\in\{1,...,m\} \\
+  g_i(w)\leq 0\ \ &amp;\forall i\in\{1,...,n\}
+  \end{align}\]</span></p>
+<p><u>Interpretation</u>: Add an inequality constraint to the original optimization problem.</p></li>
+<li><p><strong>Generalized Lagrangian</strong></p>
+<p><span class="math display">\[\begin{equation}
+  \mathcal{L}(w,\alpha,\beta)=f(w)+\sum_{i=1}^{m}{\beta_ih_i(w)}+\sum_{i=1}^{n}{\alpha_ig_i(w)}
+  \end{equation}\]</span></p></li>
+<li><p><strong>Primal optimization problem</strong></p>
+<p><span class="math display">\[\begin{equation}
+  p^* =\mathop{\min}_ {w} \theta_{\mathcal{P}}(w)=\mathop{\min}_ {w} \mathop{\max}_ {\alpha,\beta:\alpha_i\geq0} \mathcal{L}(w,\alpha,\beta)
+  \end{equation}\]</span></p>
+<p><u>Interpretation</u>: Under the 2 primal constraints above, the maximum of our generalized lagrangian (labeled as <span class="math inline">\(\theta_{\mathcal{P}}(w)\)</span>) is basically just <span class="math inline">\(f(w)\)</span> as long as <span class="math inline">\(\alpha_i\geq0\ \forall i\in\{1,...,m\}\)</span>:</p>
+<p><span class="math display">\[\begin{align}
+  &amp;\sum_{i=1}^{m}{\beta_ih_i(w)}\longrightarrow\sum_{i=1}^{m}{\beta_i\cdot0}\longrightarrow0 \\
+  &amp;\sum_{i=1}^{m}{\alpha_ig_i(w)}\xrightarrow{\alpha\geq0,g(w)\leq0}\sum_{i=1}^{m}{(+0\cdot-0)}\longrightarrow0
+  \end{align}\]</span></p>
+<p>Therefore, this is just another way to write our generalized optimization problem.</p></li>
+<li><p><strong>Dual optimization problem</strong></p>
+<p><span class="math display">\[\begin{equation}
+  d^* =\mathop{\max}_ {\alpha,\beta:\alpha_i\geq0} \theta_{\mathcal{D}}(\alpha,\beta)=\mathop{\max}_ {\alpha,\beta:\alpha_i\geq0} \mathop{\min}_ {w} \mathcal{L}(w,\alpha,\beta)
+  \end{equation}\]</span></p>
+<p><u>Interpretation</u>: This is basically the same problem as primal except that <span class="math inline">\(\mathop{\max}\)</span> and <span class="math inline">\(\mathop{\min}\)</span> are exchanged. However, their values are not necessarily equal. Instead, they follow the following relationship:</p>
+<p><span class="math display">\[\begin{equation}
+  d^* \leq p^*
+  \end{equation}\]</span></p>
+<p>The intuition is simple. Suppose we have a function <span class="math inline">\(f(x,y)\)</span>, then:</p>
+<p><span class="math display">\[\begin{align}
+  \mathop{\min}_ {w} f(x,w)\leq f(x,y)\leq \mathop{\max}_ {v} f(v,y) \\
+  \mathop{\min}_ {u} f(u,y)\leq f(x,y)\leq \mathop{\max}_ {t} f(x,t)
+  \end{align}\]</span></p>
+<p>This definitely holds for all functions in the world. Therefore, the following also holds:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathop{\max}_ {x} \big(\mathop{\min}_ {w} f(x,w)\big)\leq \mathop{\min}_ {y} \big(\mathop{\max}_ {v} f(v,y)\big)
+  \end{equation}\]</span></p>
+<p>which is basically saying that “<span class="math inline">\(\mathop{\max}\mathop{\min}\leq\mathop{\min}\mathop{\max}\)</span>” for all multivariate functions, including our Lagrangian.</p></li>
+<li><p><strong>Karush-Kuhn-Tucker Conditions (KKT)</strong></p>
+<ul>
+<li><p>Under the above assumptions, there must exist <span class="math inline">\(w^*,\alpha^ *,\beta^ *\)</span> so that</p>
+<ul>
+<li><span class="math inline">\(w^*\)</span> is the solution to the primal problem</li>
+<li><span class="math inline">\(\alpha^ *,\beta^ *\)</span> are the solution to the dual problem</li>
+<li><span class="math inline">\(p^* =d^* =\mathcal{L}(w^* ,\alpha^ * ,\beta^ * )\)</span></li>
+</ul></li>
+<li><p>KKT Conditions: <span class="math inline">\(w^*,\alpha^ *,\beta^ *\)</span> must satisfy:</p>
+<p><span class="math display">\[\begin{align}
+  \frac{\partial}{\partial w_i}\mathcal{L}(w^*,\alpha^*,\beta^* )&amp;=0\ \ i=1,\cdots,n \\
+  \frac{\partial}{\partial \beta_i}\mathcal{L}(w^*,\alpha^*,\beta^* )&amp;=0\ \ i=1,\cdots,l \\
+  \alpha_i^* g_i(w^* )&amp;=0\ \ i=1,\cdots,k \\
+  g_i(w^* )&amp;\leq0\ \ i=1,\cdots,k \\
+  \alpha_i^* &amp;\geq0\ \ i=1,\cdots,k
+  \end{align}\]</span></p></li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="reg.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/02_cls.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

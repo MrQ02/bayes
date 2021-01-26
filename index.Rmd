@@ -1,28 +1,20 @@
 --- 
-title: "Time Series Analysis"
+title: "Machine Learning"
 author: "Renyi Qu"
-date: "2021/01/25"
+date: "2021/01/26"
 site: bookdown::bookdown_site
-# header-includes:
-#    - \usepackage{bm}
-# output:
-#   pdf_document:
-#     extra_dependencies: ["bm"]
-    # latex_engine: xelatex
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: MrQ02/tsa
+github-repo: MrQ02/ml
 description: ""
 ---
-<!-- \usepackage{bm} -->
 \DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathOperator*{\argmax}{argmax}
 
 # References {-}
 
-- Bollerslev, T. (1986). Generalized Autoregressive Conditional Heteroskedasticity. <i>Journal
-of Econometrics</i>. vol. 31. [https://doi.org/10.1016/0304-4076(86)90063-1](https://doi.org/10.1016/0304-4076(86)90063-1).
-- Enders, W. (2015). <i>Applied Econometric Time Series</i>. JohnWiley & Sons Inc. [DOI:10.1198/tech.2004.s813](https://www.tandfonline.com/doi/abs/10.1198/tech.2004.s813). 
-- Engle, R.F. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. <i>Econometrica</i>. vol. 50, issue. 4. [https://doi.org/10.2307/1912773](https://doi.org/10.2307/1912773).
+- ColumbiaX. <a href="https://www.edx.org/micromasters/columbiax-artificial-intelligence" target="__blank">Artificial Intelligence MicroMasters Program</a>. edX Inc.
+- Andrew Ng. <a href="https://see.stanford.edu/Course/CS229" target="__blank">CS229 - Machine Learning</a>. Stanford University.
+- Mitchell, T. <a href="http://www.cs.cmu.edu/~tom/10701_sp11/lectures.shtml" target="__blank">10-701 - Machine Learning</a>. Carnegie Mellon University.
