@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Volatility models | Time Series Analysis</title>
-  <meta name="description" content="2 Volatility models | Time Series Analysis" />
+  <title>3 Order Selection | Time Series Analysis</title>
+  <meta name="description" content="3 Order Selection | Time Series Analysis" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Volatility models | Time Series Analysis" />
+  <meta property="og:title" content="3 Order Selection | Time Series Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="MrQ02/tsa" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Volatility models | Time Series Analysis" />
+  <meta name="twitter:title" content="3 Order Selection | Time Series Analysis" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="m.html"/>
-<link rel="next" href="order-selection.html"/>
+<link rel="prev" href="v.html"/>
+
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -131,57 +131,124 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="v" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Volatility models</h1>
-<div id="arch-autoregressive-conditional-heteroskedasticity-model" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> ARCH (Autoregressive Conditional Heteroskedasticity model)</h2>
-<p><span class="math display">\[\begin{equation*}
-    \varepsilon_t=\sigma_t\zeta_t
-\end{equation*}\]</span></p>
+<div id="order-selection" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Order Selection</h1>
+<div id="stationarity" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Stationarity</h2>
 <ul>
-<li><span class="math inline">\(\zeta_t\)</span>: white noise following <span class="math inline">\(N(0,1)\)</span></li>
-<li><span class="math inline">\(\sigma_t^2\)</span>: variance of <span class="math inline">\(\varepsilon_t\)</span>:</li>
+<li><strong>Covariance/Weak stationarity</strong></li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    &amp;\text{E}[x_t]=\text{E}[x_{t-s}]=\mu \\
+    &amp;\text{Var}[x_t]=\text{Var}[x_{t-s}]=\sigma^2 \\
+    &amp;\text{Cov}[x_t,x_{t-s}]=\text{Cov}[x_{t-i},x_{t-i-s}]=\gamma_{t-s}
+\end{align*}\]</span></p>
+<ul>
+<li><p><strong>Strong stationarity</strong> = Weak stationarity + no seasonal trend</p></li>
+<li><p>MA(q) models satisfy stationarity, but AR(p) models need restrictions.</p></li>
+<li><p><strong>Lag operator</strong></p></li>
 </ul>
 <p><span class="math display">\[\begin{equation*}
-    \sigma_t^2=\alpha_0+\sum_{i=1}^p{\alpha_i\varepsilon_{t-i}^2}
+    L^ix_t\equiv x_{t-i}
 \end{equation*}\]</span></p>
 <ul>
-<li><span class="math inline">\(\alpha_0&gt;0, \alpha_i\geq0\)</span></li>
+<li>rewrite AR(p):</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    &amp;x_t=\alpha_0+\sum_{i=1}^{p}{\alpha_iL^ix_{t-i}}+\varepsilon_t \\
+    &amp;x_t=\frac{\varepsilon_t}{1-\sum_{i=1}^{p}{\alpha_iL^i}}=\frac{\varepsilon_t}{\Phi(L)}
+\end{align*}\]</span></p>
+<ul>
+<li><strong>Characteristic polynomial</strong></li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    \Phi(L)=1-\sum_{i=1}^{p}{\alpha_iL^i}=\prod_{i=1}^{p}{(1-\phi_iL)}
+\end{equation*}\]</span></p>
+<ul>
+<li><span class="math inline">\(x_t \sim\)</span> AR(<span class="math inline">\(p\)</span>) is stationary <span class="math inline">\(\Leftrightarrow |\frac{1}{\phi_i}|&gt;1\)</span>.</li>
 </ul>
 <p>
  
 </p>
 </div>
-<div id="garch-generalized-autoregressive-conditional-heteroskedasticity-model" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> GARCH (Generalized Autoregressive Conditional Heteroskedasticity model)</h2>
-<p><span class="math display">\[\begin{equation*}
-    \sigma_t^2=\alpha_0+\sum_{i=1}^p{\alpha_i\varepsilon_{t-i}^2}+\sum_{i=1}^q{\beta_j\sigma_{t-j}^2}
-\end{equation*}\]</span></p>
-<!-- <p>&nbsp;</p> -->
-<div id="estimation-4" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Estimation</h3>
+<div id="adf-test-augmented-dickey-fuller-test" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> ADF Test (Augmented Dickey-Fuller Test)</h2>
 <ul>
-<li>MLE:</li>
-</ul>
-<p><span class="math display">\[\begin{equation*}
-        l_t(\boldsymbol{\theta},\boldsymbol{\varphi})=-\frac{1}{2}\log{2\pi}-\frac{1}{2}\log{\sigma_t^2}-\frac{\varepsilon_t^2}{2\sigma_t^2}
-    \end{equation*}\]</span></p>
-<ul>
-<li>FOC:</li>
+<li>Intuition: tests the null hypothesis that there exists such a unit root.</li>
 </ul>
 <p><span class="math display">\[\begin{align*}
-    \frac{\partial l_t}{\partial\boldsymbol{\theta}}&amp;=\frac{\varepsilon_t\omega_t}{\sigma_t^2}+\frac{\sigma_t^2}{2}\frac{\partial\sigma_t^2}{\partial\boldsymbol{\theta}}\bigg(\frac{\varepsilon_t^2}{\sigma_t^2}-1\bigg)=0 \\
-    \frac{\partial l_t}{\partial\boldsymbol{\varphi}}&amp;=\frac{1}{2\sigma_t^2}\frac{\partial\sigma_t^2}{\partial\boldsymbol{\varphi}}\bigg(\frac{\varepsilon_t^2}{\sigma_t^2}-1\bigg)=0
+    x_t&amp;=\cdots+\alpha_{p-2}x_{t-p+2}+\alpha_{p-1}x_{t-p+1}+\alpha_{p}x_{t-p} \\
+    &amp;=\cdots+\alpha_{p-2}x_{t-p+2}+\alpha_{p-1}x_{t-p+1}+\alpha_px_{t-p+1}+\alpha_{p}x_{t-p}-\alpha_px_{t-p+1} \\
+    &amp;=\cdots+\alpha_{p-2}x_{t-p+2}+(\alpha_{p-1}+\alpha_p)x_{t-p+1}-\alpha_p\Delta x_{t-p+1} \\
+    &amp;=\cdots+\alpha_{p-2}x_{t-p+2}+(\alpha_{p-1}+\alpha_p)x_{t-p+2}+(\alpha_{p-1}+\alpha_p)x_{t-p+1}-(\alpha_{p-1}+\alpha_p)x_{t-p+2}-\alpha_p\Delta x_{t-p+1} \\
+    &amp;=\cdots-(\alpha_{p-1}+\alpha_p)\Delta x_{t-p+2}-\alpha_p\Delta x_{t-p+1}=\cdots
 \end{align*}\]</span></p>
 <ul>
-<li>Recursive algorithm:</li>
+<li><p><span class="math inline">\(\Delta x_{t-p+i}=x_{t-p+i}-x_{t-p+i-1}\)</span></p></li>
+<li><p>Recursive result:</p>
+<p><span class="math display">\[\begin{equation*}
+      \Delta x_t=\alpha_0+\gamma x_{t-1}+\sum_{i=2}^p{c_i\Delta x_{t-i+1}}+\varepsilon_t
+  \end{equation*}\]</span></p>
+<ul>
+<li><span class="math inline">\(\gamma=-\bigg(1-\sum_{i=1}^p{\alpha_i}\bigg)\)</span></li>
+<li><span class="math inline">\(c_i=\sum_{j=i}^p{\alpha_j}\)</span></li>
+</ul></li>
 </ul>
-<p><span class="math display">\[\begin{align*}
-    \frac{\partial\sigma_t^2}{\partial\boldsymbol{\theta}}&amp;=\sum_{j=1}^q{\beta_j\frac{\partial\sigma_{t-j}^2}{\partial\boldsymbol{\theta}}}-2\sum_{i=1}^p{\alpha_i\boldsymbol{\omega}_t\varepsilon_{t-i}} \\
-    \frac{\partial\sigma_t^2}{\partial\boldsymbol{\varphi}}&amp;=\sum_{j=1}^q{\beta_j\frac{\partial\sigma_{t-j}^2}{\partial\boldsymbol{\varphi}}}+\boldsymbol{\epsilon}_t
-\end{align*}\]</span></p>
-
+<p>
+ 
+</p>
 </div>
+<div id="acf-autocorrelation-function" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> ACF (Autocorrelation Function)</h2>
+<ul>
+<li>accounts for both direct and indirect effects of <span class="math inline">\(x_{t-k}\)</span> on <span class="math inline">\(x_t\)</span>.</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    \rho_k&amp;=\text{Corr}[x_{t-k},x_t]\\
+    &amp;=\frac{\text{E}[(x_{t-k}-\mu_{t-k})\overline{(x_t-\mu_t)}]}{\sigma_{t-k}\sigma_t}
+\end{align*}\]</span></p>
+<p>
+ 
+</p>
+</div>
+<div id="pacf-partial-autocorrelation-function" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> PACF (Partial Autocorrelation Function)</h2>
+<ul>
+<li>accounts for only direct effects of <span class="math inline">\(x_{t-k}\)</span> on <span class="math inline">\(x_t\)</span>.</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    \phi_{ii}=\frac{\rho_i-\sum_{j=1}^{i-1}{\phi_{i-1,j}\rho_{i-j}}}{1-\sum_{j=1}^{i-1}{\phi_{i-1,j}\rho_j}}
+\end{equation*}\]</span></p>
+<ul>
+<li><span class="math inline">\(j\)</span>th order autoregression equation:</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    x_t-\mu=\sum_{i=1}^j{\phi_{ji}(x_{t-i}-\mu)}+e_t
+\end{equation*}\]</span></p>
+<ul>
+<li>joint coefficients:</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    \phi_{ij}=\phi_{i-1,j}-\phi_{ii}\phi_{i-1,i-j}
+\end{equation*}\]</span></p>
+<p>
+ 
+</p>
+</div>
+<div id="information-criteria" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Information Criteria</h2>
+<ul>
+<li>Goal: to minimize information loss</li>
+</ul>
+<p><strong>AIC (Akaike IC)</strong>:</p>
+<p><span class="math display">\[\begin{equation*}
+    \text{AIC}=2k-2\log{\hat{L}}
+\end{equation*}\]</span></p>
+<p><strong>BIC (Bayesian IC)</strong>:</p>
+<p><span class="math display">\[\begin{equation*}
+    \text{BIC}=k\log{n}-2\log{\hat{L}}
+\end{equation*}\]</span></p>
+
 </div>
 </div>
             </section>
@@ -189,8 +256,8 @@
           </div>
         </div>
       </div>
-<a href="m.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="order-selection.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="v.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -221,7 +288,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jules32/bookdown-tutorial/edit/master/02_volatility.Rmd",
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/03_order_selection.Rmd",
 "text": "Edit"
 },
 "history": {

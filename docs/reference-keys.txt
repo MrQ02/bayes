@@ -15,8 +15,9 @@ v
 arch-autoregressive-conditional-heteroskedasticity-model
 garch-generalized-autoregressive-conditional-heteroskedasticity-model
 estimation-4
-cnn
-basics-of-cnn
-cnn-examples
-object-detection
-face-recognition
+order-selection
+stationarity
+adf-test-augmented-dickey-fuller-test
+acf-autocorrelation-function
+pacf-partial-autocorrelation-function
+information-criteria
