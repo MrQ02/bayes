@@ -1,0 +1,221 @@
+# Bayesian Statistics {#b}
+
+## Concepts
+
+### Bayes' Theorem
+
+**Bayes' Theorem - General**
+
+$$\begin{equation*}
+P(A|B)=\frac{P(A)P(B|A)}{P(B)}
+\end{equation*}$$
+
+- **Prior**: $P(A)$ - original subjective belief of $A$
+
+- **Posterior**: $P(A|B)$ - updated belief of $A$ by the given data B
+
+- **Likelihood**: $\frac{P(B|A)}{P(B)}$ - measure of extent to which assumption A provides support for the particular data distribution B
+
+<br/>
+
+**Bayes' Theorem - Discrete**
+
+$$\begin{equation*}
+    P(A_i|B)=\frac{P(A_i)P(B|A_i)}{\sum_{j=1}^{n}{P(A_j)P(B|A_j)}}
+\end{equation*}$$
+
+<br/>
+
+**Bayes' Theorem - Continuous**
+
+$$\begin{equation*}
+    \pi(p|x)=\frac{\pi(p)P(x|p)}{\int_{0}^{1}{\pi(p)P(x|p)dp}}
+\end{equation*}$$
+
+<br/>
+
+**Bayes' Theorem - Data Analysis**
+
+$$\begin{equation*}
+    p(\theta|y)=\frac{p(\theta)p(y|\theta)}{p(y)}
+\end{equation*}$$
+
+- $y$: data
+
+- $\theta$: parameter
+
+- $p(y)$ is not dependent on $\theta$ and $y$ is fixed $\Longrightarrow p(y)=\text{const}$
+
+<br/>
+
+**Bayes' Theorem - Odds Ratio**
+
+$$\begin{equation*}
+\frac{p(\theta_1|y)}{p(\theta_2|y)}=\frac{p(\theta_1)}{p(\theta_2)}\frac{p(y|\theta_1)}{p(y|\theta_2)}
+\end{equation*}$$
+
+- Posterior odds = Prior odds * likelihood ratio
+
+- **Likelihood Principle**:  for a given sample of data, any two probability models $p(y|θ)$ that have the same likelihood function yield the same inference for $θ$.
+
+<br/>
+
+### Core Philosophy
+
+**The Core**:
+
+$$\begin{equation*}
+\text{Posterior}\propto\text{Prior}\times\text{Likelihood}
+\end{equation*}$$
+
+<br/>
+
+**The Steps**:
+
+1. Define prior distribution
+
+2. Gather data to generate likelihood
+
+3. Generate $\&$ Analyze posterior
+
+<br/>
+
+**The Intuition**:
+
+$$\begin{equation*}
+\text{Prior}\Longrightarrow\text{Posterior}\Big(\xrightarrow{\text{update}}\text{Prior}\Big)
+\end{equation*}$$
+
+- Uninformative prior $\rightarrow$ data-driven posterior
+
+- informative prior $\rightarrow$ posterior = mixture of prior $\&$ data $\rightarrow$ YES!
+
+- too informative prior $\rightarrow$ gather more data to modify such belief $\rightarrow$ prevent prior-driven posterior
+
+- too much data $\rightarrow$ data-dominated posterior $\rightarrow$ NO!
+
+<br/>
+
+### Conjugacy
+
+**Conjugacy**: posterior $\&$ prior are in the same distribution family.
+
+- Without conjugacy, the integral in the likelihood for continuous data is almost impossible to solve without numerical approximation.
+
+- There are so far **3** conjugate families.
+
+<br/>
+
+**Conjugate Family 1 - Beta-Binomial**:
+
+- **Prior**:
+
+$$\begin{equation*}
+    \pi(p)=\text{Beta}(\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}
+\end{equation*}$$
+
+- **Likelihood**:
+
+$$\begin{equation*}
+    P(x|p)=\text{Bin}(n,p)=\begin{pmatrix}n \\ x\end{pmatrix}p^xq^{n-x}
+\end{equation*}$$
+
+- **Posterior**:
+
+$$\begin{align*}
+    \pi(p|x)&=\frac{\text{Beta}(\alpha,\beta)\cdot\text{Bin}(n,p)}{P(x)} \\
+    &=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}\cdot\begin{pmatrix}n \\ k\end{pmatrix}p^xq^{n-x} \\
+    &=\frac{\Gamma(\alpha+\beta+n)}{\Gamma(\alpha+x)\Gamma(\beta+n-x)}p^{x+\alpha-1}(1-p)^{n-x+\beta-1} \\
+    &=\text{Beta}(\alpha+x,\beta+n-x)
+\end{align*}$$
+
+<br/>
+
+**Conjugate Family 2 - Gamma-Poisson**:
+
+- **Prior**:
+
+$$\begin{equation*}
+    \pi(\lambda)=\text{Gamma}(\alpha,\beta)=\frac{\beta^\alpha}{\Gamma(\alpha)}\lambda^{\alpha-1}e^{-\beta\lambda}
+\end{equation*}$$
+
+- **Likelihood**:
+
+$$\begin{align*}
+    &P(\lambda|x)=\text{Pois}(\lambda)=\frac{e^{-\lambda}\lambda^x}{x!} \\
+    &\mathcal{L}(\lambda|\mathbf{x})=\prod_{i=1}^{n}{\frac{e^{-\lambda}\lambda^x_i}{x_i!}}=\frac{e^{-n\lambda}\lambda^{\sum{x_i}}}{\prod_{i=1}^{n}{(x_i!)}}
+\end{align*}$$
+
+- **Posterior**:
+
+$$\begin{align*}
+    \pi(\lambda|\mathbf{x})&=\frac{\beta^\alpha}{\Gamma(\alpha)}\lambda^{\alpha-1}e^{-\beta\lambda}\cdot\frac{e^{-n\lambda}\lambda^{\sum{x_i}}}{\prod_{i=1}^{n}{(x_i!)}} \\
+    &=\frac{\beta^{\alpha}}{\Gamma(\alpha+\sum{x_i})}\lambda^{\alpha-1+\sum{x_i}}e^{-(\beta+n)\lambda} \\
+    &=\text{Gamma}(\alpha+\sum{x_i},\beta+n)
+\end{align*}$$
+
+<br/>
+
+**Conjugate Family 3 - Normal-Normal**:
+
+- **Prior**:
+
+$$\begin{equation*}
+    \pi(\mu)=N(u,v^2)=\frac{1}{\sqrt{2\pi}v}\exp{\bigg(-\frac{1}{2}\Big(\frac{\mu-u}{v}\Big)^2\bigg)}
+\end{equation*}$$
+
+- **Likelihood**:
+
+$$\begin{align*}
+    &P(x|\mu)=N(\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp{\bigg(-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)^2\bigg)} \\
+    &\mathcal{L}(\mathbf{x}|\mu)=\Big(\frac{1}{\sqrt{2\pi}\sigma}\Big)^n\prod_{i=1}^{n}{\exp{\bigg(-\frac{1}{2}\Big(\frac{x_i-\mu}{\sigma}\Big)^2\bigg)}}
+\end{align*}$$
+
+- **Posterior**:
+
+$$\begin{align*}
+    \pi(\mu|x)&\propto\exp{\Big\{-\frac{1}{2}\Big[\frac{1}{v^2}(\mu-u)^2+\frac{1}{\sigma^2}\sum_{i=1}^{n}{(x-\mu)^2}\Big]\Big\}} \\
+    &\propto\exp{\Big\{-\frac{1}{2}\frac{1}{\sigma^2v^2}\Big[v^2\sum_{i=1}^{n}{\big(x_i^2-2x_i\mu+\mu^2\big)}+\sigma^2\big(\mu^2-2\mu u+u^2\big)\Big]\Big\}} \\
+    &\propto\exp{\Big\{-\frac{1}{2}\frac{1}{\sigma^2v^2}\Big[\mu^2(\sigma^2+nv^2)-2\mu(u\sigma^2+n\bar(x)v^2)+(u^2\sigma^2+v^2\sum{x_i^2})\Big]\Big\}} \\
+    &\propto\exp{\Bigg\{-\frac{1}{2}\Bigg[\Bigg(\frac{1}{v^2}+\frac{n}{\sigma^2}\Bigg)\Bigg(\mu-\frac{\frac{u}{v^2}+\frac{n\bar{x}}{\sigma^2}}{\frac{1}{v^2}+\frac{n}{\sigma^2}}\Bigg)^2\Bigg]\Bigg\}} \\
+    &=N\Bigg(\frac{\frac{u}{v^2}+\frac{n\bar{x}}{\sigma^2}}{\frac{1}{v^2}+\frac{n}{\sigma^2}},\frac{\sigma^2v^2}{\sigma^2+nv^2}\Bigg)
+\end{align*}$$
+
+<br/>
+
+### Predictive Inference
+
+**Prior predictive distribution**:
+
+$$\begin{equation*}
+p(y)=\int{p(y|\theta)p(\theta)d\theta}
+\end{equation*}$$
+
+- = marginal distribution of $y$
+
+- $y$: unknown but observable data
+
+- $\theta$: parameter
+
+- Prior: not conditional on anything
+
+- Predictive: prediction on observable
+
+<br/>
+
+**Posterior predictive distribution**:
+
+$$\begin{equation*}
+p(\tilde{y}|y)=\int{p(\tilde{y}|\theta)p(\theta|y)d\theta}
+\end{equation*}$$
+
+- = average of conditional predictions over posterior distribution of $\theta$
+
+- $\tilde{y}$: unknown observable following the same process as $y$
+
+- Posterior: conditional on observed $y$
+
+- Predictive: prediction on observable
+
+<br/>
+

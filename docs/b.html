@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Bayesian Statistics | Bayesian Statistics</title>
+  <meta name="description" content="1 Bayesian Statistics | Bayesian Statistics" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Bayesian Statistics | Bayesian Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="MrQ02/bayes" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Bayesian Statistics | Bayesian Statistics" />
+  
+  
+  
+
+<meta name="author" content="Renyi Qu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="cls.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="lib/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/css/lesson.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bayesian Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="1" data-path="b.html"><a href="b.html"><i class="fa fa-check"></i><b>1</b> Bayesian Statistics</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="b.html"><a href="b.html#concepts"><i class="fa fa-check"></i><b>1.1</b> Concepts</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="b.html"><a href="b.html#bayes-theorem"><i class="fa fa-check"></i><b>1.1.1</b> Bayes’ Theorem</a></li>
+<li class="chapter" data-level="1.1.2" data-path="b.html"><a href="b.html#core-philosophy"><i class="fa fa-check"></i><b>1.1.2</b> Core Philosophy</a></li>
+<li class="chapter" data-level="1.1.3" data-path="b.html"><a href="b.html#conjugacy"><i class="fa fa-check"></i><b>1.1.3</b> Conjugacy</a></li>
+<li class="chapter" data-level="1.1.4" data-path="b.html"><a href="b.html#predictive-inference"><i class="fa fa-check"></i><b>1.1.4</b> Predictive Inference</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="cls.html"><a href="cls.html"><i class="fa fa-check"></i><b>2</b> Classification</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="cls.html"><a href="cls.html#logistic-regression"><i class="fa fa-check"></i><b>2.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="2.2" data-path="cls.html"><a href="cls.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>2.2</b> k-Nearest Neighbors</a></li>
+<li class="chapter" data-level="2.3" data-path="cls.html"><a href="cls.html#gaussian-discriminant-analysis"><i class="fa fa-check"></i><b>2.3</b> Gaussian Discriminant Analysis</a></li>
+<li class="chapter" data-level="2.4" data-path="cls.html"><a href="cls.html#naive-bayes-classifier"><i class="fa fa-check"></i><b>2.4</b> Naive Bayes Classifier</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="cls.html"><a href="cls.html#laplace-smoothing"><i class="fa fa-check"></i><b>2.4.1</b> <strong>Laplace Smoothing</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="cls.html"><a href="cls.html#svm"><i class="fa fa-check"></i><b>2.5</b> SVM</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="cls.html"><a href="cls.html#intro"><i class="fa fa-check"></i><b>2.5.1</b> Intro</a></li>
+<li class="chapter" data-level="2.5.2" data-path="cls.html"><a href="cls.html#margins"><i class="fa fa-check"></i><b>2.5.2</b> Margins</a></li>
+<li class="chapter" data-level="2.5.3" data-path="cls.html"><a href="cls.html#optimization-lagrange-duality"><i class="fa fa-check"></i><b>2.5.3</b> Optimization: Lagrange Duality</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bayesian Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="b" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Bayesian Statistics</h1>
+<div id="concepts" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Concepts</h2>
+<div id="bayes-theorem" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Bayes’ Theorem</h3>
+<p><strong>Bayes’ Theorem - General</strong></p>
+<p><span class="math display">\[\begin{equation*}
+P(A|B)=\frac{P(A)P(B|A)}{P(B)}
+\end{equation*}\]</span></p>
+<ul>
+<li><p><strong>Prior</strong>: <span class="math inline">\(P(A)\)</span> - original subjective belief of <span class="math inline">\(A\)</span></p></li>
+<li><p><strong>Posterior</strong>: <span class="math inline">\(P(A|B)\)</span> - updated belief of <span class="math inline">\(A\)</span> by the given data B</p></li>
+<li><p><strong>Likelihood</strong>: <span class="math inline">\(\frac{P(B|A)}{P(B)}\)</span> - measure of extent to which assumption A provides support for the particular data distribution B</p></li>
+</ul>
+<p><br/></p>
+<p><strong>Bayes’ Theorem - Discrete</strong></p>
+<p><span class="math display">\[\begin{equation*}
+    P(A_i|B)=\frac{P(A_i)P(B|A_i)}{\sum_{j=1}^{n}{P(A_j)P(B|A_j)}}
+\end{equation*}\]</span></p>
+<p><br/></p>
+<p><strong>Bayes’ Theorem - Continuous</strong></p>
+<p><span class="math display">\[\begin{equation*}
+    \pi(p|x)=\frac{\pi(p)P(x|p)}{\int_{0}^{1}{\pi(p)P(x|p)dp}}
+\end{equation*}\]</span></p>
+<p><br/></p>
+<p><strong>Bayes’ Theorem - Data Analysis</strong></p>
+<p><span class="math display">\[\begin{equation*}
+    p(\theta|y)=\frac{p(\theta)p(y|\theta)}{p(y)}
+\end{equation*}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(y\)</span>: data</p></li>
+<li><p><span class="math inline">\(\theta\)</span>: parameter</p></li>
+<li><p><span class="math inline">\(p(y)\)</span> is not dependent on <span class="math inline">\(\theta\)</span> and <span class="math inline">\(y\)</span> is fixed <span class="math inline">\(\Longrightarrow p(y)=\text{const}\)</span></p></li>
+</ul>
+<p><br/></p>
+<p><strong>Bayes’ Theorem - Odds Ratio</strong></p>
+<p><span class="math display">\[\begin{equation*}
+\frac{p(\theta_1|y)}{p(\theta_2|y)}=\frac{p(\theta_1)}{p(\theta_2)}\frac{p(y|\theta_1)}{p(y|\theta_2)}
+\end{equation*}\]</span></p>
+<ul>
+<li><p>Posterior odds = Prior odds * likelihood ratio</p></li>
+<li><p><strong>Likelihood Principle</strong>: for a given sample of data, any two probability models <span class="math inline">\(p(y|θ)\)</span> that have the same likelihood function yield the same inference for <span class="math inline">\(θ\)</span>.</p></li>
+</ul>
+<p><br/></p>
+</div>
+<div id="core-philosophy" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Core Philosophy</h3>
+<p><strong>The Core</strong>:</p>
+<p><span class="math display">\[\begin{equation*}
+\text{Posterior}\propto\text{Prior}\times\text{Likelihood}
+\end{equation*}\]</span></p>
+<p><br/></p>
+<p><strong>The Steps</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Define prior distribution</p></li>
+<li><p>Gather data to generate likelihood</p></li>
+<li><p>Generate <span class="math inline">\(\&amp;\)</span> Analyze posterior</p></li>
+</ol>
+<p><br/></p>
+<p><strong>The Intuition</strong>:</p>
+<p><span class="math display">\[\begin{equation*}
+\text{Prior}\Longrightarrow\text{Posterior}\Big(\xrightarrow{\text{update}}\text{Prior}\Big)
+\end{equation*}\]</span></p>
+<ul>
+<li><p>Uninformative prior <span class="math inline">\(\rightarrow\)</span> data-driven posterior</p></li>
+<li><p>informative prior <span class="math inline">\(\rightarrow\)</span> posterior = mixture of prior <span class="math inline">\(\&amp;\)</span> data <span class="math inline">\(\rightarrow\)</span> YES!</p></li>
+<li><p>too informative prior <span class="math inline">\(\rightarrow\)</span> gather more data to modify such belief <span class="math inline">\(\rightarrow\)</span> prevent prior-driven posterior</p></li>
+<li><p>too much data <span class="math inline">\(\rightarrow\)</span> data-dominated posterior <span class="math inline">\(\rightarrow\)</span> NO!</p></li>
+</ul>
+<p><br/></p>
+</div>
+<div id="conjugacy" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Conjugacy</h3>
+<p><strong>Conjugacy</strong>: posterior <span class="math inline">\(\&amp;\)</span> prior are in the same distribution family.</p>
+<ul>
+<li><p>Without conjugacy, the integral in the likelihood for continuous data is almost impossible to solve without numerical approximation.</p></li>
+<li><p>There are so far <strong>3</strong> conjugate families.</p></li>
+</ul>
+<p><br/></p>
+<p><strong>Conjugate Family 1 - Beta-Binomial</strong>:</p>
+<ul>
+<li><strong>Prior</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    \pi(p)=\text{Beta}(\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}
+\end{equation*}\]</span></p>
+<ul>
+<li><strong>Likelihood</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    P(x|p)=\text{Bin}(n,p)=\begin{pmatrix}n \\ x\end{pmatrix}p^xq^{n-x}
+\end{equation*}\]</span></p>
+<ul>
+<li><strong>Posterior</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    \pi(p|x)&amp;=\frac{\text{Beta}(\alpha,\beta)\cdot\text{Bin}(n,p)}{P(x)} \\
+    &amp;=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}p^{\alpha-1}(1-p)^{\beta-1}\cdot\begin{pmatrix}n \\ k\end{pmatrix}p^xq^{n-x} \\
+    &amp;=\frac{\Gamma(\alpha+\beta+n)}{\Gamma(\alpha+x)\Gamma(\beta+n-x)}p^{x+\alpha-1}(1-p)^{n-x+\beta-1} \\
+    &amp;=\text{Beta}(\alpha+x,\beta+n-x)
+\end{align*}\]</span></p>
+<p><br/></p>
+<p><strong>Conjugate Family 2 - Gamma-Poisson</strong>:</p>
+<ul>
+<li><strong>Prior</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    \pi(\lambda)=\text{Gamma}(\alpha,\beta)=\frac{\beta^\alpha}{\Gamma(\alpha)}\lambda^{\alpha-1}e^{-\beta\lambda}
+\end{equation*}\]</span></p>
+<ul>
+<li><strong>Likelihood</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    &amp;P(\lambda|x)=\text{Pois}(\lambda)=\frac{e^{-\lambda}\lambda^x}{x!} \\
+    &amp;\mathcal{L}(\lambda|\mathbf{x})=\prod_{i=1}^{n}{\frac{e^{-\lambda}\lambda^x_i}{x_i!}}=\frac{e^{-n\lambda}\lambda^{\sum{x_i}}}{\prod_{i=1}^{n}{(x_i!)}}
+\end{align*}\]</span></p>
+<ul>
+<li><strong>Posterior</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    \pi(\lambda|\mathbf{x})&amp;=\frac{\beta^\alpha}{\Gamma(\alpha)}\lambda^{\alpha-1}e^{-\beta\lambda}\cdot\frac{e^{-n\lambda}\lambda^{\sum{x_i}}}{\prod_{i=1}^{n}{(x_i!)}} \\
+    &amp;=\frac{\beta^{\alpha}}{\Gamma(\alpha+\sum{x_i})}\lambda^{\alpha-1+\sum{x_i}}e^{-(\beta+n)\lambda} \\
+    &amp;=\text{Gamma}(\alpha+\sum{x_i},\beta+n)
+\end{align*}\]</span></p>
+<p><br/></p>
+<p><strong>Conjugate Family 3 - Normal-Normal</strong>:</p>
+<ul>
+<li><strong>Prior</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{equation*}
+    \pi(\mu)=N(u,v^2)=\frac{1}{\sqrt{2\pi}v}\exp{\bigg(-\frac{1}{2}\Big(\frac{\mu-u}{v}\Big)^2\bigg)}
+\end{equation*}\]</span></p>
+<ul>
+<li><strong>Likelihood</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    &amp;P(x|\mu)=N(\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp{\bigg(-\frac{1}{2}\Big(\frac{x-\mu}{\sigma}\Big)^2\bigg)} \\
+    &amp;\mathcal{L}(\mathbf{x}|\mu)=\Big(\frac{1}{\sqrt{2\pi}\sigma}\Big)^n\prod_{i=1}^{n}{\exp{\bigg(-\frac{1}{2}\Big(\frac{x_i-\mu}{\sigma}\Big)^2\bigg)}}
+\end{align*}\]</span></p>
+<ul>
+<li><strong>Posterior</strong>:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+    \pi(\mu|x)&amp;\propto\exp{\Big\{-\frac{1}{2}\Big[\frac{1}{v^2}(\mu-u)^2+\frac{1}{\sigma^2}\sum_{i=1}^{n}{(x-\mu)^2}\Big]\Big\}} \\
+    &amp;\propto\exp{\Big\{-\frac{1}{2}\frac{1}{\sigma^2v^2}\Big[v^2\sum_{i=1}^{n}{\big(x_i^2-2x_i\mu+\mu^2\big)}+\sigma^2\big(\mu^2-2\mu u+u^2\big)\Big]\Big\}} \\
+    &amp;\propto\exp{\Big\{-\frac{1}{2}\frac{1}{\sigma^2v^2}\Big[\mu^2(\sigma^2+nv^2)-2\mu(u\sigma^2+n\bar(x)v^2)+(u^2\sigma^2+v^2\sum{x_i^2})\Big]\Big\}} \\
+    &amp;\propto\exp{\Bigg\{-\frac{1}{2}\Bigg[\Bigg(\frac{1}{v^2}+\frac{n}{\sigma^2}\Bigg)\Bigg(\mu-\frac{\frac{u}{v^2}+\frac{n\bar{x}}{\sigma^2}}{\frac{1}{v^2}+\frac{n}{\sigma^2}}\Bigg)^2\Bigg]\Bigg\}} \\
+    &amp;=N\Bigg(\frac{\frac{u}{v^2}+\frac{n\bar{x}}{\sigma^2}}{\frac{1}{v^2}+\frac{n}{\sigma^2}},\frac{\sigma^2v^2}{\sigma^2+nv^2}\Bigg)
+\end{align*}\]</span></p>
+<p><br/></p>
+</div>
+<div id="predictive-inference" class="section level3" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> Predictive Inference</h3>
+<p><strong>Prior predictive distribution</strong>:</p>
+<p><span class="math display">\[\begin{equation*}
+p(y)=\int{p(y|\theta)p(\theta)d\theta}
+\end{equation*}\]</span></p>
+<ul>
+<li><p>= marginal distribution of <span class="math inline">\(y\)</span></p></li>
+<li><p><span class="math inline">\(y\)</span>: unknown but observable data</p></li>
+<li><p><span class="math inline">\(\theta\)</span>: parameter</p></li>
+<li><p>Prior: not conditional on anything</p></li>
+<li><p>Predictive: prediction on observable</p></li>
+</ul>
+<p><br/></p>
+<p><strong>Posterior predictive distribution</strong>:</p>
+<p><span class="math display">\[\begin{equation*}
+p(\tilde{y}|y)=\int{p(\tilde{y}|\theta)p(\theta|y)d\theta}
+\end{equation*}\]</span></p>
+<ul>
+<li><p>= average of conditional predictions over posterior distribution of <span class="math inline">\(\theta\)</span></p></li>
+<li><p><span class="math inline">\(\tilde{y}\)</span>: unknown observable following the same process as <span class="math inline">\(y\)</span></p></li>
+<li><p>Posterior: conditional on observed <span class="math inline">\(y\)</span></p></li>
+<li><p>Predictive: prediction on observable</p></li>
+</ul>
+<p><br/></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cls.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/01_basics.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["series.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
